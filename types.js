@@ -1,0 +1,27 @@
+export const CLOSE_MODAL = '@modal/CLOSE_MODAL';
+export const EMIT_NAME = '@player/EMIT_NAME';
+export const RETRIEVE_NAME = '@player/RETRIEVE_NAME';
+export const END_ROUND = '@game/END_ROUND';
+export const GET_STATUS = '@game/GET_STATUS';
+export const GOT_RESPONSES = '@game/GOT_RESPONSES';
+export const JOIN_ROOM = '@game/JOIN_ROOM';
+export const NEXT_LIST = '@game/NEXT_LIST';
+export const NEXT_ROUND = '@game/NEXT_ROUND';
+export const OPEN_MODAL = '@game/OPEN_MODAL';
+export const RESET_DICE_ROLL = '@game/RESET_DICE_ROLL';
+export const ROLL_DICE = '@game/ROLL_DICE';
+export const ROUND_ENDED = '@game/ROUND_ENDED';
+export const ROUND_SCORED = '@game/ROUND_SCORED';
+export const SEND_ANSWERS = '@game/SEND_ANSWERS';
+export const SEND_TALLIES = '@game/SEND_TALLIES';
+export const SET_GAME_PHASE = '@game/SET_GAME_PHASE';
+export const SET_PLAYERS = '@game/SET_PLAYERS';
+export const SET_ROUND = '@game/SET_ROUND';
+export const START_GAME = '@game/START_GAME';
+export const START_ROUND = '@game/START_ROUND';
+export const TIMER_FIRED = '@game/TIMER_FIRED';
+
+export const ROUND_ALLOW_ANSWERS = '@round/ROUND_ALLOW_ANSWERS';
+export const ROUND_HIDE_LIST = '@round/ROUND_HIDE_LIST';
+export const ROUND_SET_ANSWERS = '@round/ROUND_SET_ANSWERS';
+export const ROUND_SHOW_TIMER = '@round/ROUND_SHOW_TIMER';
