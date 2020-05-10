@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@ui-kitten/components';
+import { Animated, TouchableOpacity } from 'react-native';
 
 const values = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'W'];
 
@@ -149,7 +149,7 @@ class Dice extends React.Component {
   }
 
   render() {
-    const { isActivePlayer, isDisabled } = this.props;
+    const { isActivePlayer, isDisabled, style, textStyle } = this.props;
     const { hasValue, rolling, value } = this.state;
 
     // const diceClasses = classNames({
@@ -173,33 +173,24 @@ class Dice extends React.Component {
       displayValue = 'Roll';
     }
 
-    return (
-      <Button
-        onPress={() => {
-          if (isDisabled || rolling || !isActivePlayer) {
-            return;
-          }
-          this.handleClick();
-        }}
-      >
-        {displayValue}
-      </Button>
-    );
+    return displayValue;
   }
 }
 
 Dice.propTypes = {
-  isActivePlayer: PropTypes.bool.isRequired,
   diceClassName: PropTypes.string,
+  isActivePlayer: PropTypes.bool.isRequired,
   isDisabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   onValue: PropTypes.func.isRequired,
   overlayClassName: PropTypes.string,
   progressClassName: PropTypes.string,
+  roll: PropTypes.string,
   rollSeconds: PropTypes.number,
   showProgress: PropTypes.bool,
   sides: PropTypes.number,
-  roll: PropTypes.string,
+  style: PropTypes.shape().isRequired,
+  textStyle: PropTypes.shape().isRequired,
 };
 
 Dice.defaultProps = {
