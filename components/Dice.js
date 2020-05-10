@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Animated, TouchableOpacity } from 'react-native';
 
 const values = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'W'];
 
@@ -94,11 +93,6 @@ class Dice extends React.Component {
     this.nextRoll();
   }
 
-  handleClick() {
-    const { onClick } = this.props;
-    onClick();
-  }
-
   reroll() {
     const { value } = this.state;
     this.availableValues.push(value);
@@ -113,58 +107,8 @@ class Dice extends React.Component {
     }, 1000);
   }
 
-  getDefaultStyleDice() {
-    const { isDisabled } = this.props;
-    const { rolling } = this.state;
-
-    return {
-      color: 'white',
-      cursor: isDisabled || rolling ? 'auto' : 'pointer',
-      display: 'inline-block',
-      fontSize: '40px',
-      fontWeight: 'bold',
-      lineHeight: '80px',
-      paddingLeft: '10px',
-      paddingRight: '10px',
-      position: 'relative',
-      textAlign: 'center',
-      verticalAlign: 'middle',
-      width: '140px',
-      filter: isDisabled && !rolling ? 'brightness(200%)' : 'none',
-    };
-  }
-
-  getDefaultStyleText() {
-    const { isDisabled } = this.props;
-
-    return {
-      left: 0,
-      color: isDisabled ? '#fff' : '#222',
-      backgroundColor: isDisabled ? 'transparent' : 'rgba(223,223,223,1)',
-      border: isDisabled ? '0' : '0.1em solid #bbb',
-      borderRadius: '8px',
-      textShadow: isDisabled ? '0 0 1px rgba(255,255,255,1)' : '0 0 5px rgba(255,255,255,0)',
-      transition: 'background-color 0.3s, color 0.3s',
-    }
-  }
-
   render() {
-    const { isActivePlayer, isDisabled, style, textStyle } = this.props;
-    const { hasValue, rolling, value } = this.state;
-
-    // const diceClasses = classNames({
-    //   hexDice: true,
-    //   dice: true,
-    //   diceDisabled: isDisabled,
-    //   diceRolling: rolling || isDisabled,
-    //   diceHasValue: hasValue,
-    //   inactivePlayer: !isActivePlayer,
-    // });
-    // const textClasses = classNames({
-      // text: true,
-      // hex: true,
-      // 'mb-rolling': rolling || isDisabled,
-    // });
+    const { rolling, value } = this.state;
 
     let displayValue = '';
     if (value) {
@@ -181,7 +125,6 @@ Dice.propTypes = {
   diceClassName: PropTypes.string,
   isActivePlayer: PropTypes.bool.isRequired,
   isDisabled: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
   onValue: PropTypes.func.isRequired,
   overlayClassName: PropTypes.string,
   progressClassName: PropTypes.string,
@@ -189,8 +132,6 @@ Dice.propTypes = {
   rollSeconds: PropTypes.number,
   showProgress: PropTypes.bool,
   sides: PropTypes.number,
-  style: PropTypes.shape().isRequired,
-  textStyle: PropTypes.shape().isRequired,
 };
 
 Dice.defaultProps = {

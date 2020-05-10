@@ -13,7 +13,9 @@ import { LinkingConfiguration, navigationRef } from './navigation';
 import {
   EntryScreen,
   GameScreen,
+  ListScreen,
   StartScreen,
+  ResponsesScreen,
 } from './screens';
 
 import configureStore from './store';
@@ -32,19 +34,40 @@ const styles = StyleSheet.create({
   },
 });
 
+const ModalScreen = () => {
+  return (
+    <View style={styles.container}>
+      {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+
+      <ModalStack.Navigator
+        headerMode="none"
+      >
+        <ModalStack.Screen
+          name="List"
+          component={ListScreen}
+        />
+        <ModalStack.Screen
+          name="Responses"
+          component={ResponsesScreen}
+        />
+      </ModalStack.Navigator>
+    </View>
+  );
+};
+
 const MainScreen = () => {
   return (
     <View style={styles.container}>
       {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
 
       <Stack.Navigator
-        headerMode={false}
+        headerMode="none"
         initialRouteName="Entry"
+        mode="card"
       >
         <Stack.Screen
           name="Entry"
           component={EntryScreen}
-          options={{ headerShown: false }}
         />
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Game" component={GameScreen} />
@@ -65,16 +88,18 @@ const App = () => {
         ref={navigationRef}
       >
         <RootStack.Navigator
-          headerMode={false}
-          initialRouteName="MainScreen"
+          initialRouteName="Main"
           mode="modal"
+          headerMode="none"
         >
           <RootStack.Screen
-            name="MainScreen"
+            name="Main"
             component={MainScreen}
-            options={{ headerShown: false }}
           />
-          {/*<RootStack.Screen name="ModalScreen" component={ModalScreen} />*/}
+          <RootStack.Screen
+            name="Modal"
+            component={ModalScreen}
+          />
         </RootStack.Navigator>
       </NavigationContainer>
     );

@@ -35,8 +35,6 @@ const StartScreen = (props) => {
     listItems.push(i);
   }
 
-  console.log('currentList', currentList);
-
   return (
     <Layout style={styles.container}>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>

@@ -37,13 +37,18 @@ function* navToGame() {
   yield null;
 }
 
+function* navToList() {
+  navigate('Modal', { Screen: 'List' });
+  yield null;
+}
+
 function* navToResponses() {
-  navigate('Game.Responses');
+  navigate('Modal', { Screen: 'Responses' });
   yield null;
 }
 
 function* navToScores() {
-  navigate('Game.Scores');
+  navigate('Modal', { Screen: 'Scores' });
   yield null;
 }
 
@@ -74,7 +79,6 @@ function* doResetDiceRoll() {
 function* doStartRound() {
   try {
     socket.emit(events.START_ROUND);
-    navigate('Game.List');
   } catch (error) {
     yield put(startRound.failure(error));
   }
@@ -100,7 +104,7 @@ function* doSendTallies(data) {
 
 function* doGotResponses(data) {
   try {
-    navigate('Game.Responses');
+    navigate('Modal', { Screen: 'Responses' });
     yield put(gotResponses.success(data));
   } catch (error) {
     yield put(gotResponses.failure(error));
@@ -109,7 +113,7 @@ function* doGotResponses(data) {
 
 function* doRoundScored() {
   try {
-    navigate('GameScores');
+    navigate('Modal', { Screen: 'Scores' });
   } catch (error) {
     yield put(gotResponses.failure(error));
   }
@@ -156,7 +160,7 @@ function* doSetGamePhase(payload) {
           put(roundShowTimer.trigger(true)),
           put(roundHideList.trigger(false))
         ].filter(Boolean));
-        yield spawn(navToGame);
+        yield spawn(navToList);
         break;
 
       case GamePhase.VOTE:

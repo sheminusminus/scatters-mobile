@@ -93,9 +93,7 @@ export const getGameTimeElapsed = createSelector(
       return -1;
     }
 
-    const elapsed = (end - start) - left;
-    console.log('time elapsed', elapsed);
-    return elapsed;
+    return (end - start) - left;
   },
 );
 

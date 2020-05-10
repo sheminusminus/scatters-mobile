@@ -68,6 +68,7 @@ export default () => {
   });
 
   socket.on(events.ROUND_STARTED, () => {
+    console.log(events.ROUND_STARTED);
     store.dispatch(startRound.success());
   });
 

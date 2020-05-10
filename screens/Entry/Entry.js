@@ -11,7 +11,7 @@ import { usePrev } from '../../hooks';
 import styles from './styles';
 
 
-const EntryScreen = ({ lookedForName, name, onRetrieveName, route, onEmitName }) => {
+const EntryScreen = ({ lookedForName, name, onRetrieveName, onEmitName }) => {
   const [value, setValue] = React.useState(name);
 
   React.useEffect(() => {
@@ -26,7 +26,6 @@ const EntryScreen = ({ lookedForName, name, onRetrieveName, route, onEmitName })
     }
   }, [prevName, name]);
 
-  console.log(route);
   return (
     <Layout style={styles.container}>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>
