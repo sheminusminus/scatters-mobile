@@ -16,7 +16,6 @@ let events;
 
 function* doEmitName(payload) {
   try {
-    console.log('emitting name');
     yield call(Storage.save, 'name', payload.name);
     socket.emit(events.EMIT_NAME, payload);
   } catch (error) {
@@ -27,7 +26,6 @@ function* doEmitName(payload) {
 function* doRetrieveName() {
   try {
     const name = yield call(Storage.load, 'name');
-    console.log('name', name);
     if (name) {
       yield put(retrieveName.success());
       yield put(emitName.trigger({ name }));
@@ -41,7 +39,6 @@ function* doRetrieveName() {
 }
 
 function* navToStart(name) {
-  console.log('navigating?');
   navigate('Start');
   yield null;
 }

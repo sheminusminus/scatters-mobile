@@ -8,14 +8,20 @@ import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
 
-import { BottomTabNavigator, LinkingConfiguration, navigationRef } from './navigation';
+import { LinkingConfiguration, navigationRef } from './navigation';
 
-import { EntryScreen, StartScreen } from './screens';
+import {
+  EntryScreen,
+  GameScreen,
+  StartScreen,
+} from './screens';
 
 import configureStore from './store';
 
 
 const Stack = createStackNavigator();
+const ModalStack = createStackNavigator();
+const RootStack = createStackNavigator();
 
 const { store } = configureStore();
 
@@ -26,6 +32,27 @@ const styles = StyleSheet.create({
   },
 });
 
+const MainScreen = () => {
+  return (
+    <View style={styles.container}>
+      {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+
+      <Stack.Navigator
+        headerMode={false}
+        initialRouteName="Entry"
+      >
+        <Stack.Screen
+          name="Entry"
+          component={EntryScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Start" component={StartScreen} />
+        <Stack.Screen name="Game" component={GameScreen} />
+      </Stack.Navigator>
+    </View>
+  );
+};
+
 const App = () => {
   const isLoadingComplete = useCachedResources();
 
@@ -33,23 +60,23 @@ const App = () => {
     return null;
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-
-        <NavigationContainer
-          linking={LinkingConfiguration}
-          ref={navigationRef}
+      <NavigationContainer
+        linking={LinkingConfiguration}
+        ref={navigationRef}
+      >
+        <RootStack.Navigator
+          headerMode={false}
+          initialRouteName="MainScreen"
+          mode="modal"
         >
-          <Stack.Navigator
-            headerMode={false}
-            initialRouteName="Entry"
-          >
-            <Stack.Screen name="Entry" component={EntryScreen} />
-            <Stack.Screen name="Start" component={StartScreen} />
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+          <RootStack.Screen
+            name="MainScreen"
+            component={MainScreen}
+            options={{ headerShown: false }}
+          />
+          {/*<RootStack.Screen name="ModalScreen" component={ModalScreen} />*/}
+        </RootStack.Navigator>
+      </NavigationContainer>
     );
   }
 };

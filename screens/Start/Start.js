@@ -13,7 +13,6 @@ const StartScreen = (props) => {
     onGetStatus,
     onSetRound,
     onStartGame,
-    playerIsActive,
     players,
   } = props;
 
@@ -49,6 +48,7 @@ const StartScreen = (props) => {
           {players.map((player) => (
             <Text
               category="s1"
+              key={player.id}
               style={styles.listItem}
             >
               {player.username.toUpperCase()}
@@ -73,7 +73,7 @@ const StartScreen = (props) => {
 
           <Button
             disabled={!players.length}
-            onPress={() => {}}
+            onPress={() => handleStart()}
           >
             Everyone's here, let's start!
           </Button>
@@ -88,19 +88,15 @@ StartScreen.navigationOptions = {
 };
 
 StartScreen.propTypes = {
-  activePlayerName: PropTypes.string,
   currentList: PropTypes.number,
-  name: PropTypes.string,
   onGetStatus: PropTypes.func.isRequired,
   onSetRound: PropTypes.func.isRequired,
   onStartGame: PropTypes.func.isRequired,
-  playerIsActive: PropTypes.bool.isRequired,
   players: PropTypes.array,
 };
 
 StartScreen.defaultProps = {
   activePlayerName: undefined,
-  name: undefined,
   players: [],
 };
 

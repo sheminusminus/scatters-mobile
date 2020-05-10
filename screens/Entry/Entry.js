@@ -11,7 +11,7 @@ import { usePrev } from '../../hooks';
 import styles from './styles';
 
 
-const EntryScreen = ({ lookedForName, name, onRetrieveName, route, onSetName }) => {
+const EntryScreen = ({ lookedForName, name, onRetrieveName, route, onEmitName }) => {
   const [value, setValue] = React.useState(name);
 
   React.useEffect(() => {
@@ -51,7 +51,7 @@ const EntryScreen = ({ lookedForName, name, onRetrieveName, route, onSetName }) 
           <Button
             disabled={!value.length}
             onPress={() => {
-              onSetName({ name: value });
+              onEmitName({ name: value });
             }}
           >
             Join the Game
@@ -70,7 +70,7 @@ EntryScreen.propTypes = {
   lookedForName: PropTypes.bool.isRequired,
   name: PropTypes.string,
   onRetrieveName: PropTypes.func.isRequired,
-  onSetName: PropTypes.func.isRequired,
+  onEmitName: PropTypes.func.isRequired,
 };
 
 

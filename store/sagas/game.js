@@ -3,7 +3,6 @@ import { all, delay, take, put, select, spawn } from 'redux-saga/effects';
 import {
   getStatus,
   gotResponses,
-  joinRoom,
   nextRound,
   resetDiceRoll,
   rollDice,
@@ -21,8 +20,9 @@ import {
 
 import { GamePhase } from '../../constants';
 
+import { navigate } from '../../navigation';
+
 import {
-  getGameWaitNextRound,
   getPlayerName,
   getRoundAnswers,
 } from '../../selectors';
@@ -32,14 +32,19 @@ let socket;
 let events;
 
 
-function* navToStart(name) {
-  // TODO: replace with nav ref
-  // yield put(push(`/start?name=${name}`));
+function* navToGame() {
+  navigate('Game');
+  yield null;
 }
 
-function* navToGame() {
-  // TODO: replace with nav ref
-  // yield put(push('/game'));
+function* navToResponses() {
+  navigate('Game.Responses');
+  yield null;
+}
+
+function* navToScores() {
+  navigate('Game.Scores');
+  yield null;
 }
 
 function* doStartGame() {
@@ -69,8 +74,7 @@ function* doResetDiceRoll() {
 function* doStartRound() {
   try {
     socket.emit(events.START_ROUND);
-    // TODO: replace with nav ref
-    // yield put(push('/game/list'));
+    navigate('Game.List');
   } catch (error) {
     yield put(startRound.failure(error));
   }
@@ -96,11 +100,7 @@ function* doSendTallies(data) {
 
 function* doGotResponses(data) {
   try {
-    const waiting = yield select(getGameWaitNextRound);
-    if (!waiting) {
-      // TODO: replace with nav ref
-      // yield put(push('/responses'));
-    }
+    navigate('Game.Responses');
     yield put(gotResponses.success(data));
   } catch (error) {
     yield put(gotResponses.failure(error));
@@ -109,8 +109,7 @@ function* doGotResponses(data) {
 
 function* doRoundScored() {
   try {
-    // TODO: replace with nav ref
-    // yield put(push('/responses/scores'));
+    navigate('GameScores');
   } catch (error) {
     yield put(gotResponses.failure(error));
   }
@@ -126,8 +125,7 @@ function* doNextRound() {
 
 function* doNextRoundSuccess() {
   try {
-    // TODO: replace with nav ref
-    // yield put(push('/game'));
+    navigate('Game');
   } catch (error) {
     yield put(gotResponses.failure(error));
   }
@@ -149,8 +147,7 @@ function* doSetGamePhase(payload) {
         return;
 
       case GamePhase.ROLL:
-        // TODO: replace with nav ref
-        // yield put(push('/game'));
+        yield spawn(navToGame);
         return;
 
       case GamePhase.LIST:
@@ -158,9 +155,8 @@ function* doSetGamePhase(payload) {
           put(roundAllowAnswers.trigger(true)),
           put(roundShowTimer.trigger(true)),
           put(roundHideList.trigger(false))
-          // TODO: replace with nav ref
-          // put(push('/game/list')),
         ].filter(Boolean));
+        yield spawn(navToGame);
         break;
 
       case GamePhase.VOTE:
@@ -170,14 +166,12 @@ function* doSetGamePhase(payload) {
           put(sendAnswers.trigger()),
           put(roundShowTimer.trigger(false)),
           put(roundHideList.trigger(true)),
-          // TODO: replace with nav ref
-          // put(push('/responses')),
         ]);
+        yield spawn(navToResponses);
         break;
 
       case GamePhase.SCORES:
-        // TODO: replace with nav ref
-        // yield put(push('/responses/scores'));
+        yield spawn(navToScores);
         break;
 
       default:
@@ -203,7 +197,6 @@ function* doSetRound(payload) {
 function* watchGameEvents() {
   while (true) {
     const { type, payload = {} } = yield take([
-      joinRoom.SUCCESS,
       nextRound.SUCCESS,
       nextRound.TRIGGER,
       resetDiceRoll.TRIGGER,
@@ -219,10 +212,6 @@ function* watchGameEvents() {
     ]);
 
     switch (type) {
-      case joinRoom.SUCCESS:
-        yield spawn(navToStart, payload.name);
-        break;
-
       case startGame.TRIGGER:
         yield spawn(doStartGame);
         break;

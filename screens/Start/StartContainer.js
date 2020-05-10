@@ -8,21 +8,15 @@ import {
 } from '../../actions';
 
 import {
-  getGameActivePlayerName,
   getGameCurrentList,
   getGamePlayers,
-  getPlayerIsActive,
-  getPlayerName,
 } from '../../selectors';
 
 import screen from './Start';
 
 
 const mapState = createStructuredSelector({
-  activePlayerName: getGameActivePlayerName,
   currentList: getGameCurrentList,
-  name: getPlayerName,
-  playerIsActive: getPlayerIsActive,
   players: getGamePlayers,
 });
 
