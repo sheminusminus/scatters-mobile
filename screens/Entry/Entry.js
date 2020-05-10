@@ -11,14 +11,14 @@ import { usePrev } from '../../hooks';
 import styles from './styles';
 
 
-const EntryScreen = ({ lookedForName, name, retrieveName, setName }) => {
+const EntryScreen = ({ lookedForName, name, onRetrieveName, route, onSetName }) => {
   const [value, setValue] = React.useState(name);
 
-  const prevName = usePrev(name);
-
   React.useEffect(() => {
-    retrieveName();
-  }, [retrieveName]);
+    onRetrieveName();
+  }, [onRetrieveName]);
+
+  const prevName = usePrev(name);
 
   React.useEffect(() => {
     if (Boolean(!prevName && name)) {
@@ -26,7 +26,7 @@ const EntryScreen = ({ lookedForName, name, retrieveName, setName }) => {
     }
   }, [prevName, name]);
 
-  console.log(lookedForName);
+  console.log(route);
   return (
     <Layout style={styles.container}>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>
@@ -51,7 +51,7 @@ const EntryScreen = ({ lookedForName, name, retrieveName, setName }) => {
           <Button
             disabled={!value.length}
             onPress={() => {
-              setName({ name: value });
+              onSetName({ name: value });
             }}
           >
             Join the Game
@@ -69,8 +69,8 @@ EntryScreen.navigationOptions = {
 EntryScreen.propTypes = {
   lookedForName: PropTypes.bool.isRequired,
   name: PropTypes.string,
-  retrieveName: PropTypes.func.isRequired,
-  setName: PropTypes.func.isRequired,
+  onRetrieveName: PropTypes.func.isRequired,
+  onSetName: PropTypes.func.isRequired,
 };
 
 

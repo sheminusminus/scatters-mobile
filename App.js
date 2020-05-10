@@ -8,10 +8,9 @@ import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
-import LinkingConfiguration from './navigation/LinkingConfiguration';
+import { BottomTabNavigator, LinkingConfiguration, navigationRef } from './navigation';
 
-import { EntryScreen } from './screens';
+import { EntryScreen, StartScreen } from './screens';
 
 import configureStore from './store';
 
@@ -37,12 +36,16 @@ const App = () => {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
 
-        <NavigationContainer linking={LinkingConfiguration}>
+        <NavigationContainer
+          linking={LinkingConfiguration}
+          ref={navigationRef}
+        >
           <Stack.Navigator
             headerMode={false}
             initialRouteName="Entry"
           >
             <Stack.Screen name="Entry" component={EntryScreen} />
+            <Stack.Screen name="Start" component={StartScreen} />
             <Stack.Screen name="Root" component={BottomTabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>

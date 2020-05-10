@@ -14,8 +14,8 @@ const mapState = createStructuredSelector({
 });
 
 const mapDispatch = {
-  setName: emitName.trigger,
-  retrieveName: retrieveName.trigger,
+  onEmitName: emitName.trigger,
+  onRetrieveName: retrieveName.trigger,
 };
 
 
