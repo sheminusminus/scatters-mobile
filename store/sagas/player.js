@@ -2,8 +2,10 @@ import { all, call, delay, take, put, spawn, select } from 'redux-saga/effects';
 
 import {
   emitName,
+  gotRooms,
   joinRoom,
   retrieveName,
+  requestRoom,
 } from '../../actions';
 
 import { getGameRoom } from '../../selectors';
@@ -18,12 +20,19 @@ let events;
 
 function* doEmitName(payload) {
   try {
-    const room = yield select(getGameRoom);
-    console.log(room);
     yield call(Storage.save, 'name', payload.name);
-    socket.emit(events.EMIT_NAME, { ...payload, room });
+    socket.emit(events.EMIT_NAME, payload);
   } catch (error) {
     yield put(emitName.failure(error));
+  }
+}
+
+function* doGotRooms(data) {
+  try {
+    console.log('navigate to rooms');
+    // yield put(navigate, 'Rooms');
+  } catch (error) {
+    yield put(gotRooms.failure(error));
   }
 }
 
@@ -47,6 +56,14 @@ function* navToStart(name) {
   yield null;
 }
 
+function* doRequestRoom(room) {
+  try {
+    socket.emit(events.REQUEST_ROOM, { room });
+  } catch (error) {
+    yield put(emitName.failure(error));
+  }
+}
+
 /**
  *  Generator function to listen for redux actions
  */
@@ -56,6 +73,8 @@ function* watchPlayerEvents() {
       emitName.TRIGGER,
       joinRoom.SUCCESS,
       retrieveName.TRIGGER,
+      gotRooms.TRIGGER,
+      requestRoom.TRIGGER,
     ]);
 
     switch (type) {
@@ -69,6 +88,14 @@ function* watchPlayerEvents() {
 
       case retrieveName.TRIGGER:
         yield spawn(doRetrieveName);
+        break;
+
+      case gotRooms.TRIGGER:
+        yield spawn(doGotRooms, payload);
+        break;
+
+      case requestRoom.TRIGGER:
+        yield spawn(doRequestRoom, payload);
         break;
 
       default:

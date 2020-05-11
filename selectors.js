@@ -23,9 +23,19 @@ export const getPlayerScore = createSelector(
   player => player.score,
 );
 
+export const getPlayerRooms = createSelector(
+  [getPlayerState],
+  player => player.rooms,
+);
+
 export const getPlayerLookedForName = createSelector(
   [getPlayerState],
   player => player.lookedForName,
+);
+
+export const getPlayerDefaultRoomAvailable = createSelector(
+  [getPlayerState],
+  player => player.defaultRoomAvailable,
 );
 
 export const getGameActivePlayer = createSelector(

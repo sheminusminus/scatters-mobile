@@ -15,9 +15,10 @@ import {
   EntryScreen,
   GameScreen,
   ListScreen,
+  ResponsesScreen,
+  RoomsScreen,
   ScoresScreen,
   StartScreen,
-  ResponsesScreen,
 } from './screens';
 
 import configureStore from './store';
@@ -49,6 +50,7 @@ const MainScreen = () => {
           name="Entry"
           component={EntryScreen}
         />
+        <Stack.Screen name="Rooms" component={RoomsScreen} />
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Game" component={GameScreen} />
       </Stack.Navigator>
@@ -68,14 +70,21 @@ const App = () => {
         ref={navigationRef}
       >
         <RootStack.Navigator
-          initialRouteName="Main"
+          initialRouteName="Entry"
           mode="modal"
           headerMode="none"
         >
+          {/*<RootStack.Screen*/}
+          {/*  name="Main"*/}
+          {/*  component={MainScreen}*/}
+          {/*/>*/}
           <RootStack.Screen
-            name="Main"
-            component={MainScreen}
+            name="Entry"
+            component={EntryScreen}
           />
+          <RootStack.Screen name="Rooms" component={RoomsScreen} />
+          <RootStack.Screen name="Start" component={StartScreen} />
+          <RootStack.Screen name="Game" component={GameScreen} />
           <RootStack.Screen
             name="List"
             component={ListScreen}

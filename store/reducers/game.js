@@ -50,6 +50,7 @@ const game = (state = gameState, action = {}) => {
       return {
         ...state,
         activePlayer: action.payload.activePlayer,
+        currentList: action.payload.currentList,
         players: action.payload.players,
         room: action.payload.room,
       };

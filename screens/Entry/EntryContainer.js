@@ -3,7 +3,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { emitName, retrieveName } from '../../actions';
 
-import { getPlayerName, getPlayerLookedForName } from '../../selectors';
+import { getPlayerName, getPlayerLookedForName, getPlayerRooms } from '../../selectors';
 
 import screen from './Entry';
 
@@ -11,6 +11,7 @@ import screen from './Entry';
 const mapState = createStructuredSelector({
   name: getPlayerName,
   lookedForName: getPlayerLookedForName,
+  rooms: getPlayerRooms,
 });
 
 const mapDispatch = {

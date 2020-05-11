@@ -17,6 +17,7 @@ import {
   startGame,
   startRound,
   timerFired,
+  gotRooms,
 } from '../actions';
 import { events, socket } from '../services';
 import createRootReducer from './reducers';
@@ -44,6 +45,11 @@ export default () => {
   );
 
   sagaMiddleware.run(rootSagas);
+
+  socket.on(events.ROOMS_JOINED, (data) => {
+    console.log(events.ROOMS_JOINED, data);
+    store.dispatch(gotRooms.trigger(data));
+  });
 
   socket.on(events.JOINED_ROOM, (data) => {
     console.log(events.JOINED_ROOM, data);

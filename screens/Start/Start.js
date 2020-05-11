@@ -14,6 +14,7 @@ const StartScreen = (props) => {
     onSetRound,
     onStartGame,
     players,
+    room,
   } = props;
 
   React.useEffect(() => {
@@ -39,7 +40,9 @@ const StartScreen = (props) => {
     <Layout style={styles.container}>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>
         <View style={styles.titleContainer}>
-          <Text category="h5">Default Room</Text>
+          <Text category="h5">
+            {`Room: ${room}`}
+          </Text>
         </View>
 
         <View style={styles.listContainer}>

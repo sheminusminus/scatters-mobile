@@ -4,13 +4,16 @@ import {
   joinRoom,
   roundScored,
   retrieveName,
+  gotRooms,
 } from '../../actions';
 
 
 const playerState = {
+  defaultRoomAvailable: false,
   id: '',
   lookedForName: false,
   name: '',
+  rooms: null,
   score: 0,
 };
 
@@ -35,6 +38,15 @@ const player = (state = playerState, action = {}) => {
       return {
         ...state,
         lookedForName: true,
+      };
+
+    case gotRooms.TRIGGER:
+      return {
+        ...state,
+        defaultRoomAvailable: action.payload.defaultRoomAvailable,
+        id: action.payload.id,
+        name: action.payload.name,
+        rooms: action.payload.rooms,
       };
 
     default:
