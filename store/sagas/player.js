@@ -1,10 +1,12 @@
-import { all, call, delay, take, put, spawn } from 'redux-saga/effects';
+import { all, call, delay, take, put, spawn, select } from 'redux-saga/effects';
 
 import {
   emitName,
   joinRoom,
   retrieveName,
 } from '../../actions';
+
+import { getGameRoom } from '../../selectors';
 
 import { navigate } from '../../navigation';
 
@@ -16,8 +18,10 @@ let events;
 
 function* doEmitName(payload) {
   try {
+    const room = yield select(getGameRoom);
+    console.log(room);
     yield call(Storage.save, 'name', payload.name);
-    socket.emit(events.EMIT_NAME, payload);
+    socket.emit(events.EMIT_NAME, { ...payload, room });
   } catch (error) {
     yield put(emitName.failure(error));
   }

@@ -46,6 +46,7 @@ export default () => {
   sagaMiddleware.run(rootSagas);
 
   socket.on(events.JOINED_ROOM, (data) => {
+    console.log(events.JOINED_ROOM, data);
     store.dispatch(joinRoom.success(data));
     // TODO: set local storage
     // lsSet('name', data.name);

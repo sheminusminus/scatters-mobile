@@ -25,6 +25,7 @@ import { navigate, navigateBack } from '../../navigation';
 import {
   getPlayerName,
   getRoundAnswers,
+  getGameRoom,
 } from '../../selectors';
 
 
@@ -54,7 +55,8 @@ function* navToScores() {
 
 function* doStartGame() {
   try {
-    socket.emit(events.START_GAME);
+    const room = yield select(getGameRoom);
+    socket.emit(events.START_GAME, { room });
   } catch (error) {
     yield put(startGame.failure(error));
   }
@@ -62,7 +64,8 @@ function* doStartGame() {
 
 function* doRollDice() {
   try {
-    socket.emit(events.ROLL_DICE);
+    const room = yield select(getGameRoom);
+    socket.emit(events.ROLL_DICE, { room });
   } catch (error) {
     yield put(rollDice.failure(error));
   }
@@ -70,7 +73,8 @@ function* doRollDice() {
 
 function* doResetDiceRoll() {
   try {
-    socket.emit(events.RESET_DICE_ROLL);
+    const room = yield select(getGameRoom);
+    socket.emit(events.RESET_DICE_ROLL, { room });
   } catch (error) {
     yield put(resetDiceRoll.failure(error));
   }
@@ -78,7 +82,8 @@ function* doResetDiceRoll() {
 
 function* doStartRound() {
   try {
-    socket.emit(events.START_ROUND);
+    const room = yield select(getGameRoom);
+    socket.emit(events.START_ROUND, { room });
   } catch (error) {
     yield put(startRound.failure(error));
   }
@@ -86,9 +91,10 @@ function* doStartRound() {
 
 function* doSendAnswers() {
   try {
+    const room = yield select(getGameRoom);
     const name = yield select(getPlayerName);
     const answers = yield select(getRoundAnswers);
-    socket.emit(events.SEND_ANSWERS, { answers, name });
+    socket.emit(events.SEND_ANSWERS, { answers, name, room });
   } catch (error) {
     yield put(sendAnswers.failure(error));
   }
@@ -96,7 +102,8 @@ function* doSendAnswers() {
 
 function* doSendTallies(data) {
   try {
-    socket.emit(events.SEND_TALLIES, data);
+    const room = yield select(getGameRoom);
+    socket.emit(events.SEND_TALLIES, { tallies: data, room });
   } catch (error) {
     yield put(sendTallies.failure(error));
   }
@@ -121,7 +128,8 @@ function* doRoundScored() {
 
 function* doNextRound() {
   try {
-    socket.emit(events.NEXT_ROUND);
+    const room = yield select(getGameRoom);
+    socket.emit(events.NEXT_ROUND, { room });
   } catch (error) {
     yield put(gotResponses.failure(error));
   }
@@ -137,7 +145,8 @@ function* doNextRoundSuccess() {
 
 function* doGetStatus() {
   try {
-    socket.emit(events.GET_STATUS, {});
+    const room = yield select(getGameRoom);
+    socket.emit(events.GET_STATUS, { room });
   } catch (error) {
     yield put(getStatus.failure(error));
   }
@@ -189,7 +198,8 @@ function* doSetGamePhase(payload) {
 
 function* doSetRound(payload) {
   try {
-    socket.emit(events.SET_ROUND, payload);
+    const room = yield select(getGameRoom);
+    socket.emit(events.SET_ROUND, { ...payload, room });
   } catch (error) {
     yield put(getStatus.failure(error));
   }
@@ -213,6 +223,7 @@ function* watchGameEvents() {
       startGame.SUCCESS,
       startGame.TRIGGER,
       startRound.TRIGGER,
+      getStatus.TRIGGER,
     ]);
 
     switch (type) {

@@ -28,7 +28,7 @@ const gameState = {
   players: [],
   roll: null,
   responses: [],
-  room: '',
+  room: 'default',
   roundActive: false,
   roundsScored: 0,
   startTime: -1,
