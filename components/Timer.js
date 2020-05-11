@@ -2,7 +2,7 @@ import React from 'react';
 import { Animated, Dimensions, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Layout, Input, Text } from '@ui-kitten/components';
+import { Layout, Text } from '@ui-kitten/components';
 
 import { rollDice } from '../actions';
 import {
