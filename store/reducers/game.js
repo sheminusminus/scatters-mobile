@@ -3,6 +3,7 @@ import { GamePhase } from '../../constants';
 import {
   endRound,
   getStatus,
+  gotResponses,
   joinRoom,
   nextList,
   nextRound,
@@ -26,6 +27,7 @@ const gameState = {
   phase: GamePhase.NOT_STARTED,
   players: [],
   roll: null,
+  responses: [],
   room: '',
   roundActive: false,
   roundsScored: 0,
@@ -124,11 +126,12 @@ const game = (state = gameState, action = {}) => {
         ...state,
         activePlayer: action.payload.activePlayer,
         endTime: -1,
+        phase: GamePhase.ROLL,
         players: action.payload.players,
+        responses: [],
         roll: null,
         startTime: -1,
         timeLeft: -1,
-        phase: GamePhase.ROLL,
       };
 
     case getStatus.SUCCESS:
@@ -153,6 +156,12 @@ const game = (state = gameState, action = {}) => {
       return {
         ...state,
         currentList: action.payload.currentList,
+      };
+
+    case gotResponses.TRIGGER:
+      return {
+        ...state,
+        responses: action.payload.responses,
       };
 
     default:

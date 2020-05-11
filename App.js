@@ -1,7 +1,8 @@
 import * as eva from '@eva-design/eva';
 import * as React from 'react';
-import { ApplicationProvider } from '@ui-kitten/components';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { createStackNavigator } from '@react-navigation/stack';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
@@ -22,7 +23,6 @@ import configureStore from './store';
 
 
 const Stack = createStackNavigator();
-const ModalStack = createStackNavigator();
 const RootStack = createStackNavigator();
 
 const { store } = configureStore();
@@ -33,27 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-
-const ModalScreen = () => {
-  return (
-    <View style={styles.container}>
-      {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-
-      <ModalStack.Navigator
-        headerMode="none"
-      >
-        <ModalStack.Screen
-          name="List"
-          component={ListScreen}
-        />
-        <ModalStack.Screen
-          name="Responses"
-          component={ResponsesScreen}
-        />
-      </ModalStack.Navigator>
-    </View>
-  );
-};
 
 const MainScreen = () => {
   return (
@@ -97,8 +76,12 @@ const App = () => {
             component={MainScreen}
           />
           <RootStack.Screen
-            name="Modal"
-            component={ModalScreen}
+            name="List"
+            component={ListScreen}
+          />
+          <RootStack.Screen
+            name="Responses"
+            component={ResponsesScreen}
           />
         </RootStack.Navigator>
       </NavigationContainer>
@@ -108,6 +91,7 @@ const App = () => {
 
 const WrappedApp = () => (
   <Provider store={store}>
+    <IconRegistry icons={EvaIconsPack} />
     <ApplicationProvider {...eva} theme={eva.dark}>
       <App />
     </ApplicationProvider>

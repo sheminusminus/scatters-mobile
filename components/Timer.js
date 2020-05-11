@@ -48,8 +48,8 @@ const Timer = ({ startTime, endTime, timeElapsed }) => {
   const prevStartTime = usePrev(startTime);
   const width = React.useRef(new Animated.Value(timerFullWidth)).current;
   const duration = endTime - startTime;
-  const warnElapsed = duration * 0.5;
-  const dangerElapsed = duration * 0.8;
+  const warnElapsed = duration * 0.66;
+  const dangerElapsed = duration * 0.84;
 
   const handleWidth = React.useCallback((toValue, duration) => {
     Animated.timing(width, {

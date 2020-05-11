@@ -127,22 +127,17 @@ export const getGamePhase = createSelector(
   game => game.phase,
 );
 
+export const getGameResponses = createSelector(
+  [getGameState],
+  game => game.responses,
+);
+
 export const getGameListItems = createSelector(
   [getGameCurrentList],
   (currentList) => {
     return listItems.slice(currentList * 12, (currentList + 1) * 12);
   },
 )
-
-export const getModalIsOpen = createSelector(
-  [getModalState],
-  modal => modal.isOpen,
-);
-
-export const getModalResponses = createSelector(
-  [getModalState],
-  modal => modal.responses,
-);
 
 export const getRoundAllowAnswers = createSelector(
   [getRoundState],

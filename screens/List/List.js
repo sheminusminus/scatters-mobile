@@ -23,7 +23,9 @@ const ListScreen = (props) => {
           <Layout style={styles.listQuestionRedacted} level="4" />
         )}
         {!hideList && (
-          <Text>{`${index + 1}) ${item}`}</Text>
+          <Text category="label">
+            {(`${index + 1}) ${item}`).toUpperCase()}
+          </Text>
         )}
       </Layout>
       <Layout>
@@ -40,12 +42,26 @@ const ListScreen = (props) => {
 
   return (
     <Layout style={styles.container}>
-      <Layout style={styles.headerContainer}>
+      <Layout
+        style={[
+          styles.headerContainer,
+          {
+            zIndex: hideList ? undefined : 1000,
+          },
+        ]}
+      >
         <Text style={styles.roll}>{roll}</Text>
         <Timer />
       </Layout>
 
-      <Layout style={styles.listContainer}>
+      <Layout
+        style={[
+          styles.listContainer,
+          {
+            zIndex: hideList ? undefined : 100,
+          }
+        ]}
+      >
         <Layout style={styles.list}>
           <List
             style={styles.listInner}

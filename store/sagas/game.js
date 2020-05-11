@@ -1,4 +1,4 @@
-import { all, delay, take, put, select, spawn } from 'redux-saga/effects';
+import { all, call, delay, take, put, select, spawn } from 'redux-saga/effects';
 
 import {
   getStatus,
@@ -20,7 +20,7 @@ import {
 
 import { GamePhase } from '../../constants';
 
-import { navigate } from '../../navigation';
+import { navigate, navigateBack } from '../../navigation';
 
 import {
   getPlayerName,
@@ -33,22 +33,26 @@ let events;
 
 
 function* navToGame() {
-  navigate('Game');
+  // navigate('Game');
+  yield call(navigate, 'Game');
   yield null;
 }
 
 function* navToList() {
-  navigate('Modal', { Screen: 'List' });
+  // navigate('Modal', { Screen: 'List' });
+  yield call(navigate, 'List');
   yield null;
 }
 
 function* navToResponses() {
-  navigate('Modal', { Screen: 'Responses' });
-  yield null;
+  console.log('nav to responses');
+  // navigate('Modal', { Screen: 'Responses' });
+  yield call(navigate, 'Responses');
 }
 
 function* navToScores() {
-  navigate('Modal', { Screen: 'Scores' });
+  // navigate('Modal', { Screen: 'Scores' });
+  yield call(navigate, 'Modal', { Screen: 'Scores' });
   yield null;
 }
 
@@ -104,7 +108,8 @@ function* doSendTallies(data) {
 
 function* doGotResponses(data) {
   try {
-    navigate('Modal', { Screen: 'Responses' });
+    // navigate('Modal', { Screen: 'Responses' });
+    yield call(navigate, 'Responses');
     yield put(gotResponses.success(data));
   } catch (error) {
     yield put(gotResponses.failure(error));
@@ -113,7 +118,8 @@ function* doGotResponses(data) {
 
 function* doRoundScored() {
   try {
-    navigate('Modal', { Screen: 'Scores' });
+    // navigate('Modal', { Screen: 'Scores' });
+    yield call(navigate, 'Modal', { Screen: 'Scores' });
   } catch (error) {
     yield put(gotResponses.failure(error));
   }
@@ -129,7 +135,8 @@ function* doNextRound() {
 
 function* doNextRoundSuccess() {
   try {
-    navigate('Game');
+    // navigate('Game');
+    yield call(navigate, 'Game');
   } catch (error) {
     yield put(gotResponses.failure(error));
   }

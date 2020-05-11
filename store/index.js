@@ -77,6 +77,7 @@ export default () => {
   });
 
   socket.on(events.GOT_RESPONSES, (data) => {
+    console.log(events.GOT_RESPONSES, data);
     store.dispatch(gotResponses.trigger(data));
   });
 

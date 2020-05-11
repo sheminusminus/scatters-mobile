@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingLeft: sizes.spacing.SM,
     paddingRight: sizes.spacing.SM,
-    zIndex: 1000,
   },
   listContainer: {
     position: 'absolute',
@@ -33,12 +32,12 @@ const styles = StyleSheet.create({
     width,
     height: height - 100,
     flex: 1,
-    zIndex: 100,
   },
   list: {
     width,
     height: height - 100,
     paddingBottom: sizes.spacing.XL * 2,
+    paddingTop: sizes.spacing.SM,
   },
   listInner: {
     height: height - 100,

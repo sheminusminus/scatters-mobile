@@ -6,8 +6,7 @@ import {
   getGameCurrentList,
   getGamePlayersNotWaiting,
   getGameRoundsScored,
-  getModalIsOpen,
-  getModalResponses,
+  getGameResponses,
   getPlayerId,
 } from '../../selectors';
 
@@ -19,10 +18,9 @@ import screen from './Responses';
 const mapState = createStructuredSelector({
   activePlayer: getGameActivePlayer,
   currentList: getGameCurrentList,
-  isOpen: getModalIsOpen,
   playerId: getPlayerId,
   players: getGamePlayersNotWaiting,
-  responses: getModalResponses,
+  responses: getGameResponses,
   roundsScored: getGameRoundsScored,
 });
 

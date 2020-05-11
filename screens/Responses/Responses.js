@@ -1,19 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Animated, Dimensions, Easing, TouchableOpacity } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
-
-import { Dice, Round } from '../../components';
+import { Layout, List, Text } from '@ui-kitten/components';
 
 import listItems from '../../lists';
 
-import styles, { diceSize } from './styles';
+import Response from './Response';
 
+import styles from './styles';
 
-const { height, width } = Dimensions.get('window');
-
-const midX = (width * 0.5) - (diceSize * 0.5);
-const midY = (height * 0.5) - (diceSize * 0.5);
 
 class ResponsesScreen extends React.Component {
   state = {
@@ -27,36 +21,23 @@ class ResponsesScreen extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { isOpen, players, onSendTallies, roundsScored } = this.props;
-    const { isOpen: wasOpen, roundsScored: prevRoundsScored } = prevProps;
+    const { players, onSendTallies, roundsScored } = this.props;
+    const { roundsScored: prevRoundsScored } = prevProps;
     const { talliedInSet, setIndex, tallies } = this.state;
     const { talliedInSet: prevTalliedInSet } = prevState;
 
-    if (wasOpen && !isOpen) {
-      this.setState({
-        setIndex: 0,
-        showRoundScores: false,
-        talliedInSet: false,
-      });
-    } else if (roundsScored > prevRoundsScored) {
+    if (roundsScored > prevRoundsScored) {
       this.setState({ showRoundScores: true });
     } else if (talliedInSet > prevTalliedInSet && talliedInSet === players.length) {
       if (setIndex < 11) {
         setTimeout(() => {
           this.setState({ setIndex: setIndex + 1, talliedInSet: 0 });
-        }, 250);
+        }, 300);
       } else {
         setTimeout(() => {
           onSendTallies(tallies);
         }, 250);
       }
-    } else if (!wasOpen && isOpen) {
-      this.setState({
-        tallies: players.reduce((obj, player) => ({
-          ...obj,
-          [player.id]: [],
-        }), {}),
-      });
     }
   }
 
@@ -88,7 +69,6 @@ class ResponsesScreen extends React.Component {
     const {
       activePlayer,
       currentList,
-      isOpen,
       onNextRound,
       playerId,
       players,
@@ -96,61 +76,37 @@ class ResponsesScreen extends React.Component {
       roundsScored,
     } = this.props;
 
-    if (!isOpen) {
-      return null;
-    }
-
     const items = listItems.slice(currentList * 12, (currentList + 1) * 12);
 
-    return <Layout />;
-    // return (
-    //   <div className="modal">
-    //     <Route
-    //       path="/responses/scores"
-    //       render={() => (
-    //         <div>
-    //           <p className="scoresHeader">Round scores:</p>
-    //
-    //           {players.map((p) => (
-    //             <Score
-    //               {...p}
-    //               key={p.id}
-    //               roundIndex={roundsScored - 1}
-    //             />
-    //           ))}
-    //
-    //           {playerId === activePlayer && (
-    //             <button
-    //               className="gameBtn"
-    //               onClick={() => onNextRound()}
-    //               type="button"
-    //             >
-    //               Next round
-    //             </button>
-    //           )}
-    //         </div>
-    //       )}
-    //     />
-    //     <Route
-    //       exact
-    //       path="/responses"
-    //       render={() => (
-    //         <div>
-    //           <p className="scoresHeader">{items[setIndex]}</p>
-    //
-    //           {responses.map((resp) => (
-    //             <Response
-    //               {...resp}
-    //               key={`${resp.id}-${setIndex}`}
-    //               onTally={this.handleTally}
-    //               index={setIndex}
-    //             />
-    //           ))}
-    //         </div>
-    //       )}
-    //     />
-    //   </div>
-    // );
+    const renderItem = ({ item }) => (
+      <Response
+        {...item}
+        index={setIndex}
+        onTally={this.handleTally}
+      />
+    );
+
+    return (
+      <Layout style={styles.container}>
+        <Layout style={styles.questionContainer}>
+          <Text category="label" style={styles.question}>
+            {items[setIndex].toUpperCase()}
+          </Text>
+        </Layout>
+        <Layout style={styles.listContainer}>
+          <Layout style={styles.list}>
+            {responses.length > 0 && (
+              <List
+                keyExtractor={(item, index) => `${item.id}-${setIndex}-${index}`}
+                style={styles.listInner}
+                data={responses}
+                renderItem={renderItem}
+              />
+            )}
+          </Layout>
+        </Layout>
+      </Layout>
+    );
   }
 }
 
@@ -160,8 +116,6 @@ ResponsesScreen.navigationOptions = {
 
 ResponsesScreen.propTypes = {
   activePlayer: PropTypes.string.isRequired,
-  currentPlayer: PropTypes.string.isRequired,
-  isOpen: PropTypes.bool.isRequired,
   onSendTallies: PropTypes.func.isRequired,
   onNextRound: PropTypes.func.isRequired,
   playerId: PropTypes.string.isRequired,
