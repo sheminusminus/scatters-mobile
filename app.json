@@ -1,20 +1,20 @@
 {
   "expo": {
-    "name": "scatters",
+    "name": "Scatters",
     "slug": "scatters",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon.jpg",
     "scheme": "myapp",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1d2447"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,7 +23,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.emilykolar.Scatters",
+      "buildNumber": "1.0.1"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
