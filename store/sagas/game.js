@@ -39,20 +39,16 @@ function* navToGame() {
 }
 
 function* navToList() {
-  // navigate('Modal', { Screen: 'List' });
   yield call(navigate, 'List');
   yield null;
 }
 
 function* navToResponses() {
-  console.log('nav to responses');
-  // navigate('Modal', { Screen: 'Responses' });
   yield call(navigate, 'Responses');
 }
 
 function* navToScores() {
-  // navigate('Modal', { Screen: 'Scores' });
-  yield call(navigate, 'Modal', { Screen: 'Scores' });
+  yield call(navigate, 'Scores');
   yield null;
 }
 
@@ -108,7 +104,6 @@ function* doSendTallies(data) {
 
 function* doGotResponses(data) {
   try {
-    // navigate('Modal', { Screen: 'Responses' });
     yield call(navigate, 'Responses');
     yield put(gotResponses.success(data));
   } catch (error) {
@@ -118,8 +113,7 @@ function* doGotResponses(data) {
 
 function* doRoundScored() {
   try {
-    // navigate('Modal', { Screen: 'Scores' });
-    yield call(navigate, 'Modal', { Screen: 'Scores' });
+    yield call(navigate, 'Scores');
   } catch (error) {
     yield put(gotResponses.failure(error));
   }
@@ -135,7 +129,6 @@ function* doNextRound() {
 
 function* doNextRoundSuccess() {
   try {
-    // navigate('Game');
     yield call(navigate, 'Game');
   } catch (error) {
     yield put(gotResponses.failure(error));

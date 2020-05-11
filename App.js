@@ -15,6 +15,7 @@ import {
   EntryScreen,
   GameScreen,
   ListScreen,
+  ScoresScreen,
   StartScreen,
   ResponsesScreen,
 } from './screens';
@@ -82,6 +83,10 @@ const App = () => {
           <RootStack.Screen
             name="Responses"
             component={ResponsesScreen}
+          />
+          <RootStack.Screen
+            name="Scores"
+            component={ScoresScreen}
           />
         </RootStack.Navigator>
       </NavigationContainer>

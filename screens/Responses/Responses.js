@@ -65,15 +65,10 @@ class ResponsesScreen extends React.Component {
   };
 
   render() {
-    const { setIndex, showRoundScores } = this.state;
+    const { setIndex } = this.state;
     const {
-      activePlayer,
       currentList,
-      onNextRound,
-      playerId,
-      players,
       responses,
-      roundsScored,
     } = this.props;
 
     const items = listItems.slice(currentList * 12, (currentList + 1) * 12);
@@ -115,18 +110,10 @@ ResponsesScreen.navigationOptions = {
 };
 
 ResponsesScreen.propTypes = {
-  activePlayer: PropTypes.string.isRequired,
   onSendTallies: PropTypes.func.isRequired,
-  onNextRound: PropTypes.func.isRequired,
-  playerId: PropTypes.string.isRequired,
   players: PropTypes.array.isRequired,
   responses: PropTypes.array.isRequired,
   roundsScored: PropTypes.number.isRequired,
-};
-
-ResponsesScreen.defaultProps = {
-  roll: null,
-  playerIsActive: false,
 };
 
 
