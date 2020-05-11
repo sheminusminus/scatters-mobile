@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     paddingTop: sizes.spacing.SM,
   },
   listInner: {
-    height: height - 100,
   },
   listItem: {
     paddingLeft: sizes.spacing.SM,

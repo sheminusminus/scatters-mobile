@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, KeyboardAvoidingView } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Input, Layout, Text } from '@ui-kitten/components';
 
@@ -29,33 +29,35 @@ const EntryScreen = ({ lookedForName, name, onRetrieveName, onEmitName }) => {
   return (
     <Layout style={styles.container}>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.titleContainer}>
-          <Text category="h5">Scatters!</Text>
-        </View>
-
-        <Loading isShown={!lookedForName} />
-
-        <View style={styles.inputContainer}>
-          <View>
-            <Input
-              onChangeText={(nextValue) => setValue(nextValue)}
-              placeholder="First name"
-              value={value}
-              style={styles.input}
-            />
+        <KeyboardAvoidingView>
+          <View style={styles.titleContainer}>
+            <Text category="h5">Scatters!</Text>
           </View>
-        </View>
 
-        <View style={styles.buttonContainer}>
-          <Button
-            disabled={!value.length}
-            onPress={() => {
-              onEmitName({ name: value });
-            }}
-          >
-            Join the Game
-          </Button>
-        </View>
+          <Loading isShown={!lookedForName} />
+
+          <View style={styles.inputContainer}>
+            <View>
+              <Input
+                onChangeText={(nextValue) => setValue(nextValue)}
+                placeholder="First name"
+                value={value}
+                style={styles.input}
+              />
+            </View>
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <Button
+              disabled={!value.length}
+              onPress={() => {
+                onEmitName({ name: value });
+              }}
+            >
+              Join the Game
+            </Button>
+          </View>
+        </KeyboardAvoidingView>
       </ScrollView>
     </Layout>
   );

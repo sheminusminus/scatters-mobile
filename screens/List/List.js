@@ -1,10 +1,14 @@
 import React from 'react';
+import { Keyboard, Dimensions, View } from 'react-native';
 import { Layout, List, Text, Input } from '@ui-kitten/components';
 
 import { Timer } from '../../components';
+import { usePrev } from '../../hooks';
 
 import styles from './styles';
 
+
+const { height: h } = Dimensions.get('window');
 
 const ListScreen = (props) => {
   const {
@@ -15,6 +19,34 @@ const ListScreen = (props) => {
     onAnswer,
     roll,
   } = props;
+
+  const input = React.useRef(null);
+  const [height, setHeight] = React.useState(0);
+  const [focused, setFocused] = React.useState(-1);
+
+  const _keyboardDidShow = (e) => {
+    setHeight(e?.endCoordinates?.height + 24);
+  };
+
+  const _keyboardDidHide = () => {
+    setHeight(0);
+  };
+
+  React.useEffect(() => {
+    Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
+    Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
+
+    return () => {
+      Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
+      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide);
+    };
+  }, []);
+
+  const handleNext = () => {
+    if (focused < items.length && input.current) {
+      input.current.focus();
+    }
+  };
 
   const renderItem = ({ item, index }) => (
     <Layout style={styles.listItem}>
@@ -30,9 +62,15 @@ const ListScreen = (props) => {
       </Layout>
       <Layout>
         <Input
+          returnKeyType="next"
+          ref={focused === (index - 1) ? input : undefined}
           disabled={!allowAnswers}
           onChangeText={(val) => {
             onAnswer(val, index);
+          }}
+          onSubmitEditing={handleNext}
+          onFocus={() => {
+            setFocused(index);
           }}
           value={answers[index]}
         />
@@ -40,8 +78,13 @@ const ListScreen = (props) => {
     </Layout>
   );
 
+  console.log(height);
   return (
-    <Layout style={styles.container}>
+    <Layout
+      style={[
+        styles.container
+      ]}
+    >
       <Layout
         style={[
           styles.headerContainer,
@@ -64,7 +107,10 @@ const ListScreen = (props) => {
       >
         <Layout style={styles.list}>
           <List
-            style={styles.listInner}
+            style={[styles.listInner,  {
+              height: h - 100 - height,
+              maxHeight: h - 100 - height,
+            }]}
             data={items}
             renderItem={renderItem}
           />
