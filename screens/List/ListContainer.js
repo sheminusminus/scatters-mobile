@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  getRoundAllowAnswers,
-  getRoundHideList,
-  getRoundAnswers,
   getGameListItems,
+  getGameRoll,
+  getRoundAllowAnswers,
+  getRoundAnswers,
+  getRoundHideList,
 } from '../../selectors';
 
 import {
@@ -23,6 +24,7 @@ const ListContainer = (props) => {
     hideList,
     listItems,
     onSetAnswers,
+    ...rest
   } = props;
 
   const handleAnswer = React.useCallback((value, index) => {
@@ -38,6 +40,7 @@ const ListContainer = (props) => {
       hideList={hideList}
       items={listItems}
       onAnswer={handleAnswer}
+      {...rest}
     />
   );
 };
@@ -47,6 +50,7 @@ const mapStateToProps = createStructuredSelector({
   answers: getRoundAnswers,
   hideList: getRoundHideList,
   listItems: getGameListItems,
+  roll: getGameRoll,
 });
 
 const mapDispatchToProps = {

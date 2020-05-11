@@ -1,21 +1,45 @@
 import React from 'react';
-import { Layout, Text } from '@ui-kitten/components';
+import { Animated } from 'react-native';
+import { Layout, List, ListItem, Text } from '@ui-kitten/components';
+
+import { Timer } from '../../components';
 
 import styles from './styles';
 
 
-const List = (props) => {
+const data = new Array(8).fill({
+  title: 'Item',
+});
+
+const ListScreen = (props) => {
   const {
     allowAnswers,
     answers,
     hideList,
-    onAnswer,
     items,
+    onAnswer,
+    roll,
   } = props;
+
+  const renderItem = ({ item, index }) => (
+    <ListItem title={`${item.title} ${index + 1}`}/>
+  );
 
   return (
     <Layout style={styles.container}>
-      <Text>Test</Text>
+      <Layout style={styles.headerContainer}>
+        <Text style={styles.roll}>{roll}</Text>
+        <Timer />
+      </Layout>
+
+      <Layout style={styles.listContainer}>
+        <Layout style={styles.list}>
+          <List
+            data={data}
+            renderItem={renderItem}
+          />
+        </Layout>
+      </Layout>
     </Layout>
   );
   // return (
@@ -67,4 +91,4 @@ const List = (props) => {
   // );
 };
 
-export default List;
+export default ListScreen;

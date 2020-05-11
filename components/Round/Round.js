@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
 import { Button, Layout, Text } from '@ui-kitten/components';
 
 import { usePrev } from '../../hooks';
@@ -84,12 +83,6 @@ const RoundScreen = (props) => {
 
   return (
     <Layout style={styles.container}>
-      <Layout style={styles.timerContainer}>
-        {showTimer && (
-          <View />
-        )}
-      </Layout>
-
       <Layout style={styles.buttonsContainer}>
         {!playerIsActive && !allowAnswers && (
           <Text category="s1">
