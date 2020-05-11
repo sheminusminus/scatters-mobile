@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated } from 'react-native';
-import { Layout, List, ListItem, Text } from '@ui-kitten/components';
+import { Layout, List, Text, Input } from '@ui-kitten/components';
 
 import { Timer } from '../../components';
 
@@ -22,7 +22,25 @@ const ListScreen = (props) => {
   } = props;
 
   const renderItem = ({ item, index }) => (
-    <ListItem title={`${item.title} ${index + 1}`}/>
+    <Layout style={styles.listItem}>
+      <Layout style={styles.listQuestion}>
+        {hideList && (
+          <Layout style={styles.listQuestionRedacted} level="4" />
+        )}
+        {!hideList && (
+          <Text>{`${index + 1}) ${item}`}</Text>
+        )}
+      </Layout>
+      <Layout>
+        <Input
+          disabled={!allowAnswers}
+          onChangeText={(val) => {
+            onAnswer(val, index);
+          }}
+          value={answers[index]}
+        />
+      </Layout>
+    </Layout>
   );
 
   return (
@@ -35,7 +53,8 @@ const ListScreen = (props) => {
       <Layout style={styles.listContainer}>
         <Layout style={styles.list}>
           <List
-            data={data}
+            style={styles.listInner}
+            data={items}
             renderItem={renderItem}
           />
         </Layout>

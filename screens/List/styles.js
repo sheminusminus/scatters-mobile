@@ -37,7 +37,25 @@ const styles = StyleSheet.create({
   },
   list: {
     width,
-    height: height - 96,
+    height: height - 100,
+    paddingBottom: sizes.spacing.XL * 2,
+  },
+  listInner: {
+    height: height - 100,
+  },
+  listItem: {
+    paddingLeft: sizes.spacing.SM,
+    paddingRight: sizes.spacing.SM,
+    paddingTop: sizes.spacing.XS,
+    paddingBottom: sizes.spacing.XS,
+  },
+  listQuestion: {
+    marginBottom: sizes.spacing.XS,
+  },
+  listQuestionRedacted: {
+    height: 20,
+    width: '100%',
+    marginBottom: sizes.spacing.XS,
   },
   roll: {
     width: (width - (sizes.spacing.SM * 2)) * 0.15,

@@ -13,6 +13,7 @@ import {
 
 import { usePrev } from '../hooks';
 import { sizes } from '../constants';
+import { msToMMSS } from '../utils';
 
 
 const { width } = Dimensions.get('window');
@@ -21,6 +22,9 @@ const timerHeight = 6;
 const timerFullWidth = (width - (sizes.spacing.SM * 2)) * 0.85;
 
 const styles = StyleSheet.create({
+  container: {
+
+  },
   timerContainer: {
     width: timerFullWidth,
     height: timerHeight,
@@ -32,6 +36,12 @@ const styles = StyleSheet.create({
     height: timerHeight,
     borderRadius: 3,
   },
+  countdown: {
+    width: timerFullWidth,
+    textAlign: 'right',
+    opacity: 0.5,
+    paddingBottom: sizes.spacing.XS / 2,
+  },
 });
 
 const Timer = ({ startTime, endTime, timeElapsed }) => {
@@ -39,7 +49,7 @@ const Timer = ({ startTime, endTime, timeElapsed }) => {
   const width = React.useRef(new Animated.Value(timerFullWidth)).current;
   const duration = endTime - startTime;
   const warnElapsed = duration * 0.5;
-  const dangerElapsed = duration * 0.75;
+  const dangerElapsed = duration * 0.8;
 
   const handleWidth = React.useCallback((toValue, duration) => {
     Animated.timing(width, {
@@ -58,26 +68,33 @@ const Timer = ({ startTime, endTime, timeElapsed }) => {
 
   let bgColor = 'rgb(0, 224, 150)';
   if (timeElapsed > -1) {
-    if (timeElapsed >= warnElapsed) {
+    if (timeElapsed >= dangerElapsed) {
       bgColor = 'rgb(255, 61, 113)';
-    } else if (timeElapsed >= dangerElapsed) {
+    } else if (timeElapsed >= warnElapsed) {
       bgColor = 'rgb(255, 170, 0)';
     }
   }
 
   return (
-    <Layout style={styles.timerContainer} level="4">
-      <Animated.View
-        style={[
-          styles.timer,
-          {
-            backgroundColor: bgColor,
-          },
-          {
-            width,
-          },
-        ]}
-      />
+    <Layout>
+      <Layout>
+        <Text category="label" style={styles.countdown}>
+          {msToMMSS(endTime - (startTime + timeElapsed))}
+        </Text>
+      </Layout>
+      <Layout style={styles.timerContainer} level="4">
+        <Animated.View
+          style={[
+            styles.timer,
+            {
+              backgroundColor: bgColor,
+            },
+            {
+              width,
+            },
+          ]}
+        />
+      </Layout>
     </Layout>
   );
 };
