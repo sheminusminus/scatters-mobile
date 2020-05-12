@@ -23,8 +23,9 @@ const GoIcon = (props = {}) => (
 );
 
 const RoomsScreen = (props) => {
-  const { allRooms, joinedRooms, onRequestRoom, onEmitName, username } = props;
+  const { permission, allRooms, joinedRooms, onRequestRoom, onEmitName, username } = props;
 
+  console.log(permission);
   const styles = makeStyles();
 
   const [selected, setSelected] = React.useState(null);

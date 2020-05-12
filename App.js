@@ -4,7 +4,7 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NavigationContainer } from '@react-navigation/native';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, NativeModules } from 'react-native';
 import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
@@ -23,6 +23,10 @@ import {
 
 import configureStore from './store';
 
+
+// if (__DEV__) {
+//   NativeModules.DevSettings.setIsDebuggingRemotely(true)
+// }
 
 const Stack = createStackNavigator();
 const RootStack = createStackNavigator();

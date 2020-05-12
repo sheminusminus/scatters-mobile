@@ -4,10 +4,28 @@ import { createSelector } from 'reselect';
 import listItems from './lists';
 
 
+const getState = state => state;
 const getPlayerState = state => state.player;
 const getGameState = state => state.game;
 const getRoomsState = state => state.rooms;
 const getRoundState = state => state.round;
+const getSystemState = state => state.system;
+
+
+export const getAllState = createSelector(
+  [getState],
+  state => state,
+);
+
+export const getSystemRecordingPerm = createSelector(
+  [getSystemState],
+  system => system.recordingPerm,
+);
+
+export const getSystemCanRecord = createSelector(
+  [getSystemRecordingPerm],
+  perm => perm === 'granted',
+);
 
 export const getPlayerName = createSelector(
   [getPlayerState],

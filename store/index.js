@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-
-import reactotron from './ReactotronConfig';
+// import { composeWithDevTools } from 'remote-redux-devtools';
 
 import {
   emitName,
@@ -32,23 +31,23 @@ import createRootReducer from './reducers';
 import createRootSagas from './sagas';
 
 
-const sagaMonitor = reactotron.createSagaMonitor();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = createRootReducer();
 
 export default () => {
+  console.log('store setup');
   const rootSagas = createRootSagas(socket, events);
 
-  const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+  const sagaMiddleware = createSagaMiddleware();
 
   const middleware = applyMiddleware(sagaMiddleware);
 
   const store = createStore(
     rootReducer,
     {},
-    compose(
+    composeEnhancers(
       middleware,
-      reactotron.createEnhancer(),
     ),
   );
 

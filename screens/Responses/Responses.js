@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Layout, List, Text } from '@ui-kitten/components';
 
 import listItems from '../../lists';
+import { Record } from '../../components';
 
 import Response from './Response';
 
@@ -19,6 +20,11 @@ class ResponsesScreen extends React.Component {
       [player.username]: [],
     }), {}),
   };
+
+  componentDidMount() {
+    const { onRequestRecording } = this.props;
+    onRequestRecording();
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const { players, onSendTallies, roundsScored } = this.props;
@@ -67,8 +73,10 @@ class ResponsesScreen extends React.Component {
   render() {
     const { setIndex } = this.state;
     const {
+      canRecord,
       currentList,
       responses,
+      onRecord,
     } = this.props;
 
     const items = listItems.slice(currentList * 12, (currentList + 1) * 12);
@@ -100,6 +108,8 @@ class ResponsesScreen extends React.Component {
             )}
           </Layout>
         </Layout>
+
+        <Record canRecord={canRecord} onPress={onRecord} />
       </Layout>
     );
   }
@@ -110,6 +120,9 @@ ResponsesScreen.navigationOptions = {
 };
 
 ResponsesScreen.propTypes = {
+  canRecord: PropTypes.bool,
+  onRecord: PropTypes.func.isRequired,
+  onRequestRecording: PropTypes.func.isRequired,
   onSendTallies: PropTypes.func.isRequired,
   players: PropTypes.array.isRequired,
   responses: PropTypes.array.isRequired,

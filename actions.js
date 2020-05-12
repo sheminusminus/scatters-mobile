@@ -4,6 +4,7 @@ export const makeActions = (ACTION) => {
   const TRIGGER = `${ACTION}_TRIGGER`;
   const SUCCESS = `${ACTION}_SUCCESS`;
   const FAILURE = `${ACTION}_FAILURE`;
+  const FULFILL = `${ACTION}_FULFILL`;
   const RESET = `${ACTION}_RESET`;
 
   return {
@@ -24,6 +25,11 @@ export const makeActions = (ACTION) => {
     failure: (error, meta = undefined) => ({
       type: FAILURE,
       error,
+      meta,
+    }),
+    fulfill: (payload, meta = undefined) => ({
+      type: FULFILL,
+      payload,
       meta,
     }),
     reset: () => ({
@@ -72,3 +78,7 @@ export const sendInviteForRoom = makeActions(types.INVITES_SEND_FOR_ROOM);
 
 export const onConnect = makeActions(types.ON_CONNECT);
 export const onDisconnect = makeActions(types.ON_DISCONNECT);
+
+export const permsRequestRecording = makeActions(types.PERMS_REQUEST_RECORDING);
+export const permsCheckRecording = makeActions(types.PERMS_CHECK_RECORDING);
+export const audioStartRecording = makeActions(types.AUDIO_START_REC);

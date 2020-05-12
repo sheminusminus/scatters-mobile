@@ -6,14 +6,16 @@ import {
   getGamePlayersNotWaiting,
   getGameRoundsScored,
   getGameResponses,
+  getSystemCanRecord,
 } from '../../selectors';
 
-import { sendTallies } from '../../actions';
+import { audioStartRecording, sendTallies, permsRequestRecording } from '../../actions';
 
 import screen from './Responses';
 
 
 const mapState = createStructuredSelector({
+  canRecord: getSystemCanRecord,
   currentList: getGameCurrentList,
   players: getGamePlayersNotWaiting,
   responses: getGameResponses,
@@ -21,7 +23,9 @@ const mapState = createStructuredSelector({
 });
 
 const mapDispatch = {
+  onRequestRecording: permsRequestRecording.trigger,
   onSendTallies: sendTallies.trigger,
+  onRecord: audioStartRecording.trigger,
 };
 
 

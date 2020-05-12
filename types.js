@@ -38,3 +38,7 @@ export const INVITES_SEND_FOR_ROOM = '@invites/SEND_FOR_ROOM';
 
 export const ON_CONNECT = '@socket/ON_CONNECT';
 export const ON_DISCONNECT = '@socket/ON_DISCONNECT';
+
+export const PERMS_REQUEST_RECORDING = '@perms/REQUEST_RECORDING';
+export const PERMS_CHECK_RECORDING = '@perms/CHECK_RECORDING';
+export const AUDIO_START_REC = '@perms/AUDIO_START_REC';

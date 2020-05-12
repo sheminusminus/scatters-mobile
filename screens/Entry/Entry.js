@@ -11,12 +11,13 @@ import { usePrev } from '../../hooks';
 import styles from './styles';
 
 
-const EntryScreen = ({ lookedForName, username, navigation, onRetrieveName, onEmitName, rooms }) => {
+const EntryScreen = ({ onCheckRecordingPerms, lookedForName, username, navigation, onRetrieveName, onEmitName, rooms }) => {
   const [value, setValue] = React.useState(username);
 
   React.useEffect(() => {
     onRetrieveName();
-  }, [onRetrieveName]);
+    onCheckRecordingPerms();
+  }, [onRetrieveName, onCheckRecordingPerms]);
 
   const prevName = usePrev(username);
   const prevRooms = usePrev(rooms);
@@ -77,6 +78,7 @@ EntryScreen.propTypes = {
   lookedForName: PropTypes.bool.isRequired,
   username: PropTypes.string,
   navigation: PropTypes.shape().isRequired,
+  onCheckRecordingPerms: PropTypes.func.isRequired,
   onRetrieveName: PropTypes.func.isRequired,
   onEmitName: PropTypes.func.isRequired,
   rooms: PropTypes.array,

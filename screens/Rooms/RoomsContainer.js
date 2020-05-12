@@ -7,6 +7,7 @@ import {
   getRoomsAllRoomsNames,
   getRoomsJoinedRoomsNames,
   getPlayerName,
+  getSystemRecordingPerm,
 } from '../../selectors';
 
 import screen from './Rooms';
@@ -16,6 +17,7 @@ const mapState = createStructuredSelector({
   allRooms: getRoomsAllRoomsNames,
   joinedRooms: getRoomsJoinedRoomsNames,
   username: getPlayerName,
+  permission: getSystemRecordingPerm,
 });
 
 const mapDispatch = {

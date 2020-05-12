@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { emitName, retrieveName } from '../../actions';
+import { emitName, retrieveName, permsCheckRecording } from '../../actions';
 
 import { getPlayerName, getPlayerLookedForName, getRoomsJoinedRoomsNames } from '../../selectors';
 
@@ -17,6 +17,7 @@ const mapState = createStructuredSelector({
 const mapDispatch = {
   onEmitName: emitName.trigger,
   onRetrieveName: retrieveName.trigger,
+  onCheckRecordingPerms: permsCheckRecording.trigger,
 };
 
 

@@ -17,8 +17,10 @@ const StartScreen = (props) => {
     onStartGame,
     players,
     room,
+    allState,
   } = props;
 
+  console.log(allState);
   React.useEffect(() => {
     onGetStatus();
   }, [onGetStatus]);
