@@ -2,7 +2,8 @@ import io from 'socket.io-client';
 
 // const socket = io.connect('http://localhost:3050/scatters');
 // const socket = io.connect('https://respected-snapdragon-ferry.glitch.me/scatters');
-const socket = io.connect('https://ripe-ink-cuticle.glitch.me/scatters');
+// const socket = io.connect('https://ripe-ink-cuticle.glitch.me/scatters');
+const socket = io.connect('https://spectacular-mint-tire.glitch.me/scatters');
 
 
 export const events = {

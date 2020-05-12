@@ -50,7 +50,7 @@ export const getGamePlayers = createSelector(
 export const getGameActivePlayerName = createSelector(
   [getGamePlayers, getGameActivePlayer],
   (players, activePlayer) => {
-    const p = players.find(p => p.id === activePlayer);
+    const p = players.find(p => p.username === activePlayer);
 
     if (p) {
       return p.username;

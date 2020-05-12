@@ -16,7 +16,7 @@ const RoomsScreen = (props) => {
   // const roomItems = Object.values(rooms || {}).filter((roomId) => roomId !== playerId);
   const roomItems = Object.values(rooms || {});
 
-  if (defaultRoomAvailable) {
+  if (defaultRoomAvailable && !rooms.default) {
     roomItems.push('default');
   }
 
