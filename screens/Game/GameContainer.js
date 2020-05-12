@@ -7,11 +7,9 @@ import {
 } from '../../actions';
 
 import {
-  getGameActivePlayer,
   getGameActivePlayerName,
   getGameRoll,
   getGameTimeLeft,
-  getPlayerId,
   getPlayerIsActive,
 } from '../../selectors';
 
@@ -19,9 +17,7 @@ import screen from './Game';
 
 
 const mapState = createStructuredSelector({
-  activePlayer: getGameActivePlayer,
   activePlayerName: getGameActivePlayerName,
-  id: getPlayerId,
   playerIsActive: getPlayerIsActive,
   roll: getGameRoll,
   timeLeft: getGameTimeLeft,

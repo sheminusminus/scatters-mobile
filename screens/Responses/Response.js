@@ -9,8 +9,7 @@ import styles from './styles';
 const Response = (props) => {
   const {
     answers,
-    id,
-    name,
+    username,
     index,
     onTally,
   } = props;
@@ -36,7 +35,7 @@ const Response = (props) => {
             category="label"
             style={styles.name}
           >
-            {name}
+            {username}
           </Text>
         </Layout>
 
@@ -47,7 +46,7 @@ const Response = (props) => {
             onPress={() => {
               setNope(true);
               setYep(false);
-              onTally(index, id, -1);
+              onTally(index, username, -1);
             }}
             status={Intent.DANGER}
           >
@@ -60,7 +59,7 @@ const Response = (props) => {
             onPress={() => {
               setYep(true);
               setNope(false);
-              onTally(index, id, 1);
+              onTally(index, username, 1);
             }}
             status={Intent.SUCCESS}
           >

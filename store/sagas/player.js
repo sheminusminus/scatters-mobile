@@ -8,7 +8,7 @@ import {
   requestRoom,
 } from '../../actions';
 
-import { getGameRoom } from '../../selectors';
+import { getPlayerName } from '../../selectors';
 
 import { navigate } from '../../navigation';
 
@@ -20,7 +20,7 @@ let events;
 
 function* doEmitName(payload) {
   try {
-    yield call(Storage.save, 'name', payload.name);
+    yield call(Storage.save, 'username', payload.username);
     socket.emit(events.EMIT_NAME, payload);
   } catch (error) {
     yield put(emitName.failure(error));
@@ -38,10 +38,10 @@ function* doGotRooms(data) {
 
 function* doRetrieveName() {
   try {
-    const name = yield call(Storage.load, 'name');
-    if (name) {
+    const username = yield call(Storage.load, 'username');
+    if (username) {
       yield put(retrieveName.success());
-      yield put(emitName.trigger({ name }));
+      yield put(emitName.trigger({ username }));
     } else {
       yield delay(1000);
       yield put(retrieveName.failure());
@@ -51,14 +51,15 @@ function* doRetrieveName() {
   }
 }
 
-function* navToStart(name) {
+function* navToStart() {
   navigate('Start');
   yield null;
 }
 
 function* doRequestRoom(room) {
   try {
-    socket.emit(events.REQUEST_ROOM, { room });
+    const username = yield select(getPlayerName);
+    socket.emit(events.REQUEST_ROOM, { room, username });
   } catch (error) {
     yield put(emitName.failure(error));
   }
@@ -83,7 +84,7 @@ function* watchPlayerEvents() {
         break;
 
       case joinRoom.SUCCESS:
-        yield spawn(navToStart, payload.name);
+        yield spawn(navToStart, payload.username);
         break;
 
       case retrieveName.TRIGGER:

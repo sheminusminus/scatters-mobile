@@ -3,14 +3,13 @@ import { createStructuredSelector } from 'reselect';
 
 import { requestRoom } from '../../actions';
 
-import { getPlayerRooms, getPlayerId, getPlayerDefaultRoomAvailable } from '../../selectors';
+import { getPlayerRooms, getPlayerDefaultRoomAvailable } from '../../selectors';
 
 import screen from './Rooms';
 
 
 const mapState = createStructuredSelector({
   defaultRoomAvailable: getPlayerDefaultRoomAvailable,
-  playerId: getPlayerId,
   rooms: getPlayerRooms,
 });
 

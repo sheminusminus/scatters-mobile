@@ -5,17 +5,11 @@ import listItems from './lists';
 
 const getPlayerState = state => state.player;
 const getGameState = state => state.game;
-const getModalState = state => state.modal;
 const getRoundState = state => state.round;
 
 export const getPlayerName = createSelector(
   [getPlayerState],
-  player => player.name,
-);
-
-export const getPlayerId = createSelector(
-  [getPlayerState],
-  player => player.id,
+  player => player.username,
 );
 
 export const getPlayerScore = createSelector(
@@ -44,8 +38,8 @@ export const getGameActivePlayer = createSelector(
 );
 
 export const getPlayerIsActive = createSelector(
-  [getPlayerId, getGameActivePlayer],
-  (playerId, activePlayer) => playerId === activePlayer,
+  [getPlayerName, getGameActivePlayer],
+  (username, activePlayer) => username === activePlayer,
 );
 
 export const getGamePlayers = createSelector(

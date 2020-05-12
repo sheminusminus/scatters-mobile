@@ -9,7 +9,7 @@ import screen from './Entry';
 
 
 const mapState = createStructuredSelector({
-  name: getPlayerName,
+  username: getPlayerName,
   lookedForName: getPlayerLookedForName,
   rooms: getPlayerRooms,
 });

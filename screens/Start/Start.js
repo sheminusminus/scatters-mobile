@@ -49,7 +49,7 @@ const StartScreen = (props) => {
           {players.map((player) => (
             <Text
               category="s1"
-              key={player.id}
+              key={player.username}
               style={styles.listItem}
             >
               {player.username.toUpperCase()}

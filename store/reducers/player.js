@@ -10,11 +10,10 @@ import {
 
 const playerState = {
   defaultRoomAvailable: false,
-  id: '',
   lookedForName: false,
-  name: '',
   rooms: null,
   score: 0,
+  username: '',
 };
 
 const player = (state = playerState, action = {}) => {
@@ -22,15 +21,14 @@ const player = (state = playerState, action = {}) => {
     case joinRoom.SUCCESS:
       return {
         ...state,
-        id: action.payload.id,
-        name: action.payload.name,
-        ...(action.payload.players.find((p) => p.id === action.payload.id) || {}),
+        ...(action.payload.players.find((p) => p.username === action.payload.username) || {}),
+        username: action.payload.username,
       };
 
     case roundScored.SUCCESS:
       return {
         ...state,
-        ...(action.payload.players.find((p) => p.id === state.id) || {}),
+        ...(action.payload.players.find((p) => p.username === state.username) || {}),
       };
 
     case retrieveName.FAILURE:
@@ -44,8 +42,7 @@ const player = (state = playerState, action = {}) => {
       return {
         ...state,
         defaultRoomAvailable: action.payload.defaultRoomAvailable,
-        id: action.payload.id,
-        name: action.payload.name,
+        username: action.payload.username,
         rooms: action.payload.rooms,
       };
 

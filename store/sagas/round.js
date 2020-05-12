@@ -8,7 +8,7 @@ import {
 let socket;
 let events;
 
-function* doRoundSetAnswers(payload) {
+function* doRoundSetAnswers() {
   try {
     yield null;
   } catch (error) {

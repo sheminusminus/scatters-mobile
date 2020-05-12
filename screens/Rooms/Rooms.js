@@ -6,11 +6,15 @@ import { Button, Input, Layout, Text, List } from '@ui-kitten/components';
 import styles from './styles';
 
 
-const RoomsScreen = ({ defaultRoomAvailable, onRequestRoom, playerId, rooms }) => {
+const RoomsScreen = (props) => {
+  const { defaultRoomAvailable, onRequestRoom, rooms } = props;
+
   const [selected, setSelected] = React.useState(null);
   const [input, setInput] = React.useState('');
 
-  const roomItems = Object.values(rooms || {}).filter((roomId) => roomId !== playerId);
+  console.log(props);
+  // const roomItems = Object.values(rooms || {}).filter((roomId) => roomId !== playerId);
+  const roomItems = Object.values(rooms || {});
 
   if (defaultRoomAvailable) {
     roomItems.push('default');
@@ -99,7 +103,6 @@ RoomsScreen.navigationOptions = {
 RoomsScreen.propTypes = {
   defaultRoomAvailable: PropTypes.bool.isRequired,
   onRequestRoom: PropTypes.func.isRequired,
-  playerId: PropTypes.string.isRequired,
   rooms: PropTypes.shape().isRequired,
 };
 

@@ -35,7 +35,7 @@ const ScoresScreen = (props) => {
       <Layout style={styles.listContainer}>
         <Layout style={styles.list}>
           <List
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.username}
             style={styles.listInner}
             data={players}
             renderItem={renderItem}

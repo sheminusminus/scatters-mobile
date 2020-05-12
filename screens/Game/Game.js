@@ -15,14 +15,12 @@ const midY = (height * 0.5) - (diceSize * 0.5);
 
 const GameScreen = (props) => {
   const {
-    activePlayer,
     activePlayerName,
-    id,
+    onResetDice,
     onRollDice,
+    playerIsActive,
     roll,
     timeLeft,
-    onResetDice,
-    playerIsActive,
   } = props;
 
   const diceRef = React.useRef(null);
@@ -107,7 +105,7 @@ const GameScreen = (props) => {
             ]}
           >
             <Dice
-              isActivePlayer={id === activePlayer}
+              isActivePlayer={playerIsActive}
               isDisabled={Boolean(diceVal)}
               onValue={(val) => {
                 setDiceVal(val);
@@ -139,14 +137,12 @@ GameScreen.navigationOptions = {
 };
 
 GameScreen.propTypes = {
-  activePlayer: PropTypes.string.isRequired,
   activePlayerName: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  onResetDice: PropTypes.func.isRequired,
   onRollDice: PropTypes.func.isRequired,
+  playerIsActive: PropTypes.bool,
   roll: PropTypes.string,
   timeLeft: PropTypes.number.isRequired,
-  onResetDice: PropTypes.func.isRequired,
-  playerIsActive: PropTypes.bool,
 };
 
 GameScreen.defaultProps = {

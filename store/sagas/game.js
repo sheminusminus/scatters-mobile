@@ -92,9 +92,9 @@ function* doStartRound() {
 function* doSendAnswers() {
   try {
     const room = yield select(getGameRoom);
-    const name = yield select(getPlayerName);
+    const username = yield select(getPlayerName);
     const answers = yield select(getRoundAnswers);
-    socket.emit(events.SEND_ANSWERS, { answers, name, room });
+    socket.emit(events.SEND_ANSWERS, { answers, username, room });
   } catch (error) {
     yield put(sendAnswers.failure(error));
   }

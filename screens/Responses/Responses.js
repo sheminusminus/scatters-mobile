@@ -16,7 +16,7 @@ class ResponsesScreen extends React.Component {
     talliedInSet: 0,
     tallies: this.props.players.reduce((obj, player) => ({
       ...obj,
-      [player.id]: [],
+      [player.username]: [],
     }), {}),
   };
 
@@ -41,24 +41,24 @@ class ResponsesScreen extends React.Component {
     }
   }
 
-  handleTally = (index, playerId, vote) => {
-    if (this.state.tallies[playerId][index] !== undefined) {
-      const tallies = [...this.state.tallies[playerId]];
+  handleTally = (index, username, vote) => {
+    if (this.state.tallies[username][index] !== undefined) {
+      const tallies = [...this.state.tallies[username]];
       tallies[index] = vote;
       this.setState({
         tallies: {
           ...this.state.tallies,
-          [playerId]: tallies,
+          [username]: tallies,
         },
       });
     } else {
-      const tallies = [...this.state.tallies[playerId]];
+      const tallies = [...this.state.tallies[username]];
       tallies.push(vote);
       this.setState({
         talliedInSet: this.state.talliedInSet + 1,
         tallies: {
           ...this.state.tallies,
-          [playerId]: tallies,
+          [username]: tallies,
         },
       });
     }
@@ -92,7 +92,7 @@ class ResponsesScreen extends React.Component {
           <Layout style={styles.list}>
             {responses.length > 0 && (
               <List
-                keyExtractor={(item, index) => `${item.id}-${setIndex}-${index}`}
+                keyExtractor={(item, index) => `${item.username}-${setIndex}-${index}`}
                 style={styles.listInner}
                 data={responses}
                 renderItem={renderItem}

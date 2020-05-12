@@ -11,27 +11,27 @@ import { usePrev } from '../../hooks';
 import styles from './styles';
 
 
-const EntryScreen = ({ lookedForName, name, navigation, onRetrieveName, onEmitName, rooms }) => {
-  const [value, setValue] = React.useState(name);
+const EntryScreen = ({ lookedForName, username, navigation, onRetrieveName, onEmitName, rooms }) => {
+  const [value, setValue] = React.useState(username);
 
   React.useEffect(() => {
     onRetrieveName();
   }, [onRetrieveName]);
 
-  const prevName = usePrev(name);
+  const prevName = usePrev(username);
   const prevRooms = usePrev(rooms);
 
   React.useEffect(() => {
-    if (Boolean(!prevName && name)) {
-      setValue(name);
+    if (Boolean(!prevName && username)) {
+      setValue(username);
     }
-  }, [prevName, name]);
+  }, [prevName, username]);
 
   React.useEffect(() => {
     if (Boolean(!prevRooms && rooms)) {
       navigation.navigate('Rooms');
     }
-  }, [prevName, name]);
+  }, [prevName, username]);
 
   return (
     <Layout style={styles.container}>
@@ -57,7 +57,7 @@ const EntryScreen = ({ lookedForName, name, navigation, onRetrieveName, onEmitNa
           <Button
             disabled={!value.length}
             onPress={() => {
-              onEmitName({ name: value });
+              onEmitName({ username: value });
             }}
           >
             Join the Game
@@ -74,7 +74,7 @@ EntryScreen.navigationOptions = {
 
 EntryScreen.propTypes = {
   lookedForName: PropTypes.bool.isRequired,
-  name: PropTypes.string,
+  username: PropTypes.string,
   navigation: PropTypes.shape().isRequired,
   onRetrieveName: PropTypes.func.isRequired,
   onEmitName: PropTypes.func.isRequired,
