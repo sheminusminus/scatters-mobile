@@ -47,10 +47,10 @@ export const events = {
 
 const oneTimeEvents = [];
 
-socket.on('connect', () => {
-  console.log('connected');
-  socket.emit('connected');
-});
+// socket.on('connect', () => {
+//   console.log('connected');
+//   socket.emit('connected');
+// });
 
 socket.on('connect_error', () => {
   console.log('connection error');

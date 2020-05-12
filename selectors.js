@@ -172,9 +172,5 @@ export const getRoomsAllRooms = createSelector(
 
 export const getRoomsAllRoomsNames = createSelector(
   [getRoomsAllRooms],
-  allRooms => (allRooms ? allRooms.map((room) => room.name) : []).concat([
-    'another',
-    'and-another',
-    'and-me',
-  ]),
+  allRooms => (allRooms ? allRooms.map((room) => room.name) : []),
 );

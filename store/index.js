@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import reactotron from './ReactotronConfig';
 
 import {
+  emitName,
   gotResponses,
   joinRoom,
   nextRound,
@@ -22,8 +23,10 @@ import {
   requestOnlineUsers,
   requestInvitesToMe,
   requestInvitesFromMe,
+  requestRoom,
   sendInviteForRoom,
 } from '../actions';
+import { getPlayerName, getRoomsRoom } from '../selectors';
 import { events, socket } from '../services';
 import createRootReducer from './reducers';
 import createRootSagas from './sagas';
@@ -50,6 +53,19 @@ export default () => {
   );
 
   sagaMiddleware.run(rootSagas);
+
+  socket.on(events.CONNECT, () => {
+    socket.emit('connected');
+    const state = store.getState();
+    const username = getPlayerName(state);
+    const room = getRoomsRoom(state);
+    if (username) {
+      store.dispatch(emitName.trigger({ username }));
+    }
+    if (room) {
+      store.dispatch(requestRoom.trigger(room));
+    }
+  });
 
   socket.on(events.LIST_ROOMS, (data) => {
     console.log(events.LIST_ROOMS, data);
