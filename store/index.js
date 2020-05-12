@@ -18,6 +18,11 @@ import {
   startRound,
   timerFired,
   gotRooms,
+  requestAllUsers,
+  requestOnlineUsers,
+  requestInvitesToMe,
+  requestInvitesFromMe,
+  sendInviteForRoom,
 } from '../actions';
 import { events, socket } from '../services';
 import createRootReducer from './reducers';
@@ -46,8 +51,8 @@ export default () => {
 
   sagaMiddleware.run(rootSagas);
 
-  socket.on(events.ROOMS_JOINED, (data) => {
-    console.log(events.ROOMS_JOINED, data);
+  socket.on(events.LIST_ROOMS, (data) => {
+    console.log(events.LIST_ROOMS, data);
     store.dispatch(gotRooms.trigger(data));
   });
 
@@ -106,6 +111,31 @@ export default () => {
 
   socket.on(events.ROUND_SET, (data) => {
     store.dispatch(setRound.success(data));
+  });
+
+  socket.on(events.PRESENCE_GET_ONLINE_USERS, (data) => {
+    console.log(events.PRESENCE_GET_ONLINE_USERS, data);
+    store.dispatch(requestOnlineUsers.success(data));
+  });
+
+  socket.on(events.PRESENCE_GET_ALL_USERS, (data) => {
+    console.log(events.PRESENCE_GET_ALL_USERS, data);
+    store.dispatch(requestAllUsers.success(data));
+  });
+
+  socket.on(events.INVITES_GET_TO_ME, (data) => {
+    console.log(events.INVITES_GET_TO_ME, data);
+    store.dispatch(requestInvitesToMe.success(data));
+  });
+
+  socket.on(events.INVITES_GET_FROM_ME, (data) => {
+    console.log(events.INVITES_GET_FROM_ME, data);
+    store.dispatch(requestInvitesFromMe.success(data));
+  });
+
+  socket.on(events.INVITES_SEND_FOR_ROOM, (data) => {
+    console.log(events.INVITES_SEND_FOR_ROOM, data);
+    store.dispatch(sendInviteForRoom.success(data));
   });
 
   return { store, socket };

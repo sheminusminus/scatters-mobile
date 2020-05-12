@@ -25,7 +25,7 @@ import { navigate, navigateBack } from '../../navigation';
 import {
   getPlayerName,
   getRoundAnswers,
-  getGameRoom,
+  getRoomsRoom,
 } from '../../selectors';
 
 
@@ -55,7 +55,7 @@ function* navToScores() {
 
 function* doStartGame() {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     socket.emit(events.START_GAME, { room });
   } catch (error) {
     yield put(startGame.failure(error));
@@ -64,7 +64,7 @@ function* doStartGame() {
 
 function* doRollDice() {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     socket.emit(events.ROLL_DICE, { room });
   } catch (error) {
     yield put(rollDice.failure(error));
@@ -73,7 +73,7 @@ function* doRollDice() {
 
 function* doResetDiceRoll() {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     socket.emit(events.RESET_DICE_ROLL, { room });
   } catch (error) {
     yield put(resetDiceRoll.failure(error));
@@ -82,7 +82,7 @@ function* doResetDiceRoll() {
 
 function* doStartRound() {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     socket.emit(events.START_ROUND, { room });
   } catch (error) {
     yield put(startRound.failure(error));
@@ -91,7 +91,7 @@ function* doStartRound() {
 
 function* doSendAnswers() {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     const username = yield select(getPlayerName);
     const answers = yield select(getRoundAnswers);
     socket.emit(events.SEND_ANSWERS, { answers, username, room });
@@ -102,7 +102,7 @@ function* doSendAnswers() {
 
 function* doSendTallies(data) {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     socket.emit(events.SEND_TALLIES, { tallies: data, room });
   } catch (error) {
     yield put(sendTallies.failure(error));
@@ -128,7 +128,7 @@ function* doRoundScored() {
 
 function* doNextRound() {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     socket.emit(events.NEXT_ROUND, { room });
   } catch (error) {
     yield put(gotResponses.failure(error));
@@ -145,7 +145,7 @@ function* doNextRoundSuccess() {
 
 function* doGetStatus() {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     socket.emit(events.GET_STATUS, { room });
   } catch (error) {
     yield put(getStatus.failure(error));
@@ -198,7 +198,7 @@ function* doSetGamePhase(payload) {
 
 function* doSetRound(payload) {
   try {
-    const room = yield select(getGameRoom);
+    const room = yield select(getRoomsRoom);
     socket.emit(events.SET_ROUND, { ...payload, room });
   } catch (error) {
     yield put(getStatus.failure(error));

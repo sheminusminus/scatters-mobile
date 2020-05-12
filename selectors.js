@@ -1,3 +1,4 @@
+/* noinspection JSUnresolvedVariable */
 import { createSelector } from 'reselect';
 
 import listItems from './lists';
@@ -5,6 +6,7 @@ import listItems from './lists';
 
 const getPlayerState = state => state.player;
 const getGameState = state => state.game;
+const getRoomsState = state => state.rooms;
 const getRoundState = state => state.round;
 
 export const getPlayerName = createSelector(
@@ -17,19 +19,9 @@ export const getPlayerScore = createSelector(
   player => player.score,
 );
 
-export const getPlayerRooms = createSelector(
-  [getPlayerState],
-  player => player.rooms,
-);
-
 export const getPlayerLookedForName = createSelector(
   [getPlayerState],
   player => player.lookedForName,
-);
-
-export const getPlayerDefaultRoomAvailable = createSelector(
-  [getPlayerState],
-  player => player.defaultRoomAvailable,
 );
 
 export const getGameActivePlayer = createSelector(
@@ -63,11 +55,6 @@ export const getGameActivePlayerName = createSelector(
 export const getGamePlayersNotWaiting = createSelector(
   [getGameState],
   game => game.players.filter((p) => !p.waiting),
-);
-
-export const getGameRoom = createSelector(
-  [getGameState],
-  game => game.room,
 );
 
 export const getGameRoll = createSelector(
@@ -161,4 +148,33 @@ export const getRoundShowTimer = createSelector(
 export const getRoundAnswers = createSelector(
   [getRoundState],
   round => round.answers,
+);
+
+export const getRoomsRoom = createSelector(
+  [getRoomsState],
+  rooms => rooms.room,
+);
+
+export const getRoomsJoinedRooms = createSelector(
+  [getRoomsState],
+  rooms => rooms.joinedRooms,
+);
+
+export const getRoomsJoinedRoomsNames = createSelector(
+  [getRoomsJoinedRooms],
+  joinedRooms => joinedRooms ? joinedRooms.map((room) => room.name) : [],
+);
+
+export const getRoomsAllRooms = createSelector(
+  [getRoomsState],
+  rooms => rooms.allRooms,
+);
+
+export const getRoomsAllRoomsNames = createSelector(
+  [getRoomsAllRooms],
+  allRooms => (allRooms ? allRooms.map((room) => room.name) : []).concat([
+    'another',
+    'and-another',
+    'and-me',
+  ]),
 );

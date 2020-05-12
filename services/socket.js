@@ -3,7 +3,8 @@ import io from 'socket.io-client';
 // const socket = io.connect('http://localhost:3050/scatters');
 // const socket = io.connect('https://respected-snapdragon-ferry.glitch.me/scatters');
 // const socket = io.connect('https://ripe-ink-cuticle.glitch.me/scatters');
-const socket = io.connect('https://spectacular-mint-tire.glitch.me/scatters');
+// const socket = io.connect('https://spectacular-mint-tire.glitch.me/scatters');
+const socket = io.connect('https://whimsical-cubic-hare.glitch.me/scatters');
 
 
 export const events = {
@@ -17,6 +18,7 @@ export const events = {
   GET_STATUS: 'get-status',
   GOT_RESPONSES: 'got-responses',
   JOINED_ROOM: 'joined-room',
+  LIST_ROOMS: 'list-rooms',
   NEXT_ROUND: 'next-round',
   PLAYERS_UPDATED: 'players-updated',
   REQUEST_ROOM: 'request-room',
@@ -34,14 +36,19 @@ export const events = {
   START_ROUND: 'start-round',
   TIMER_FIRED: 'timer-fired',
   WAIT_NEXT_ROUND: 'wait-next-round',
+
+  PRESENCE_GET_ONLINE_USERS: 'presence-get-online-users',
+  PRESENCE_GET_ALL_USERS: 'presence-get-all-users',
+
+  INVITES_GET_TO_ME: 'invites-get-to-me',
+  INVITES_GET_FROM_ME: 'invites-get-from-me',
+  INVITES_SEND_FOR_ROOM: 'invites-send-for-room',
 };
 
-const oneTimeEvents = [
-  events.GAME_STARTED,
-  events.JOINED_ROOM,
-];
+const oneTimeEvents = [];
 
 socket.on('connect', () => {
+  console.log('connected');
   socket.emit('connected');
 });
 

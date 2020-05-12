@@ -1,64 +1,77 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { sizes } from '../../constants';
+import { getDimensions } from '../../utils';
 
 
-const { height, width } = Dimensions.get('window');
+const styles = () => {
+  const { height, width } = getDimensions();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingBottom: sizes.spacing.XL * 2,
-    paddingTop: 100,
-  },
-  titleContainer: {
-    position: 'absolute',
-    top: 0,
-    height: 100,
-    paddingTop: 60,
-    width,
-    marginBottom: sizes.spacing.XL * 2,
-    paddingLeft: sizes.spacing.SM,
-    paddingRight: sizes.spacing.SM,
-  },
-  title: {
-    width: '100%',
-    textAlign: 'center',
-  },
-  item: {
-    height: 40,
-  },
-  itemLayout: {
-    height: 40,
-    flex: 1,
-    justifyContent: 'center',
-    paddingLeft: sizes.spacing.SM,
-    paddingRight: sizes.spacing.SM,
-  },
-  itemText: {
-  },
-  itemTextSelected: {
-    color: 'rgb(0, 224, 150)',
-  },
-  roomsContainer: {
-    maxHeight: 300,
-    paddingLeft: sizes.spacing.SM,
-    paddingRight: sizes.spacing.SM,
-    paddingTop: sizes.spacing.SM,
-  },
-  inputContainer: {
-    height: 100,
-    paddingLeft: sizes.spacing.SM,
-    paddingRight: sizes.spacing.SM,
-    paddingTop: sizes.spacing.XL,
-  },
-  actionContainer: {
-    height: 100,
-    paddingLeft: sizes.spacing.SM,
-    paddingRight: sizes.spacing.SM,
-    paddingTop: sizes.spacing.MED,
-  },
-});
+  return StyleSheet.create({
+    list: {
+      minHeight: 0,
+    },
+    item: {
+      minHeight: 50,
+    },
+    container: {
+      paddingBottom: sizes.spacing.XL * 2,
+      paddingTop: sizes.spacing.L * 2,
+      minHeight: height,
+      width,
+    },
+    titleContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      height: sizes.spacing.XL,
+      maxHeight: sizes.spacing.XL,
+      maxWidth: width,
+      marginBottom: sizes.spacing.SM,
+    },
+    title: {
+      width: '100%',
+      textAlign: 'center',
+      alignSelf: 'center',
+      opacity: 0.8,
+    },
+    plusButton: {
+      position: 'absolute',
+      top: 0,
+      right: sizes.spacing.MED,
+      maxHeight: sizes.spacing.XL,
+      maxWidth: sizes.spacing.XL,
+    },
+    roomsContainer: {
+      // minHeight: 150,
+      // maxHeight: 300,
+      paddingLeft: sizes.spacing.MED,
+      paddingRight: sizes.spacing.MED,
+      // paddingTop: sizes.spacing.SM,
+      marginTop: sizes.spacing.L,
+    },
+    inputContainer: {
+      // height: 100,
+      // paddingLeft: sizes.spacing.MED,
+      // paddingRight: sizes.spacing.MED,
+      marginTop: sizes.spacing.SM,
+      marginBottom: sizes.spacing.L,
+      // paddingTop: sizes.spacing.XL,
+    },
+    actionContainer: {
+      // height: 100,
+      paddingLeft: sizes.spacing.MED,
+      paddingRight: sizes.spacing.MED,
+      // paddingTop: sizes.spacing.MED,
+    },
+    backdrop: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    card: {
+      padding: sizes.spacing.SM,
+      width: width - (sizes.spacing.MED * 2),
+    }
+  });
+};
 
 
 export default styles;

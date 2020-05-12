@@ -1,97 +1,150 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { View, TouchableOpacity } from 'react-native';
-import { Button, Input, Layout, Text, List } from '@ui-kitten/components';
+import { View } from 'react-native';
+import { Button, Card, Icon, Input, Modal, Layout, Text } from '@ui-kitten/components';
 
-import styles from './styles';
+import { ListHeader, RoomsMenu } from '../../components';
+import { Intent } from '../../constants';
 
+import makeStyles from './styles';
+
+
+const PlusIcon = (props = {}) => (
+  <Icon {...props} name="person-add" />
+);
+
+const AddIcon = (props = {}) => (
+  <Icon {...props} name="plus" />
+);
+
+const GoIcon = (props = {}) => (
+  <Icon {...props} name="arrow-forward" />
+);
 
 const RoomsScreen = (props) => {
-  const { defaultRoomAvailable, onRequestRoom, rooms } = props;
+  const { allRooms, joinedRooms, onRequestRoom } = props;
+
+  const styles = makeStyles();
 
   const [selected, setSelected] = React.useState(null);
   const [input, setInput] = React.useState('');
+  const [modalVisible, setModalVisible] = React.useState(false);
 
-  console.log(props);
-  // const roomItems = Object.values(rooms || {}).filter((roomId) => roomId !== playerId);
-  const roomItems = Object.values(rooms || {});
+  const joinedItems = joinedRooms || [];
+  const allItems = allRooms || [];
 
-  if (defaultRoomAvailable && !rooms.default) {
-    roomItems.push('default');
-  }
-
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        if (item === selected) {
-          setSelected(null);
-        } else {
-          setInput('');
-          setSelected(item);
-        }
-      }}
-      style={styles.item}
-    >
-      <Layout style={styles.itemLayout} level={item === selected ? '2' : '1'}>
-        <Text style={item === selected ? styles.itemTextSelected : styles.itemText}>
-          {item}
-        </Text>
-      </Layout>
-    </TouchableOpacity>
+  const renderJoinedListHeader = () => (
+    <ListHeader>
+      {`My Rooms${joinedItems.length === 0 ? ' (none joined yet)' : ''}`}
+    </ListHeader>
   );
+
+  const renderAllListHeader = () => (
+    <ListHeader>
+      {`All Rooms${allItems.length === 0 ? ' (none here, create one!)' : ''}`}
+    </ListHeader>
+  );
+
+  const joinedHeight = Math.min((joinedItems.length * 50) + 50, 300);
+  const allHeight = Math.min((allItems.length * 50) + 50, 300);
+
+  const handlePress = () => {
+    if (!selected && !input) {
+      setModalVisible(true);
+    } else if (selected) {
+      onRequestRoom(selected);
+      setModalVisible(false);
+    } else {
+      onRequestRoom(input);
+      setModalVisible(false);
+    }
+  };
 
   return (
     <Layout style={styles.container}>
-      <View style={styles.titleContainer}>
+      <Layout style={styles.titleContainer}>
         <Text category="h5" style={styles.title}>
-          Rooms
+          Join a Room
         </Text>
-      </View>
-
-      <View style={styles.roomsContainer}>
-        {roomItems.length > 0 && (
-          <List
-            data={roomItems}
-            keyExtractor={(item) => item}
-            renderItem={renderItem}
-          />
-        )}
-        {roomItems.length === 0 && (
-          <Layout>
-            <Text>
-              You haven't joined any rooms
-            </Text>
-          </Layout>
-        )}
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Input
-          value={input}
-          onChangeText={(val) => {
-            setSelected(null);
-            setInput(val);
-          }}
-          placeholder="Room name (find or create)"
+        <Button
+          disabled
+          appearance="ghost"
+          accessoryLeft={PlusIcon}
+          style={styles.plusButton}
+          status={Intent.SUCCESS}
         />
-      </View>
+      </Layout>
+
+      <Layout style={{ paddingHorizontal: 24 }}>
+        <RoomsMenu
+          ListHeaderComponent={renderJoinedListHeader}
+          items={joinedItems}
+          keyExtractor={item => item}
+          selected={selected}
+          setSelected={(val) => {
+            setSelected(val);
+            setInput('');
+          }}
+          itemStyle={styles.item}
+          style={{
+            height: joinedHeight,
+            maxHeight: joinedHeight,
+          }}
+        />
+      </Layout>
+
+      <Layout style={{ paddingHorizontal: 24 }}>
+        <RoomsMenu
+          ListHeaderComponent={renderAllListHeader}
+          items={allItems}
+          keyExtractor={item => item}
+          selected={selected}
+          setSelected={(val) => {
+            setSelected(val);
+            setInput('');
+          }}
+          style={{
+            height: allHeight,
+            maxHeight: allHeight,
+            marginBottom: 40,
+          }}
+        />
+      </Layout>
 
       <View style={styles.actionContainer}>
         <Button
-          disabled={!selected && !input}
-          onPress={() => {
-            if (selected) {
-              onRequestRoom(selected);
-            } else if (input) {
-              onRequestRoom(input);
-            }
-          }}
+          accessoryRight={selected ? GoIcon : AddIcon}
+          onPress={handlePress}
         >
           {!!selected && `Join "${selected}"`}
-
-          {!!input && `Join or create "${input}"`}
+          {!selected && !input && 'Create New Room'}
         </Button>
       </View>
+
+      <Modal
+        visible={modalVisible}
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setModalVisible(false)}>
+        <Card disabled={true} style={styles.card}>
+          <Text category="label" style={{ opacity: 0.8 }}>NEW ROOM NAME</Text>
+
+          <View style={styles.inputContainer}>
+            <Input
+              value={input}
+              onChangeText={(val) => {
+                setSelected(null);
+                setInput(val);
+              }}
+              status={input && input.length >= 1 ? Intent.SUCCESS : undefined}
+              placeholder="e.g. My Secret Room"
+            />
+          </View>
+
+          <Button onPress={handlePress}>
+            Done
+          </Button>
+        </Card>
+      </Modal>
     </Layout>
   );
 };
@@ -101,9 +154,14 @@ RoomsScreen.navigationOptions = {
 };
 
 RoomsScreen.propTypes = {
-  defaultRoomAvailable: PropTypes.bool.isRequired,
   onRequestRoom: PropTypes.func.isRequired,
-  rooms: PropTypes.shape().isRequired,
+  allRooms: PropTypes.array,
+  joinedRooms: PropTypes.array,
+};
+
+RoomsScreen.defaultProps = {
+  allRooms: null,
+  joinedRooms: null,
 };
 
 

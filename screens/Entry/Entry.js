@@ -33,6 +33,7 @@ const EntryScreen = ({ lookedForName, username, navigation, onRetrieveName, onEm
     }
   }, [prevName, username]);
 
+  console.log(prevRooms, rooms);
   return (
     <Layout style={styles.container}>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>
@@ -78,7 +79,7 @@ EntryScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,
   onRetrieveName: PropTypes.func.isRequired,
   onEmitName: PropTypes.func.isRequired,
-  rooms: PropTypes.shape(),
+  rooms: PropTypes.array,
 };
 
 EntryScreen.defaultProps = {

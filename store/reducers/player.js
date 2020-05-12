@@ -1,19 +1,18 @@
-import { GamePhase } from '../../constants';
-
 import {
   joinRoom,
   roundScored,
   retrieveName,
   gotRooms,
+  onConnect,
+  onDisconnect,
 } from '../../actions';
 
 
 const playerState = {
-  defaultRoomAvailable: false,
   lookedForName: false,
-  rooms: null,
   score: 0,
   username: '',
+  connected: false,
 };
 
 const player = (state = playerState, action = {}) => {
@@ -41,9 +40,7 @@ const player = (state = playerState, action = {}) => {
     case gotRooms.TRIGGER:
       return {
         ...state,
-        defaultRoomAvailable: action.payload.defaultRoomAvailable,
         username: action.payload.username,
-        rooms: action.payload.rooms,
       };
 
     default:

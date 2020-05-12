@@ -3,14 +3,17 @@ import { createStructuredSelector } from 'reselect';
 
 import { requestRoom } from '../../actions';
 
-import { getPlayerRooms, getPlayerDefaultRoomAvailable } from '../../selectors';
+import {
+  getRoomsAllRoomsNames,
+  getRoomsJoinedRoomsNames,
+} from '../../selectors';
 
 import screen from './Rooms';
 
 
 const mapState = createStructuredSelector({
-  defaultRoomAvailable: getPlayerDefaultRoomAvailable,
-  rooms: getPlayerRooms,
+  allRooms: getRoomsAllRoomsNames,
+  joinedRooms: getRoomsJoinedRoomsNames,
 });
 
 const mapDispatch = {

@@ -28,3 +28,13 @@ export const ROUND_ALLOW_ANSWERS = '@round/ROUND_ALLOW_ANSWERS';
 export const ROUND_HIDE_LIST = '@round/ROUND_HIDE_LIST';
 export const ROUND_SET_ANSWERS = '@round/ROUND_SET_ANSWERS';
 export const ROUND_SHOW_TIMER = '@round/ROUND_SHOW_TIMER';
+
+export const PRESENCE_GET_ONLINE_USERS = '@presence/GET_ONLINE_USERS';
+export const PRESENCE_GET_ALL_USERS = '@presence/GET_ALL_USERS';
+
+export const INVITES_GET_TO_ME = '@invites/GET_TO_ME';
+export const INVITES_GET_FROM_ME = '@invites/GET_FROM_ME';
+export const INVITES_SEND_FOR_ROOM = '@invites/SEND_FOR_ROOM';
+
+export const ON_CONNECT = '@socket/ON_CONNECT';
+export const ON_DISCONNECT = '@socket/ON_DISCONNECT';

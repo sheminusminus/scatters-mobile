@@ -103,13 +103,18 @@ const App = () => {
   }
 };
 
-const WrappedApp = () => (
-  <Provider store={store}>
-    <IconRegistry icons={EvaIconsPack} />
-    <ApplicationProvider {...eva} theme={eva.dark}>
-      <App />
-    </ApplicationProvider>
-  </Provider>
-);
+const WrappedApp = () => {
+  console.log('~~~~~~~~~~~~`');
+  console.log('app started');
+  console.log('~~~~~~~~~~~~`');
+  return (
+    <Provider store={store}>
+      <IconRegistry icons={[EvaIconsPack]} />
+      <ApplicationProvider {...eva} theme={eva.dark}>
+        <App />
+      </ApplicationProvider>
+    </Provider>
+  );
+};
 
 export default WrappedApp;

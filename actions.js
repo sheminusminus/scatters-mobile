@@ -62,3 +62,13 @@ export const roundAllowAnswers = makeActions(types.ROUND_ALLOW_ANSWERS);
 export const roundHideList = makeActions(types.ROUND_HIDE_LIST);
 export const roundSetAnswers = makeActions(types.ROUND_SET_ANSWERS);
 export const roundShowTimer = makeActions(types.ROUND_SHOW_TIMER);
+
+export const requestAllUsers = makeActions(types.PRESENCE_GET_ALL_USERS);
+export const requestOnlineUsers = makeActions(types.PRESENCE_GET_ONLINE_USERS);
+
+export const requestInvitesToMe = makeActions(types.INVITES_GET_TO_ME);
+export const requestInvitesFromMe = makeActions(types.INVITES_GET_FROM_ME);
+export const sendInviteForRoom = makeActions(types.INVITES_SEND_FOR_ROOM);
+
+export const onConnect = makeActions(types.ON_CONNECT);
+export const onDisconnect = makeActions(types.ON_DISCONNECT);

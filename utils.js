@@ -1,3 +1,6 @@
+import { Dimensions } from 'react-native';
+
+
 export const msToMMSS = (ms) => {
   const sec = Math.floor(ms / 1000);
   const minutes = Math.floor(sec / 60);
@@ -14,3 +17,5 @@ export const msToMMSS = (ms) => {
   }
   return `${minString}:${secString}`;
 };
+
+export const getDimensions = () => Dimensions.get('window');
