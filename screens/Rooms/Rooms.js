@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Button, Card, Icon, Input, Modal, Layout, Text } from '@ui-kitten/components';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { ListHeader, RoomsMenu } from '../../components';
 import { Intent } from '../../constants';
@@ -22,7 +23,7 @@ const GoIcon = (props = {}) => (
 );
 
 const RoomsScreen = (props) => {
-  const { allRooms, joinedRooms, onRequestRoom } = props;
+  const { allRooms, joinedRooms, onRequestRoom, onEmitName, username } = props;
 
   const styles = makeStyles();
 
@@ -32,6 +33,13 @@ const RoomsScreen = (props) => {
 
   const joinedItems = joinedRooms || [];
   const allItems = allRooms || [];
+
+  // useFocusEffect(React.useCallback(() => {
+  //   console.log('focused', allRooms);
+  //   if (!allRooms) {
+  //     onEmitName({ username });
+  //   }
+  // }, [allRooms, onEmitName, username]));
 
   const renderJoinedListHeader = () => (
     <ListHeader>
@@ -157,6 +165,8 @@ RoomsScreen.propTypes = {
   onRequestRoom: PropTypes.func.isRequired,
   allRooms: PropTypes.array,
   joinedRooms: PropTypes.array,
+  username: PropTypes.string,
+  onEmitName: PropTypes.func.isRequired,
 };
 
 RoomsScreen.defaultProps = {

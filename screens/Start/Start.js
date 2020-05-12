@@ -4,6 +4,8 @@ import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, IndexPath, Layout, Select, SelectItem, Text } from '@ui-kitten/components';
 
+import { PopBack } from '../../components';
+
 import styles from './styles';
 
 
@@ -80,6 +82,7 @@ const StartScreen = (props) => {
           </Button>
         </View>
       </ScrollView>
+      <PopBack />
     </Layout>
   );
 };

@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { Animated, Dimensions, Easing, TouchableOpacity } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 
-import { Dice, Round } from '../../components';
+import { Dice, PopBack, Round } from '../../components';
 
 import styles, { diceSize } from './styles';
-
 
 const { height, width } = Dimensions.get('window');
 
@@ -69,6 +68,7 @@ const GameScreen = (props) => {
         }}
         onReRoll={() => {
           setDiceVal(null);
+          setIsRolling(false);
           if (diceRef.current) {
             diceRef.current.reroll();
           }
@@ -126,6 +126,9 @@ const GameScreen = (props) => {
           <Text category="s1" style={styles.message}>
             {`${playerIsActive ? 'Your' : `${activePlayerName}'s`} turn to roll`}
           </Text>
+        )}
+        {!isRolling && !diceVal && (
+          <PopBack />
         )}
       </Layout>
     </Layout>
