@@ -1,29 +1,29 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-// import { composeWithDevTools } from 'remote-redux-devtools';
 
 import {
+  clearRoom,
   emitName,
   gotResponses,
+  gotRooms,
   joinRoom,
   nextRound,
+  requestAllUsers,
+  requestInvitesFromMe,
+  requestInvitesToMe,
+  requestOnlineUsers,
+  requestRoom,
   resetDiceRoll,
   rollDice,
   roundEnded,
   roundScored,
+  sendInviteForRoom,
   setGamePhase,
   setPlayers,
   setRound,
   startGame,
   startRound,
   timerFired,
-  gotRooms,
-  requestAllUsers,
-  requestOnlineUsers,
-  requestInvitesToMe,
-  requestInvitesFromMe,
-  requestRoom,
-  sendInviteForRoom,
 } from '../actions';
 import { getPlayerName, getRoomsRoom } from '../selectors';
 import { events, socket } from '../services';
@@ -53,18 +53,19 @@ export default () => {
 
   sagaMiddleware.run(rootSagas);
 
-  socket.on(events.CONNECT, () => {
-    socket.emit('connected');
-    const state = store.getState();
-    const username = getPlayerName(state);
-    const room = getRoomsRoom(state);
-    if (username) {
-      store.dispatch(emitName.trigger({ username }));
-    }
-    if (room) {
-      store.dispatch(requestRoom.trigger(room));
-    }
-  });
+  // socket.on(events.CONNECT, () => {
+  //   socket.emit('connected');
+  //   console.log('connected');
+  //   const state = store.getState();
+  //   const username = getPlayerName(state);
+  //   const room = getRoomsRoom(state);
+  //   if (username) {
+  //     store.dispatch(emitName.trigger({ username }));
+  //   }
+  //   if (room) {
+  //     store.dispatch(requestRoom.trigger(room));
+  //   }
+  // });
 
   socket.on(events.LIST_ROOMS, (data) => {
     console.log(events.LIST_ROOMS, data);
@@ -151,6 +152,11 @@ export default () => {
   socket.on(events.INVITES_SEND_FOR_ROOM, (data) => {
     console.log(events.INVITES_SEND_FOR_ROOM, data);
     store.dispatch(sendInviteForRoom.success(data));
+  });
+
+  socket.on(events.ROOM_EXITED, (data) => {
+    console.log(events.ROOM_EXITED, data);
+    store.dispatch(clearRoom.success(data));
   });
 
   return { store, socket };

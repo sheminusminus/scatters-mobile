@@ -1,20 +1,25 @@
 import * as eva from '@eva-design/eva';
+import { Notifications } from 'expo';
+import Constants from 'expo-constants';
 import * as React from 'react';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NavigationContainer } from '@react-navigation/native';
-import { Platform, StatusBar, StyleSheet, View, NativeModules } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
+import * as Permissions from 'expo-permissions';
 
 import useCachedResources from './hooks/useCachedResources';
 
 import { LinkingConfiguration, navigationRef } from './navigation';
+import { Storage } from './services';
 
 import {
   EntryScreen,
   GameScreen,
   ListScreen,
+  PresenceScreen,
   ResponsesScreen,
   RoomsScreen,
   ScoresScreen,
@@ -24,46 +29,38 @@ import {
 import configureStore from './store';
 
 
-// if (__DEV__) {
-//   NativeModules.DevSettings.setIsDebuggingRemotely(true)
-// }
+const registerForPushNotificationsAsync = async () => {
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    const token = await Notifications.getExpoPushTokenAsync();
+    console.log(token);
+    await Storage.save('pushToken', token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+};
 
-const Stack = createStackNavigator();
 const RootStack = createStackNavigator();
 
 const { store } = configureStore();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
-
-const MainScreen = () => {
-  return (
-    <View style={styles.container}>
-      {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-
-      <Stack.Navigator
-        headerMode="none"
-        initialRouteName="Entry"
-        mode="card"
-      >
-        <Stack.Screen
-          name="Entry"
-          component={EntryScreen}
-        />
-        <Stack.Screen name="Rooms" component={RoomsScreen} />
-        <Stack.Screen name="Start" component={StartScreen} />
-        <Stack.Screen name="Game" component={GameScreen} />
-      </Stack.Navigator>
-    </View>
-  );
-};
-
 const App = () => {
   const isLoadingComplete = useCachedResources();
+
+  React.useEffect(() => {
+    registerForPushNotificationsAsync().then(() => {
+      console.log('registration attempted');
+    });
+  });
 
   if (!isLoadingComplete) {
     return null;
@@ -87,6 +84,7 @@ const App = () => {
             component={EntryScreen}
           />
           <RootStack.Screen name="Rooms" component={RoomsScreen} />
+          <RootStack.Screen name="Presence" component={PresenceScreen} />
           <RootStack.Screen name="Start" component={StartScreen} />
           <RootStack.Screen name="Game" component={GameScreen} />
           <RootStack.Screen

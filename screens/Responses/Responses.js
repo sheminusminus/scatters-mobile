@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Layout, List, Text } from '@ui-kitten/components';
 
 import listItems from '../../lists';
-import { Record } from '../../components';
+// import { Record } from '../../components';
 
 import Response from './Response';
 
@@ -21,10 +21,10 @@ class ResponsesScreen extends React.Component {
     }), {}),
   };
 
-  componentDidMount() {
-    const { onRequestRecording } = this.props;
-    onRequestRecording();
-  }
+  // componentDidMount() {
+  //   const { onRequestRecording } = this.props;
+  //   onRequestRecording();
+  // }
 
   componentDidUpdate(prevProps, prevState) {
     const { players, onSendTallies, roundsScored } = this.props;
@@ -109,7 +109,7 @@ class ResponsesScreen extends React.Component {
           </Layout>
         </Layout>
 
-        <Record canRecord={canRecord} onPress={onRecord} />
+        {/*<Record canRecord={canRecord} onPress={onRecord} />*/}
       </Layout>
     );
   }

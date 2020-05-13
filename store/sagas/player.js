@@ -20,8 +20,9 @@ let events;
 
 function* doEmitName(payload) {
   try {
+    const pushToken = yield call(Storage.load, 'pushToken');
     yield call(Storage.save, 'username', payload.username);
-    socket.emit(events.EMIT_NAME, payload);
+    socket.emit(events.EMIT_NAME, { ...payload, pushToken });
   } catch (error) {
     yield put(emitName.failure(error));
   }
@@ -30,7 +31,7 @@ function* doEmitName(payload) {
 function* doGotRooms(data) {
   try {
     console.log('navigate to rooms');
-    // yield put(navigate, 'Rooms');
+    yield call(navigate, 'Rooms');
   } catch (error) {
     yield put(gotRooms.failure(error));
   }
@@ -39,9 +40,11 @@ function* doGotRooms(data) {
 function* doRetrieveName() {
   try {
     const username = yield call(Storage.load, 'username');
+    const pushToken = yield call(Storage.load, 'pushToken');
+
     if (username) {
       yield put(retrieveName.success());
-      yield put(emitName.trigger({ username }));
+      yield put(emitName.trigger({ username, pushToken }));
     } else {
       yield delay(1000);
       yield put(retrieveName.failure());

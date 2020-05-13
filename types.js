@@ -1,8 +1,9 @@
-export const CLOSE_MODAL = '@modal/CLOSE_MODAL';
 export const EMIT_NAME = '@player/EMIT_NAME';
 export const GOT_ROOMS = '@player/GOT_ROOMS';
 export const REQUEST_ROOM = '@player/REQUEST_ROOM';
 export const RETRIEVE_NAME = '@player/RETRIEVE_NAME';
+
+export const CLEAR_ROOM = '@rooms/CLEAR_ROOM';
 
 export const END_ROUND = '@game/END_ROUND';
 export const GET_STATUS = '@game/GET_STATUS';
@@ -10,7 +11,6 @@ export const GOT_RESPONSES = '@game/GOT_RESPONSES';
 export const JOIN_ROOM = '@game/JOIN_ROOM';
 export const NEXT_LIST = '@game/NEXT_LIST';
 export const NEXT_ROUND = '@game/NEXT_ROUND';
-export const OPEN_MODAL = '@game/OPEN_MODAL';
 export const RESET_DICE_ROLL = '@game/RESET_DICE_ROLL';
 export const ROLL_DICE = '@game/ROLL_DICE';
 export const ROUND_ENDED = '@game/ROUND_ENDED';

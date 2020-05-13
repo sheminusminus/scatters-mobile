@@ -29,6 +29,11 @@ class Storage {
       return undefined;
     }
   };
+
+  static eraseAll = async () => {
+    const keys = await AsyncStorage.getAllKeys();
+    await AsyncStorage.multiRemove(keys);
+  };
 }
 
 

@@ -4,8 +4,10 @@ import io from 'socket.io-client';
 // const socket = io.connect('https://respected-snapdragon-ferry.glitch.me/scatters');
 // const socket = io.connect('https://ripe-ink-cuticle.glitch.me/scatters');
 // const socket = io.connect('https://spectacular-mint-tire.glitch.me/scatters');
-const socket = io.connect('https://whimsical-cubic-hare.glitch.me/scatters');
-
+// const socket = io.connect('https://whimsical-cubic-hare.glitch.me/scatters');
+// const socket = io.connect('https://shore-oval-mongoose.glitch.me/scatters');
+// const socket = io.connect('https://bumpy-helpful-cheese.glitch.me/scatters');
+const socket = io.connect('https://scatters.lol/scatters');
 
 export const events = {
   CONNECT: 'connect',
@@ -13,6 +15,7 @@ export const events = {
   DICE_ROLL_RESET: 'dice-roll-reset',
   DICE_ROLLED: 'dice-rolled',
   EMIT_NAME: 'name',
+  EXIT_ROOM: 'exit-room',
   GAME_STARTED: 'game-started',
   GAME_STATUS: 'game-status',
   GET_STATUS: 'get-status',
@@ -24,6 +27,7 @@ export const events = {
   REQUEST_ROOM: 'request-room',
   RESET_DICE_ROLL: 'reset-dice-roll',
   ROLL_DICE: 'roll-dice',
+  ROOM_EXITED: 'room-exited',
   ROOMS_JOINED: 'rooms-joined',
   ROUND_ENDED: 'round-ended',
   ROUND_SCORED: 'round-scored',
@@ -43,14 +47,17 @@ export const events = {
   INVITES_GET_TO_ME: 'invites-get-to-me',
   INVITES_GET_FROM_ME: 'invites-get-from-me',
   INVITES_SEND_FOR_ROOM: 'invites-send-for-room',
+
+  SET_PUSH_TOKEN: 'set-push-token',
+  SEND_PUSH: 'send-push',
 };
 
 const oneTimeEvents = [];
 
-// socket.on('connect', () => {
-//   console.log('connected');
-//   socket.emit('connected');
-// });
+socket.on('connect', () => {
+  console.log('connected');
+  socket.emit('connected');
+});
 
 socket.on('connect_error', () => {
   console.log('connection error');

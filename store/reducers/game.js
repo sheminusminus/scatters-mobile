@@ -1,6 +1,7 @@
 import { GamePhase } from '../../constants';
 
 import {
+  clearRoom,
   endRound,
   getStatus,
   gotResponses,
@@ -164,6 +165,9 @@ const game = (state = gameState, action = {}) => {
         ...state,
         responses: action.payload.responses,
       };
+
+    case clearRoom.SUCCESS:
+      return gameState;
 
     default:
       return state;

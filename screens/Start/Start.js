@@ -12,6 +12,7 @@ import styles from './styles';
 const StartScreen = (props) => {
   const {
     currentList,
+    onClearRoom,
     onGetStatus,
     onSetRound,
     onStartGame,
@@ -84,7 +85,12 @@ const StartScreen = (props) => {
           </Button>
         </View>
       </ScrollView>
-      <PopBack />
+
+      <PopBack
+        beforeBack={() => {
+          onClearRoom();
+        }}
+      />
     </Layout>
   );
 };
@@ -95,6 +101,7 @@ StartScreen.navigationOptions = {
 
 StartScreen.propTypes = {
   currentList: PropTypes.number,
+  onClearRoom: PropTypes.func.isRequired,
   onGetStatus: PropTypes.func.isRequired,
   onSetRound: PropTypes.func.isRequired,
   onStartGame: PropTypes.func.isRequired,

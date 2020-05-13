@@ -192,3 +192,13 @@ export const getRoomsAllRoomsNames = createSelector(
   [getRoomsAllRooms],
   allRooms => (allRooms ? allRooms.map((room) => room.name) : []),
 );
+
+export const getRoomsAllPlayers = createSelector(
+  [getRoomsState],
+  rooms => rooms.allPlayers,
+);
+
+export const getRoomsOnlinePlayers = createSelector(
+  [getRoomsState],
+  rooms => rooms.onlinePlayers,
+);

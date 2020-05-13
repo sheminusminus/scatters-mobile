@@ -2,9 +2,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
+  clearRoom,
   getStatus,
-  startGame,
   setRound,
+  startGame,
 } from '../../actions';
 
 import {
@@ -25,6 +26,7 @@ const mapState = createStructuredSelector({
 });
 
 const mapDispatch = {
+  onClearRoom: clearRoom.trigger,
   onGetStatus: getStatus.trigger,
   onSetRound: setRound.trigger,
   onStartGame: startGame.trigger,

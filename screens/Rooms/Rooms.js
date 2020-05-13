@@ -2,7 +2,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Button, Card, Icon, Input, Modal, Layout, Text } from '@ui-kitten/components';
-import { useFocusEffect } from '@react-navigation/native';
 
 import { ListHeader, RoomsMenu } from '../../components';
 import { Intent } from '../../constants';
@@ -23,13 +22,21 @@ const GoIcon = (props = {}) => (
 );
 
 const RoomsScreen = (props) => {
-  const { permission, allRooms, joinedRooms, onRequestRoom, onEmitName, username } = props;
+  const {
+    permission,
+    allRooms,
+    joinedRooms,
+    onRequestRoom,
+    onEmitName,
+    username,
+    navigation,
+  } = props;
 
   console.log(permission);
   const styles = makeStyles();
 
   const [selected, setSelected] = React.useState(null);
-  const [input, setInput] = React.useState('');
+  const [input, setInput] = React.useState(null);
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const joinedItems = joinedRooms || [];
@@ -76,7 +83,9 @@ const RoomsScreen = (props) => {
           Join a Room
         </Text>
         <Button
-          disabled
+          onPress={() => {
+            navigation.navigate('Presence');
+          }}
           appearance="ghost"
           accessoryLeft={PlusIcon}
           style={styles.plusButton}
@@ -133,13 +142,18 @@ const RoomsScreen = (props) => {
       <Modal
         visible={modalVisible}
         backdropStyle={styles.backdrop}
-        onBackdropPress={() => setModalVisible(false)}>
+        onBackdropPress={() => {
+          setModalVisible(false);
+          setInput('');
+          setSelected(null);
+        }}
+      >
         <Card disabled={true} style={styles.card}>
           <Text category="label" style={{ opacity: 0.8 }}>NEW ROOM NAME</Text>
 
           <View style={styles.inputContainer}>
             <Input
-              value={input}
+              value={input || ''}
               onChangeText={(val) => {
                 setSelected(null);
                 setInput(val);

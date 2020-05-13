@@ -13,7 +13,7 @@ const BackIcon = (props = {}) => (
   />
 );
 
-const PopBack = ({ style = {} }) => {
+const PopBack = ({ beforeBack, style = {} }) => {
   const navigation = useNavigation();
 
   return (
@@ -30,6 +30,9 @@ const PopBack = ({ style = {} }) => {
         ...style,
       }}
       onPress={() => {
+        if (beforeBack) {
+          beforeBack();
+        }
         navigation.dispatch(popAction);
       }}
     />

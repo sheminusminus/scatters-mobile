@@ -32,7 +32,7 @@ const styles = () => {
       width: '100%',
       textAlign: 'center',
       alignSelf: 'center',
-      opacity: 0.5,
+      opacity: 0.8,
     },
     plusButton: {
       position: 'absolute',
