@@ -8,7 +8,7 @@ import {
 
 const roundState = {
   allowAnswers: false,
-  answers: ['', '', '', '', '', '', '', '', '', '', '', ''],
+  answers: new Array(12).fill(''),
   hideList: true,
   showTimer: false,
 };

@@ -4,24 +4,26 @@ import { createStructuredSelector } from 'reselect';
 import {
   requestAllUsers,
   requestOnlineUsers,
+  sendPushNotif,
 } from '../../actions';
 
 import {
-  getRoomsAllPlayers,
-  getRoomsOnlinePlayers,
+  getAllPlayers,
+  getOnlinePlayers,
 } from '../../selectors';
 
 import screen from './Presence';
 
 
 const mapState = createStructuredSelector({
-  allPlayers: getRoomsAllPlayers,
-  onlinePlayers: getRoomsOnlinePlayers,
+  allPlayers: getAllPlayers,
+  onlinePlayers: getOnlinePlayers,
 })
 
 const mapDispatch = {
   onGetAllPlayers: requestAllUsers.trigger,
   onGetOnlinePlayers: requestOnlineUsers.trigger,
+  onSendPushNotif: sendPushNotif.trigger,
 };
 
 

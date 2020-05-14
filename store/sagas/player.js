@@ -8,7 +8,7 @@ import {
   requestRoom,
 } from '../../actions';
 
-import { getPlayerName } from '../../selectors';
+import { getUsername } from '../../selectors';
 
 import { navigate } from '../../navigation';
 
@@ -61,7 +61,7 @@ function* navToStart() {
 
 function* doRequestRoom(room) {
   try {
-    const username = yield select(getPlayerName);
+    const username = yield select(getUsername);
     socket.emit(events.REQUEST_ROOM, { room, username });
   } catch (error) {
     yield put(emitName.failure(error));

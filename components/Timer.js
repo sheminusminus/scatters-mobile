@@ -6,9 +6,9 @@ import { Layout, Text } from '@ui-kitten/components';
 
 import { rollDice } from '../actions';
 import {
-  getGameEndTime,
-  getGameStartTime,
-  getGameTimeElapsed,
+  getTimerEnd,
+  getTimerStart,
+  getTimerElapsedTime,
 } from '../selectors';
 
 import { usePrev } from '../hooks';
@@ -100,9 +100,9 @@ const Timer = ({ startTime, endTime, timeElapsed }) => {
 };
 
 const mapState = createStructuredSelector({
-  endTime: getGameEndTime,
-  startTime: getGameStartTime,
-  timeElapsed: getGameTimeElapsed,
+  endTime: getTimerEnd,
+  startTime: getTimerStart,
+  timeElapsed: getTimerElapsedTime,
 });
 
 const mapDispatch = {

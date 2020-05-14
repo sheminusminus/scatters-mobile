@@ -9,9 +9,9 @@ import {
 } from '../../actions';
 
 import {
-  getGameCurrentList,
-  getGamePlayers,
-  getRoomsRoom,
+  getCurrentList,
+  getPlayers,
+  getActiveRoom,
   getAllState,
 } from '../../selectors';
 
@@ -19,9 +19,9 @@ import screen from './Start';
 
 
 const mapState = createStructuredSelector({
-  currentList: getGameCurrentList,
-  players: getGamePlayers,
-  room: getRoomsRoom,
+  currentList: getCurrentList,
+  players: getPlayers,
+  room: getActiveRoom,
   allState: getAllState,
 });
 

@@ -42,3 +42,5 @@ export const ON_DISCONNECT = '@socket/ON_DISCONNECT';
 export const PERMS_REQUEST_RECORDING = '@perms/REQUEST_RECORDING';
 export const PERMS_CHECK_RECORDING = '@perms/CHECK_RECORDING';
 export const AUDIO_START_REC = '@perms/AUDIO_START_REC';
+
+export const SEND_PUSH_NOTIF = '@notifs/SEND_PUSH_NOTIF';

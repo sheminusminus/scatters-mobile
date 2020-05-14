@@ -82,3 +82,5 @@ export const onDisconnect = makeActions(types.ON_DISCONNECT);
 export const permsRequestRecording = makeActions(types.PERMS_REQUEST_RECORDING);
 export const permsCheckRecording = makeActions(types.PERMS_CHECK_RECORDING);
 export const audioStartRecording = makeActions(types.AUDIO_START_REC);
+
+export const sendPushNotif = makeActions(types.SEND_PUSH_NOTIF);

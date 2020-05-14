@@ -1,14 +1,14 @@
+import * as Device from 'expo-device';
 import * as eva from '@eva-design/eva';
-import { Notifications } from 'expo';
-import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 import * as React from 'react';
+import Constants from 'expo-constants';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NavigationContainer } from '@react-navigation/native';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Notifications } from 'expo';
 import { Provider } from 'react-redux';
-import * as Permissions from 'expo-permissions';
 
 import useCachedResources from './hooks/useCachedResources';
 
@@ -44,6 +44,22 @@ const registerForPushNotificationsAsync = async () => {
     const token = await Notifications.getExpoPushTokenAsync();
     console.log(token);
     await Storage.save('pushToken', token);
+    const createdCategory = await Storage.load('createdRoomInviteCategory');
+    if (!createdCategory) {
+      await Notifications.createCategoryAsync('roomInvite', [
+        {
+          actionId: 'acceptRoomInvite',
+          buttonTitle: 'Join',
+          isDestructive: false,
+        },
+        {
+          actionId: 'declineRoomInvite',
+          buttonTitle: 'Decline',
+          isDestructive: true,
+        },
+      ]);
+      await Storage.save('createdRoomInviteCategory', 'true');
+    }
   } else {
     alert('Must use physical device for Push Notifications');
   }
@@ -57,9 +73,11 @@ const App = () => {
   const isLoadingComplete = useCachedResources();
 
   React.useEffect(() => {
-    registerForPushNotificationsAsync().then(() => {
-      console.log('registration attempted');
-    });
+    if (Device.isDevice) {
+      registerForPushNotificationsAsync().then(() => {
+        console.log('push registration attempted');
+      });
+    }
   });
 
   if (!isLoadingComplete) {

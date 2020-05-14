@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Text } from '@ui-kitten/components';
+import { useNavigation } from '@react-navigation/native';
 
 import { Intent, sizes } from '../../constants';
 
 import { getDimensions } from '../../utils';
 
 import { PlayerList } from '../../components';
-import { socket, events } from '../../services';
 
 
 const getStyles = () => {
@@ -51,7 +51,11 @@ const Presence = (props) => {
   const {
     allPlayers,
     onGetAllPlayers,
+    onSendPushNotif,
+    route,
   } = props;
+
+  const navigation = useNavigation();
 
   const [token, setToken] = React.useState('');
   const [notif, setNotif] = React.useState({});
@@ -71,9 +75,8 @@ const Presence = (props) => {
       </Layout>
       <PlayerList
         headerText="All players"
-        onSelect={async () => {
-
-          socket.emit();
+        onSelect={(player) => {
+          onSendPushNotif({ to: player, room: route.params.room });
         }}
         players={allPlayers}
         style={styles.list}
@@ -86,6 +89,8 @@ const Presence = (props) => {
 Presence.propTypes = {
   allPlayers: PropTypes.array,
   onGetAllPlayers: PropTypes.func.isRequired,
+  onSendPushNotif: PropTypes.func.isRequired,
+  route: PropTypes.shape().isRequired,
 };
 
 export default Presence;

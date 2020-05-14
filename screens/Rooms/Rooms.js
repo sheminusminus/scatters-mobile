@@ -83,8 +83,9 @@ const RoomsScreen = (props) => {
           Join a Room
         </Text>
         <Button
+          disabled={!selected}
           onPress={() => {
-            navigation.navigate('Presence');
+            navigation.navigate('Presence', { room: selected });
           }}
           appearance="ghost"
           accessoryLeft={PlusIcon}

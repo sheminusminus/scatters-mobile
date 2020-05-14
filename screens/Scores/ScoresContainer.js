@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  getGamePlayersNotWaiting,
-  getGameRoundsScored,
+  getPlayersNotWaiting,
+  getRoundsScored,
   getPlayerIsActive,
 } from '../../selectors';
 
@@ -14,8 +14,8 @@ import screen from './Scores';
 
 const mapState = createStructuredSelector({
   playerIsActive: getPlayerIsActive,
-  players: getGamePlayersNotWaiting,
-  roundsScored: getGameRoundsScored,
+  players: getPlayersNotWaiting,
+  roundsScored: getRoundsScored,
 });
 
 const mapDispatch = {

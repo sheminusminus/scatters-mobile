@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  getGameListItems,
-  getGameRoll,
-  getRoundAllowAnswers,
-  getRoundAnswers,
-  getRoundHideList,
+  getListItems,
+  getRoll,
+  getAnsweringIsAllowed,
+  getAnswers,
+  getShouldHideList,
 } from '../../selectors';
 
 import {
@@ -46,11 +46,11 @@ const ListContainer = (props) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  allowAnswers: getRoundAllowAnswers,
-  answers: getRoundAnswers,
-  hideList: getRoundHideList,
-  listItems: getGameListItems,
-  roll: getGameRoll,
+  allowAnswers: getAnsweringIsAllowed,
+  answers: getAnswers,
+  hideList: getShouldHideList,
+  listItems: getListItems,
+  roll: getRoll,
 });
 
 const mapDispatchToProps = {

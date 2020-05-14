@@ -7,7 +7,9 @@ import io from 'socket.io-client';
 // const socket = io.connect('https://whimsical-cubic-hare.glitch.me/scatters');
 // const socket = io.connect('https://shore-oval-mongoose.glitch.me/scatters');
 // const socket = io.connect('https://bumpy-helpful-cheese.glitch.me/scatters');
-const socket = io.connect('https://scatters.lol/scatters');
+// const socket = io.connect('https://scatters.lol/scatters');
+// const socket = io.connect('http://localhost:3050/scatters');
+const socket = io.connect('https://4e36639e.ngrok.io/scatters');
 
 export const events = {
   CONNECT: 'connect',
@@ -48,8 +50,9 @@ export const events = {
   INVITES_GET_FROM_ME: 'invites-get-from-me',
   INVITES_SEND_FOR_ROOM: 'invites-send-for-room',
 
-  SET_PUSH_TOKEN: 'set-push-token',
+  CONFIRM_PUSH_SENT: 'confirm-push-sent',
   SEND_PUSH: 'send-push',
+  SET_PUSH_TOKEN: 'set-push-token',
 };
 
 const oneTimeEvents = [];

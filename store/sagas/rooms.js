@@ -6,7 +6,7 @@ import {
   requestOnlineUsers,
 } from '../../actions';
 
-import { getPlayerName, getRoomsRoom } from '../../selectors';
+import { getUsername, getActiveRoom } from '../../selectors';
 import { navigate } from '../../navigation';
 
 
@@ -15,8 +15,8 @@ let events;
 
 function* doClearRoom() {
   try {
-    const username = yield select(getPlayerName);
-    const room = yield select(getRoomsRoom);
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
     socket.emit(events.EXIT_ROOM, { username, room });
   } catch (error) {
     yield put(clearRoom.failure(error));
