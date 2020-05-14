@@ -44,3 +44,5 @@ export const PERMS_CHECK_RECORDING = '@perms/CHECK_RECORDING';
 export const AUDIO_START_REC = '@perms/AUDIO_START_REC';
 
 export const SEND_PUSH_NOTIF = '@notifs/SEND_PUSH_NOTIF';
+export const ACCEPT_ROOM_INVITE = '@notifs/ACCEPT_ROOM_INVITE';
+export const DECLINE_ROOM_INVITE = '@notifs/DECLINE_ROOM_INVITE';

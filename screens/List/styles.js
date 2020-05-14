@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     height,
     width,
+    backgroundColor: 'pink',
   },
   headerContainer: {
     flex: 1,

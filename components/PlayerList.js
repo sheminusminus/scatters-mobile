@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Divider, List, Layout, Text } from '@ui-kitten/components';
+import { Divider, List, Layout, Text, Button, Icon } from '@ui-kitten/components';
 
 import { getDimensions } from '../utils';
 
@@ -10,25 +10,42 @@ import ListHeader from './ListHeader';
 import { sizes } from '../constants';
 
 
+const InviteIcon = (props) => (
+  <Icon {...props} name="paper-plane" />
+);
+
 const getStyles = () => {
   const { width } = getDimensions();
   return StyleSheet.create({
     name: {
       flex: 1,
-      justifyContent: 'center',
-      minHeight: 50,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      // minHeight: 50,
+      paddingVertical: sizes.spacing.XS,
       paddingHorizontal: sizes.spacing.XL,
+      height: 48,
       maxWidth: width,
+      alignItems: 'center',
+
     },
     header: {
       paddingHorizontal: sizes.spacing.MED,
     },
-    text: {},
+    text: {
+      alignSelf: 'center',
+    },
     selectedText: {
       color: 'rgb(0, 224, 150)',
     },
     list: {
       maxWidth: width,
+    },
+    invite: {
+      alignSelf: 'center',
+      maxWidth: 48,
+      width: 48,
+      maxHeight: 32,
     },
   });
 };
@@ -46,17 +63,19 @@ const PlayerList = (props) => {
   const renderHeader = () => <ListHeader style={styles.header}>{headerText}</ListHeader>;
 
   const renderItem = ({ item, index }) => (
-    <TouchableOpacity
-      onPress={() => {
-        onSelect(item, index);
-      }}
-    >
-      <Layout style={styles.name}>
-        <Text category="c2">
-          {item}
-        </Text>
-      </Layout>
-    </TouchableOpacity>
+    <Layout style={styles.name}>
+      <Text category="c2">
+        {item}
+      </Text>
+      <Button
+        accessoryLeft={InviteIcon}
+        size="tiny"
+        style={styles.invite}
+        onPress={() => {
+          onSelect(item, index);
+        }}
+      />
+    </Layout>
   );
 
   return (

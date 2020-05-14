@@ -9,8 +9,11 @@ const diceSize = 80;
 
 const styles = StyleSheet.create({
   messageContainer: {
-    height: 100,
+    maxHeight: 100,
     width,
+    top: 100,
+    position: 'absolute',
+    zIndex: 1900,
   },
   message: {
     width: '100%',
@@ -22,17 +25,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
     height,
+    maxHeight: height,
     width,
-  },
-  scrollContainer: {
-    flex: 1,
-    width,
-    height,
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   diceContainer: {
     position: 'absolute',
@@ -46,6 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: diceSize,
     height: diceSize,
+    zIndex: 2000,
   },
 });
 

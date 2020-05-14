@@ -78,7 +78,7 @@ const App = () => {
         console.log('push registration attempted');
       });
     }
-  });
+  }, []);
 
   if (!isLoadingComplete) {
     return null;
@@ -93,10 +93,6 @@ const App = () => {
           mode="modal"
           headerMode="none"
         >
-          {/*<RootStack.Screen*/}
-          {/*  name="Main"*/}
-          {/*  component={MainScreen}*/}
-          {/*/>*/}
           <RootStack.Screen
             name="Entry"
             component={EntryScreen}

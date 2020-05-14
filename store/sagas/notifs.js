@@ -5,11 +5,11 @@ import Constants from 'expo-constants';
 
 import {
   sendPushNotif,
+  requestRoom,
 } from '../../actions';
 
 import {
   getUsername,
-  getActiveRoom,
 } from '../../selectors';
 
 import { Storage } from '../../services';
@@ -96,18 +96,16 @@ function* handleNotification(notification) {
   const { actionId, origin, data, remote } = notification;
   const { room, incrementBadge  } = data;
 
-  if (actionId === 'acceptRoomInvite') {
-    console.log(`accepted room invitation to ${room}`);
-  } else if (actionId === 'declineRoomInvite') {
-    console.log(`declined room invitation to ${room}`);
-  }
-
   if (origin === 'selected') {
     yield call(Notifications.setBadgeNumberAsync, 0);
   } else {
     const badge = yield call(Notifications.getBadgeNumberAsync);
     const nextBadge = incrementBadge ? badge + incrementBadge : badge;
     yield call(Notifications.setBadgeNumberAsync, nextBadge);
+  }
+
+  if (actionId === 'acceptRoomInvite') {
+    yield put(requestRoom.trigger(room));
   }
   yield null;
 }

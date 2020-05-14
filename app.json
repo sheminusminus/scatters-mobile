@@ -7,7 +7,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.10",
+    "version": "1.0.11",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.emilykolar.Scatters",
-      "buildNumber": "1.0.10"
+      "buildNumber": "1.0.11"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

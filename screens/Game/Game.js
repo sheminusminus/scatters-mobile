@@ -26,11 +26,18 @@ const GameScreen = (props) => {
   const translateX = React.useRef(new Animated.Value(midX)).current;
   const translateY = React.useRef(new Animated.Value(midY)).current;
   const animateColor = React.useRef(new Animated.Value(0)).current;
+  const fade = React.useRef(new Animated.Value(1)).current;
 
   const [diceVal, setDiceVal] = React.useState(roll);
   const [isRolling, setIsRolling] = React.useState(false);
 
-  const handleTranslate = (toX, toY, colorTo) => {
+  const handleTranslate = (toX, toY, colorTo, fadeTo) => {
+    if (fadeTo === 0) {
+      Animated.timing(fade, {
+        toValue: fadeTo,
+        duration: 400,
+      }).start();
+    }
     Animated.parallel([
       Animated.timing(translateX, {
         toValue: toX,
@@ -45,8 +52,15 @@ const GameScreen = (props) => {
       Animated.timing(animateColor, {
         toValue: colorTo,
         duration: 1200,
-      })
+      }),
     ]).start();
+    if (fadeTo === 1) {
+      Animated.timing(fade, {
+        toValue: fadeTo,
+        duration: 400,
+        delay: 200,
+      }).start();
+    }
   };
 
   const backgroundColor = animateColor.interpolate({
@@ -73,7 +87,7 @@ const GameScreen = (props) => {
             diceRef.current.reroll();
           }
           onResetDice();
-          handleTranslate(midX, midY, 0);
+          handleTranslate(midX, midY, 0, 1);
         }}
       />
 
@@ -109,7 +123,7 @@ const GameScreen = (props) => {
               isDisabled={Boolean(diceVal)}
               onValue={(val) => {
                 setDiceVal(val);
-                handleTranslate(0, 40, 100);
+                handleTranslate(0, 40, 100, 0);
               }}
               ref={diceRef}
               roll={roll}
@@ -121,16 +135,19 @@ const GameScreen = (props) => {
         </TouchableOpacity>
       </Animated.View>
 
-      <Layout style={styles.messageContainer}>
-        {!diceVal && !isRolling && (
-          <Text category="s1" style={styles.message}>
-            {`${playerIsActive ? 'Your' : `${activePlayerName}'s`} turn to roll`}
-          </Text>
-        )}
-        {!isRolling && !diceVal && (
-          <PopBack />
-        )}
-      </Layout>
+      <Animated.View style={[styles.messageContainer, { opacity: fade }]}>
+        <Layout>
+          {!diceVal && !isRolling && (
+            <Text category="s1" style={styles.message}>
+              {`${playerIsActive ? 'Your' : `${activePlayerName}'s`} turn to roll 🙃`}
+            </Text>
+          )}
+
+          {!isRolling && !diceVal && (
+            <PopBack style={{ top: -48 }} />
+          )}
+        </Layout>
+      </Animated.View>
     </Layout>
   );
 };
