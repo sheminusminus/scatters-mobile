@@ -37,7 +37,7 @@ function* doSendPushNotif(payload) {
 
     if (pushToken) {
       socket.emit(events.SEND_PUSH, {
-        action: 'ROOM_INVITE',
+        action: 'roomInvite',
         pushToken,
         room: payload.room,
         to: payload.to,
@@ -92,21 +92,20 @@ function* watchNotifsEvents() {
 }
 
 function* handleNotification(notification) {
-  console.log('from the saga', notification);
   const { actionId, origin, data, remote } = notification;
   const { room, incrementBadge  } = data;
 
-  if (origin === 'selected') {
-    yield call(Notifications.setBadgeNumberAsync, 0);
+  if (origin === 'selected' || actionId === 'acceptRoomInvite') {
+    yield all([
+      call(Notifications.setBadgeNumberAsync, 0),
+      put(requestRoom.trigger(room)),
+    ]);
   } else {
     const badge = yield call(Notifications.getBadgeNumberAsync);
     const nextBadge = incrementBadge ? badge + incrementBadge : badge;
     yield call(Notifications.setBadgeNumberAsync, nextBadge);
   }
 
-  if (actionId === 'acceptRoomInvite') {
-    yield put(requestRoom.trigger(room));
-  }
   yield null;
 }
 
