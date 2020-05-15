@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import {
   clearRoom,
+  createRoom,
   gotResponses,
   gotRooms,
   joinRoom,
@@ -24,7 +25,6 @@ import {
   startRound,
   timerFired,
 } from '../actions';
-import { getUsername, getActiveRoom } from '../selectors';
 import { events, socket } from '../services';
 import createRootReducer from './reducers';
 import createRootSagas from './sagas';
@@ -35,7 +35,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = createRootReducer();
 
 export default () => {
-  console.log('store setup');
   const rootSagas = createRootSagas(socket, events);
 
   const sagaMiddleware = createSagaMiddleware();
@@ -134,8 +133,17 @@ export default () => {
   });
 
   socket.on(events.CONFIRM_PUSH_SENT, (data) => {
-    console.log(data);
     store.dispatch(sendPushNotif.success(data));
+  });
+
+  socket.on(events.ROOM_CREATED_ERROR, (data) => {
+    console.log(events.ROOM_CREATED_ERROR, data);
+    store.dispatch(createRoom.failure(data));
+  });
+
+  socket.on(events.ROOM_CREATED, (data) => {
+    console.log(events.ROOM_CREATED, data);
+    store.dispatch(createRoom.success(data));
   });
 
   return { store, socket };

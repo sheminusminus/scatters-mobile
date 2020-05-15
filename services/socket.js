@@ -12,6 +12,7 @@ const socket = io.connect('https://scatters.lol/scatters');
 export const events = {
   CONNECT: 'connect',
   CONNECT_ERROR: 'connect_error',
+  CREATE_ROOM: 'create-room',
   DICE_ROLL_RESET: 'dice-roll-reset',
   DICE_ROLLED: 'dice-rolled',
   EMIT_NAME: 'name',
@@ -27,6 +28,8 @@ export const events = {
   REQUEST_ROOM: 'request-room',
   RESET_DICE_ROLL: 'reset-dice-roll',
   ROLL_DICE: 'roll-dice',
+  ROOM_CREATED: 'room-created',
+  ROOM_CREATED_ERROR: 'room-created-error',
   ROOM_EXITED: 'room-exited',
   ROOMS_JOINED: 'rooms-joined',
   ROUND_ENDED: 'round-ended',

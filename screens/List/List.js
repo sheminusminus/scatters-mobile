@@ -1,9 +1,8 @@
 import React from 'react';
-import { Keyboard, Dimensions, View } from 'react-native';
+import { Keyboard, Dimensions } from 'react-native';
 import { Layout, List, Text, Input } from '@ui-kitten/components';
 
 import { Timer } from '../../components';
-import { usePrev } from '../../hooks';
 
 import styles from './styles';
 
@@ -78,7 +77,6 @@ const ListScreen = (props) => {
     </Layout>
   );
 
-  console.log(height);
   return (
     <Layout
       style={[

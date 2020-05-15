@@ -42,26 +42,25 @@ const styles = () => {
       maxWidth: sizes.spacing.XL,
     },
     roomsContainer: {
-      // minHeight: 150,
-      // maxHeight: 300,
       paddingLeft: sizes.spacing.MED,
       paddingRight: sizes.spacing.MED,
-      // paddingTop: sizes.spacing.SM,
       marginTop: sizes.spacing.L,
     },
     inputContainer: {
-      // height: 100,
-      // paddingLeft: sizes.spacing.MED,
-      // paddingRight: sizes.spacing.MED,
       marginTop: sizes.spacing.SM,
-      marginBottom: sizes.spacing.L,
-      // paddingTop: sizes.spacing.XL,
+      marginBottom: sizes.spacing.SM,
+    },
+    checkboxContainer: {
+      marginTop: sizes.spacing.SM,
+      marginBottom: sizes.spacing.XL,
+    },
+    checkbox: {
+      marginBottom: sizes.spacing.MED,
     },
     actionContainer: {
-      // height: 100,
       paddingLeft: sizes.spacing.MED,
       paddingRight: sizes.spacing.MED,
-      // paddingTop: sizes.spacing.MED,
+      marginTop: sizes.spacing.SM,
     },
     backdrop: {
       backgroundColor: 'rgba(0, 0, 0, 0.5)',

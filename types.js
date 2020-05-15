@@ -2,6 +2,7 @@ export const EMIT_NAME = '@player/EMIT_NAME';
 export const GOT_ROOMS = '@player/GOT_ROOMS';
 export const REQUEST_ROOM = '@player/REQUEST_ROOM';
 export const RETRIEVE_NAME = '@player/RETRIEVE_NAME';
+export const CREATE_ROOM = '@player/CREATE_ROOM';
 
 export const CLEAR_ROOM = '@rooms/CLEAR_ROOM';
 

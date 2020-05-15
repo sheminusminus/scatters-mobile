@@ -34,7 +34,9 @@ function* doNavigateToRooms() {
 function* doRequestAllUsers() {
   try {
     console.log(events.PRESENCE_GET_ALL_USERS, 'requesting?');
-    socket.emit(events.PRESENCE_GET_ALL_USERS);
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.PRESENCE_GET_ALL_USERS, { username, room });
   } catch (error) {
     yield put(requestAllUsers.failure(error));
   }
@@ -43,7 +45,9 @@ function* doRequestAllUsers() {
 function* doRequestOnlineUsers() {
   try {
     console.log(events.PRESENCE_GET_ONLINE_USERS, 'requesting?');
-    socket.emit(events.PRESENCE_GET_ONLINE_USERS);
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.PRESENCE_GET_ONLINE_USERS, { username, room });
   } catch (error) {
     yield put(requestOnlineUsers.failure(error));
   }

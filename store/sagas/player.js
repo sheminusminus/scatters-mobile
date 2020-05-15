@@ -1,12 +1,16 @@
+import { create } from 'react-native/jest/renderer';
 import { all, call, delay, take, put, spawn, select } from 'redux-saga/effects';
 
 import {
+  createRoom,
   emitName,
   gotRooms,
   joinRoom,
-  retrieveName,
   requestRoom,
+  retrieveName,
 } from '../../actions';
+
+import { RoomVisibility, RoomType } from '../../constants';
 
 import { getUsername } from '../../selectors';
 
@@ -68,12 +72,25 @@ function* doRequestRoom(room) {
   }
 }
 
+function* doCreateRoom(payload) {
+  try {
+    const { isRealtime, isPrivate, room } = payload;
+    const username = yield select(getUsername);
+    const type = isRealtime ? RoomType.REALTIME : RoomType.ASYNC;
+    const visibility = isPrivate ? RoomVisibility.PRIVATE : RoomVisibility.PUBLIC;
+    socket.emit(events.CREATE_ROOM, { room, username, type, visibility });
+  } catch (error) {
+    yield put(createRoom.failure(error));
+  }
+}
+
 /**
  *  Generator function to listen for redux actions
  */
 function* watchPlayerEvents() {
   while (true) {
     const { type, payload = {} } = yield take([
+      createRoom.TRIGGER,
       emitName.TRIGGER,
       joinRoom.SUCCESS,
       retrieveName.TRIGGER,
@@ -100,6 +117,10 @@ function* watchPlayerEvents() {
 
       case requestRoom.TRIGGER:
         yield spawn(doRequestRoom, payload);
+        break;
+
+      case createRoom.TRIGGER:
+        yield spawn(doCreateRoom, payload);
         break;
 
       default:

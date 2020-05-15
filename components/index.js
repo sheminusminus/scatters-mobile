@@ -1,4 +1,5 @@
 export { default as Dice } from './Dice';
+export { default as KeyboardDismissingView } from './KeyboardDismissingView';
 export { default as ListHeader } from './ListHeader';
 export { default as Loading } from './Loading';
 export { default as PopBack } from './PopBack';

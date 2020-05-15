@@ -1,1 +1,1 @@
-export { default } from './RoomsContainer';
+export { default } from './RoomsStack';

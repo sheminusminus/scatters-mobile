@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
 
+import { Screen } from './components';
 import { LinkingConfiguration, navigationRef } from './navigation';
 import { Storage } from './services';
 

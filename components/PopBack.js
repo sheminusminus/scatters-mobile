@@ -13,20 +13,29 @@ const BackIcon = (props = {}) => (
   />
 );
 
-const PopBack = ({ beforeBack, style = {} }) => {
+const XIcon = (props = {}) => (
+  <Icon
+    {...props}
+    name="close-circle"
+  />
+);
+
+const PopBack = ({ beforeBack, isCancel, style = {} }) => {
   const navigation = useNavigation();
 
   return (
     <Button
-      accessoryLeft={BackIcon}
+      accessoryLeft={isCancel ? XIcon : BackIcon}
       appearance="ghost"
-      status={Intent.PRIMARY}
+      status={isCancel ? Intent.DANGER : Intent.PRIMARY}
       style={{
         position: 'absolute',
         top: 48,
-        left: 16,
+        left: isCancel ? undefined : 16,
+        right: isCancel ? 16 : undefined,
         width: 40,
         height: 40,
+        opacity: isCancel ? 0.65 : 1,
         ...style,
       }}
       onPress={() => {

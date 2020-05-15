@@ -39,6 +39,7 @@ export const makeActions = (ACTION) => {
 };
 
 export const clearRoom = makeActions(types.CLEAR_ROOM);
+export const createRoom = makeActions(types.CREATE_ROOM);
 
 export const emitName = makeActions(types.EMIT_NAME);
 export const endRound = makeActions(types.END_ROUND);
