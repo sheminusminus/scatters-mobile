@@ -1,8 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
-import { Button, Card, Icon, Input, Modal, Layout, Text } from '@ui-kitten/components';
 import { useFocusEffect } from '@react-navigation/native';
+import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 
 import { ListHeader, RoomsMenu } from '../../components';
 import { Intent } from '../../constants';
@@ -23,24 +23,21 @@ const GoIcon = (props = {}) => (
 );
 
 const RoomsScreen = (props) => {
-  const { permission, allRooms, joinedRooms, onRequestRoom, onEmitName, username } = props;
+  const {
+    allRooms,
+    joinedRooms,
+    onRequestRoom,
+    onRequestListRooms,
+    navigation,
+  } = props;
 
-  console.log(permission);
   const styles = makeStyles();
 
   const [selected, setSelected] = React.useState(null);
-  const [input, setInput] = React.useState('');
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [input, setInput] = React.useState(null);
 
   const joinedItems = joinedRooms || [];
   const allItems = allRooms || [];
-
-  // useFocusEffect(React.useCallback(() => {
-  //   console.log('focused', allRooms);
-  //   if (!allRooms) {
-  //     onEmitName({ username });
-  //   }
-  // }, [allRooms, onEmitName, username]));
 
   const renderJoinedListHeader = () => (
     <ListHeader>
@@ -58,16 +55,16 @@ const RoomsScreen = (props) => {
   const allHeight = Math.min((allItems.length * 50) + 50, 300);
 
   const handlePress = () => {
-    if (!selected && !input) {
-      setModalVisible(true);
-    } else if (selected) {
-      onRequestRoom(selected);
-      setModalVisible(false);
+    if (!selected) {
+      navigation.navigate('Create');
     } else {
-      onRequestRoom(input);
-      setModalVisible(false);
+      onRequestRoom(selected);
     }
   };
+
+  useFocusEffect(React.useCallback(() => {
+    onRequestListRooms();
+  }, [onRequestListRooms]));
 
   return (
     <Layout style={styles.container}>
@@ -76,7 +73,10 @@ const RoomsScreen = (props) => {
           Join a Room
         </Text>
         <Button
-          disabled
+          disabled={!selected}
+          onPress={() => {
+            navigation.navigate('Presence', { room: selected });
+          }}
           appearance="ghost"
           accessoryLeft={PlusIcon}
           style={styles.plusButton}
@@ -129,31 +129,6 @@ const RoomsScreen = (props) => {
           {!selected && !input && 'Create New Room'}
         </Button>
       </View>
-
-      <Modal
-        visible={modalVisible}
-        backdropStyle={styles.backdrop}
-        onBackdropPress={() => setModalVisible(false)}>
-        <Card disabled={true} style={styles.card}>
-          <Text category="label" style={{ opacity: 0.8 }}>NEW ROOM NAME</Text>
-
-          <View style={styles.inputContainer}>
-            <Input
-              value={input}
-              onChangeText={(val) => {
-                setSelected(null);
-                setInput(val);
-              }}
-              status={input && input.length >= 1 ? Intent.SUCCESS : undefined}
-              placeholder="e.g. My Secret Room"
-            />
-          </View>
-
-          <Button onPress={handlePress}>
-            Done
-          </Button>
-        </Card>
-      </Modal>
     </Layout>
   );
 };
@@ -164,6 +139,7 @@ RoomsScreen.navigationOptions = {
 
 RoomsScreen.propTypes = {
   onRequestRoom: PropTypes.func.isRequired,
+  onRequestListRooms: PropTypes.func.isRequired,
   allRooms: PropTypes.array,
   joinedRooms: PropTypes.array,
   username: PropTypes.string,

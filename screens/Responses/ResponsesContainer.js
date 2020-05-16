@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  getGameCurrentList,
-  getGamePlayersNotWaiting,
-  getGameRoundsScored,
-  getGameResponses,
-  getSystemCanRecord,
+  getCurrentList,
+  getPlayersNotWaiting,
+  getRoundsScored,
+  getResponses,
+  getCanRecord,
 } from '../../selectors';
 
 import { audioStartRecording, sendTallies, permsRequestRecording } from '../../actions';
@@ -15,11 +15,11 @@ import screen from './Responses';
 
 
 const mapState = createStructuredSelector({
-  canRecord: getSystemCanRecord,
-  currentList: getGameCurrentList,
-  players: getGamePlayersNotWaiting,
-  responses: getGameResponses,
-  roundsScored: getGameRoundsScored,
+  canRecord: getCanRecord,
+  currentList: getCurrentList,
+  players: getPlayersNotWaiting,
+  responses: getResponses,
+  roundsScored: getRoundsScored,
 });
 
 const mapDispatch = {

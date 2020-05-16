@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 
 import { Intent } from '../constants';
+import { socket } from '../services';
 
 const VoiceIcon = (props = {}) => (
   <Icon
@@ -20,6 +21,7 @@ const PlayIcon = (props = {}) => (
     name="play-circle"
   />
 );
+
 
 class Record extends React.Component {
   recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_LOW_QUALITY));

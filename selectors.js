@@ -17,48 +17,48 @@ export const getAllState = createSelector(
   state => state,
 );
 
-export const getSystemRecordingPerm = createSelector(
+export const getRecordingPermission = createSelector(
   [getSystemState],
   system => system.recordingPerm,
 );
 
-export const getSystemCanRecord = createSelector(
-  [getSystemRecordingPerm],
+export const getCanRecord = createSelector(
+  [getRecordingPermission],
   perm => perm === 'granted',
 );
 
-export const getPlayerName = createSelector(
+export const getUsername = createSelector(
   [getPlayerState],
   player => player.username,
 );
 
-export const getPlayerScore = createSelector(
+export const getScore = createSelector(
   [getPlayerState],
   player => player.score,
 );
 
-export const getPlayerLookedForName = createSelector(
+export const getLookedForName = createSelector(
   [getPlayerState],
   player => player.lookedForName,
 );
 
-export const getGameActivePlayer = createSelector(
+export const getActivePlayer = createSelector(
   [getGameState],
   game => game.activePlayer,
 );
 
 export const getPlayerIsActive = createSelector(
-  [getPlayerName, getGameActivePlayer],
+  [getUsername, getActivePlayer],
   (username, activePlayer) => username === activePlayer,
 );
 
-export const getGamePlayers = createSelector(
+export const getPlayers = createSelector(
   [getGameState],
   game => game.players,
 );
 
-export const getGameActivePlayerName = createSelector(
-  [getGamePlayers, getGameActivePlayer],
+export const getActivePlayerUsername = createSelector(
+  [getPlayers, getActivePlayer],
   (players, activePlayer) => {
     const p = players.find(p => p.username === activePlayer);
 
@@ -70,33 +70,33 @@ export const getGameActivePlayerName = createSelector(
   },
 );
 
-export const getGamePlayersNotWaiting = createSelector(
+export const getPlayersNotWaiting = createSelector(
   [getGameState],
   game => game.players.filter((p) => !p.waiting),
 );
 
-export const getGameRoll = createSelector(
+export const getRoll = createSelector(
   [getGameState],
   game => game.roll,
 );
 
-export const getGameTimeLeft = createSelector(
+export const getTimeLeft = createSelector(
   [getGameState],
   game => game.timeLeft,
 );
 
-export const getGameStartTime = createSelector(
+export const getTimerStart = createSelector(
   [getGameState],
   game => game.startTime,
 );
 
-export const getGameEndTime = createSelector(
+export const getTimerEnd = createSelector(
   [getGameState],
   game => game.endTime,
 );
 
-export const getGameTimeElapsed = createSelector(
-  [getGameStartTime, getGameEndTime, getGameTimeLeft],
+export const getTimerElapsedTime = createSelector(
+  [getTimerStart, getTimerEnd, getTimeLeft],
   (start, end, left) => {
     if (start === -1 || end === -1) {
       return -1;
@@ -106,29 +106,19 @@ export const getGameTimeElapsed = createSelector(
   },
 );
 
-export const getGameRoundActive = createSelector(
+export const getActiveRound = createSelector(
   [getGameState],
   game => game.roundActive,
 );
 
-export const getGameRoundsScored = createSelector(
+export const getRoundsScored = createSelector(
   [getGameState],
   game => game.roundsScored,
 );
 
-export const getGameCurrentList = createSelector(
+export const getCurrentList = createSelector(
   [getGameState],
   game => game.currentList,
-);
-
-export const getGameWaitNextRound = createSelector(
-  [getGameState],
-  game => game.waitNextRound,
-);
-
-export const getGameWaitRoundStart = createSelector(
-  [getGameState],
-  game => game.waitRoundStart,
 );
 
 export const getGamePhase = createSelector(
@@ -136,59 +126,69 @@ export const getGamePhase = createSelector(
   game => game.phase,
 );
 
-export const getGameResponses = createSelector(
+export const getResponses = createSelector(
   [getGameState],
   game => game.responses,
 );
 
-export const getGameListItems = createSelector(
-  [getGameCurrentList],
+export const getListItems = createSelector(
+  [getCurrentList],
   (currentList) => {
     return listItems.slice(currentList * 12, (currentList + 1) * 12);
   },
 )
 
-export const getRoundAllowAnswers = createSelector(
+export const getAnsweringIsAllowed = createSelector(
   [getRoundState],
   round => round.allowAnswers,
 );
 
-export const getRoundHideList = createSelector(
+export const getShouldHideList = createSelector(
   [getRoundState],
   round => round.hideList,
 );
 
-export const getRoundShowTimer = createSelector(
+export const getShouldShowTimer = createSelector(
   [getRoundState],
   round => round.showTimer,
 );
 
-export const getRoundAnswers = createSelector(
+export const getAnswers = createSelector(
   [getRoundState],
   round => round.answers,
 );
 
-export const getRoomsRoom = createSelector(
+export const getActiveRoom = createSelector(
   [getRoomsState],
   rooms => rooms.room,
 );
 
-export const getRoomsJoinedRooms = createSelector(
+export const getJoinedRooms = createSelector(
   [getRoomsState],
   rooms => rooms.joinedRooms,
 );
 
-export const getRoomsJoinedRoomsNames = createSelector(
-  [getRoomsJoinedRooms],
+export const getJoinedRoomNames = createSelector(
+  [getJoinedRooms],
   joinedRooms => joinedRooms ? joinedRooms.map((room) => room.name) : [],
 );
 
-export const getRoomsAllRooms = createSelector(
+export const getAllRooms = createSelector(
   [getRoomsState],
   rooms => rooms.allRooms,
 );
 
-export const getRoomsAllRoomsNames = createSelector(
-  [getRoomsAllRooms],
+export const getAllRoomNames = createSelector(
+  [getAllRooms],
   allRooms => (allRooms ? allRooms.map((room) => room.name) : []),
+);
+
+export const getAllPlayers = createSelector(
+  [getRoomsState],
+  rooms => rooms.allPlayers,
+);
+
+export const getOnlinePlayers = createSelector(
+  [getRoomsState],
+  rooms => rooms.onlinePlayers,
 );

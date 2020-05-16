@@ -1,32 +1,32 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-// import { composeWithDevTools } from 'remote-redux-devtools';
 
 import {
+  clearRoom,
+  createRoom,
   emitName,
   gotResponses,
+  gotRooms,
   joinRoom,
   nextRound,
+  requestAllUsers,
+  requestInvitesFromMe,
+  requestInvitesToMe,
+  requestOnlineUsers,
   resetDiceRoll,
   rollDice,
   roundEnded,
   roundScored,
+  sendInviteForRoom,
+  sendPushNotif,
   setGamePhase,
   setPlayers,
   setRound,
   startGame,
   startRound,
   timerFired,
-  gotRooms,
-  requestAllUsers,
-  requestOnlineUsers,
-  requestInvitesToMe,
-  requestInvitesFromMe,
-  requestRoom,
-  sendInviteForRoom,
 } from '../actions';
-import { getPlayerName, getRoomsRoom } from '../selectors';
-import { events, socket } from '../services';
+import { events, socket, Storage } from '../services';
 import createRootReducer from './reducers';
 import createRootSagas from './sagas';
 
@@ -36,7 +36,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = createRootReducer();
 
 export default () => {
-  console.log('store setup');
   const rootSagas = createRootSagas(socket, events);
 
   const sagaMiddleware = createSagaMiddleware();
@@ -53,29 +52,19 @@ export default () => {
 
   sagaMiddleware.run(rootSagas);
 
-  socket.on(events.CONNECT, () => {
-    socket.emit('connected');
-    const state = store.getState();
-    const username = getPlayerName(state);
-    const room = getRoomsRoom(state);
+  socket.on('reconnect', async () => {
+    const username = await Storage.load(Storage.kNAME);
     if (username) {
       store.dispatch(emitName.trigger({ username }));
-    }
-    if (room) {
-      store.dispatch(requestRoom.trigger(room));
     }
   });
 
   socket.on(events.LIST_ROOMS, (data) => {
-    console.log(events.LIST_ROOMS, data);
     store.dispatch(gotRooms.trigger(data));
   });
 
   socket.on(events.JOINED_ROOM, (data) => {
-    console.log(events.JOINED_ROOM, data);
     store.dispatch(joinRoom.success(data));
-    // TODO: set local storage
-    // lsSet('name', data.name);
   });
 
   socket.on(events.PLAYERS_UPDATED, (data) => {
@@ -95,7 +84,6 @@ export default () => {
   });
 
   socket.on(events.ROUND_STARTED, () => {
-    console.log(events.ROUND_STARTED);
     store.dispatch(startRound.success());
   });
 
@@ -129,28 +117,41 @@ export default () => {
   });
 
   socket.on(events.PRESENCE_GET_ONLINE_USERS, (data) => {
-    console.log(events.PRESENCE_GET_ONLINE_USERS, data);
     store.dispatch(requestOnlineUsers.success(data));
   });
 
   socket.on(events.PRESENCE_GET_ALL_USERS, (data) => {
-    console.log(events.PRESENCE_GET_ALL_USERS, data);
     store.dispatch(requestAllUsers.success(data));
   });
 
   socket.on(events.INVITES_GET_TO_ME, (data) => {
-    console.log(events.INVITES_GET_TO_ME, data);
     store.dispatch(requestInvitesToMe.success(data));
   });
 
   socket.on(events.INVITES_GET_FROM_ME, (data) => {
-    console.log(events.INVITES_GET_FROM_ME, data);
     store.dispatch(requestInvitesFromMe.success(data));
   });
 
   socket.on(events.INVITES_SEND_FOR_ROOM, (data) => {
-    console.log(events.INVITES_SEND_FOR_ROOM, data);
     store.dispatch(sendInviteForRoom.success(data));
+  });
+
+  socket.on(events.ROOM_EXITED, (data) => {
+    store.dispatch(clearRoom.success(data));
+  });
+
+  socket.on(events.CONFIRM_PUSH_SENT, (data) => {
+    store.dispatch(sendPushNotif.success(data));
+  });
+
+  socket.on(events.ROOM_CREATED_ERROR, (data) => {
+    console.log(events.ROOM_CREATED_ERROR, data);
+    store.dispatch(createRoom.failure(data));
+  });
+
+  socket.on(events.ROOM_CREATED, (data) => {
+    console.log(events.ROOM_CREATED, data);
+    store.dispatch(createRoom.success(data));
   });
 
   return { store, socket };

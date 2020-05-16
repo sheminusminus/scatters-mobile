@@ -32,7 +32,7 @@ const styles = () => {
       width: '100%',
       textAlign: 'center',
       alignSelf: 'center',
-      opacity: 0.5,
+      opacity: 0.8,
     },
     plusButton: {
       position: 'absolute',
@@ -42,25 +42,26 @@ const styles = () => {
       maxWidth: sizes.spacing.XL,
     },
     roomsContainer: {
+      // minHeight: 150,
+      // maxHeight: 300,
       paddingLeft: sizes.spacing.MED,
       paddingRight: sizes.spacing.MED,
+      // paddingTop: sizes.spacing.SM,
       marginTop: sizes.spacing.L,
     },
     inputContainer: {
+      // height: 100,
+      // paddingLeft: sizes.spacing.MED,
+      // paddingRight: sizes.spacing.MED,
       marginTop: sizes.spacing.SM,
-      marginBottom: sizes.spacing.SM,
-    },
-    checkboxContainer: {
-      marginTop: sizes.spacing.SM,
-      marginBottom: sizes.spacing.XL,
-    },
-    checkbox: {
-      marginBottom: sizes.spacing.MED,
+      marginBottom: sizes.spacing.L,
+      // paddingTop: sizes.spacing.XL,
     },
     actionContainer: {
+      // height: 100,
       paddingLeft: sizes.spacing.MED,
       paddingRight: sizes.spacing.MED,
-      marginTop: sizes.spacing.SM,
+      // paddingTop: sizes.spacing.MED,
     },
     backdrop: {
       backgroundColor: 'rgba(0, 0, 0, 0.5)',

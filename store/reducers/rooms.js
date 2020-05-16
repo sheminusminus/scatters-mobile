@@ -1,12 +1,16 @@
 import {
-  joinRoom,
+  clearRoom,
   gotRooms,
+  joinRoom,
+  requestAllUsers,
 } from '../../actions';
 
 
 const roomsState = {
+  allPlayers: [],
   allRooms: null,
   joinedRooms: null,
+  onlinePlayers: [],
   room: '',
 };
 
@@ -25,6 +29,20 @@ const rooms = (state = roomsState, action = {}) => {
         ...state,
         allRooms: action.payload.allRooms,
         joinedRooms: action.payload.joinedRooms,
+      };
+
+    case clearRoom.SUCCESS:
+      return {
+        ...state,
+        allRooms: action.payload.allRooms,
+        joinedRooms: action.payload.joinedRooms,
+        room: '',
+      };
+
+    case requestAllUsers.SUCCESS:
+      return {
+        ...state,
+        allPlayers: action.payload.allPlayers,
       };
 
     default:

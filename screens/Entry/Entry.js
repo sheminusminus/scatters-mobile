@@ -11,13 +11,12 @@ import { usePrev } from '../../hooks';
 import styles from './styles';
 
 
-const EntryScreen = ({ onCheckRecordingPerms, lookedForName, username, navigation, onRetrieveName, onEmitName, rooms }) => {
+const EntryScreen = ({ lookedForName, username, navigation, onRetrieveName, onEmitName, rooms }) => {
   const [value, setValue] = React.useState(username);
 
   React.useEffect(() => {
     onRetrieveName();
-    onCheckRecordingPerms();
-  }, [onRetrieveName, onCheckRecordingPerms]);
+  }, [onRetrieveName]);
 
   const prevName = usePrev(username);
   const prevRooms = usePrev(rooms);
@@ -29,12 +28,11 @@ const EntryScreen = ({ onCheckRecordingPerms, lookedForName, username, navigatio
   }, [prevName, username]);
 
   React.useEffect(() => {
-    if (Boolean(!prevRooms && rooms)) {
+    if (Boolean(username && !prevRooms && rooms)) {
       navigation.navigate('Rooms');
     }
-  }, [prevName, username]);
+  }, [prevRooms, rooms, username]);
 
-  console.log(prevRooms, rooms);
   return (
     <Layout style={styles.container}>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>

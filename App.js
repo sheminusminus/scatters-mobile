@@ -1,20 +1,25 @@
+import * as Device from 'expo-device';
 import * as eva from '@eva-design/eva';
+import * as Permissions from 'expo-permissions';
 import * as React from 'react';
+import Constants from 'expo-constants';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NavigationContainer } from '@react-navigation/native';
-import { Platform, StatusBar, StyleSheet, View, NativeModules } from 'react-native';
+import { Notifications } from 'expo';
 import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
 
 import { LinkingConfiguration, navigationRef } from './navigation';
+import { Storage } from './services';
 
 import {
   EntryScreen,
   GameScreen,
   ListScreen,
+  PresenceScreen,
   ResponsesScreen,
   RoomsScreen,
   ScoresScreen,
@@ -24,46 +29,56 @@ import {
 import configureStore from './store';
 
 
-// if (__DEV__) {
-//   NativeModules.DevSettings.setIsDebuggingRemotely(true)
-// }
+const registerForPushNotificationsAsync = async () => {
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    const token = await Notifications.getExpoPushTokenAsync();
+    console.log(token);
+    await Storage.save(Storage.kToken, token);
+    const createdCategory = await Storage.load(Storage.kInviteCategory);
+    if (!createdCategory) {
+      await Notifications.createCategoryAsync('roomInvite', [
+        {
+          actionId: 'acceptRoomInvite',
+          buttonTitle: 'Join',
+          isDestructive: false,
+        },
+        {
+          actionId: 'declineRoomInvite',
+          buttonTitle: 'Decline',
+          isDestructive: true,
+        },
+      ]);
+      await Storage.save(Storage.kInviteCategory, 'true');
+    }
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+};
 
-const Stack = createStackNavigator();
 const RootStack = createStackNavigator();
 
 const { store } = configureStore();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
-
-const MainScreen = () => {
-  return (
-    <View style={styles.container}>
-      {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-
-      <Stack.Navigator
-        headerMode="none"
-        initialRouteName="Entry"
-        mode="card"
-      >
-        <Stack.Screen
-          name="Entry"
-          component={EntryScreen}
-        />
-        <Stack.Screen name="Rooms" component={RoomsScreen} />
-        <Stack.Screen name="Start" component={StartScreen} />
-        <Stack.Screen name="Game" component={GameScreen} />
-      </Stack.Navigator>
-    </View>
-  );
-};
-
 const App = () => {
   const isLoadingComplete = useCachedResources();
+
+  React.useEffect(() => {
+    if (Device.isDevice) {
+      registerForPushNotificationsAsync().then(() => {
+        console.log('push registration attempted');
+      });
+    }
+  }, []);
 
   if (!isLoadingComplete) {
     return null;
@@ -78,15 +93,12 @@ const App = () => {
           mode="modal"
           headerMode="none"
         >
-          {/*<RootStack.Screen*/}
-          {/*  name="Main"*/}
-          {/*  component={MainScreen}*/}
-          {/*/>*/}
           <RootStack.Screen
             name="Entry"
             component={EntryScreen}
           />
           <RootStack.Screen name="Rooms" component={RoomsScreen} />
+          <RootStack.Screen name="Presence" component={PresenceScreen} />
           <RootStack.Screen name="Start" component={StartScreen} />
           <RootStack.Screen name="Game" component={GameScreen} />
           <RootStack.Screen

@@ -2,15 +2,15 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  getGameActivePlayerName,
-  getGameCurrentList,
-  getGameRoll,
-  getGameRoundActive,
+  getActivePlayerUsername,
+  getCurrentList,
+  getRoll,
+  getActiveRound,
   getPlayerIsActive,
-  getRoundAllowAnswers,
-  getRoundHideList,
-  getRoundAnswers,
-  getRoundShowTimer,
+  getAnsweringIsAllowed,
+  getShouldHideList,
+  getAnswers,
+  getShouldShowTimer,
 } from '../../selectors';
 
 import {
@@ -25,15 +25,15 @@ import screen from './Round';
 
 
 const mapState = createStructuredSelector({
-  activePlayerName: getGameActivePlayerName,
-  allowAnswers: getRoundAllowAnswers,
-  answers: getRoundAnswers,
-  currentList: getGameCurrentList,
-  hideList: getRoundHideList,
+  activePlayerName: getActivePlayerUsername,
+  allowAnswers: getAnsweringIsAllowed,
+  answers: getAnswers,
+  currentList: getCurrentList,
+  hideList: getShouldHideList,
   playerIsActive: getPlayerIsActive,
-  roll: getGameRoll,
-  roundActive: getGameRoundActive,
-  showTimer: getRoundShowTimer,
+  roll: getRoll,
+  roundActive: getActiveRound,
+  showTimer: getShouldShowTimer,
 });
 
 const mapDispatch = {

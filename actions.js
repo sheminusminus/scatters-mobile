@@ -38,7 +38,9 @@ export const makeActions = (ACTION) => {
   };
 };
 
-export const closeModal = makeActions(types.CLOSE_MODAL);
+export const clearRoom = makeActions(types.CLEAR_ROOM);
+export const createRoom = makeActions(types.CREATE_ROOM);
+
 export const emitName = makeActions(types.EMIT_NAME);
 export const endRound = makeActions(types.END_ROUND);
 export const getStatus = makeActions(types.GET_STATUS);
@@ -47,7 +49,7 @@ export const gotRooms = makeActions(types.GOT_ROOMS);
 export const joinRoom = makeActions(types.JOIN_ROOM);
 export const nextList = makeActions(types.NEXT_LIST);
 export const nextRound = makeActions(types.NEXT_ROUND);
-export const openModal = makeActions(types.OPEN_MODAL);
+export const requestListRooms = makeActions(types.REQUEST_LIST_ROOMS);
 export const requestRoom = makeActions(types.REQUEST_ROOM);
 export const resetDiceRoll = makeActions(types.RESET_DICE_ROLL);
 export const retrieveName = makeActions(types.RETRIEVE_NAME);
@@ -82,3 +84,7 @@ export const onDisconnect = makeActions(types.ON_DISCONNECT);
 export const permsRequestRecording = makeActions(types.PERMS_REQUEST_RECORDING);
 export const permsCheckRecording = makeActions(types.PERMS_CHECK_RECORDING);
 export const audioStartRecording = makeActions(types.AUDIO_START_REC);
+
+export const sendPushNotif = makeActions(types.SEND_PUSH_NOTIF);
+export const acceptRoomInvite = makeActions(types.ACCEPT_ROOM_INVITE);
+export const declineRoomInvite = makeActions(types.DECLINE_ROOM_INVITE);

@@ -1,16 +1,12 @@
 import { Audio } from 'expo-av';
 import * as Permissions from 'expo-permissions';
-import { all, call, take, put, spawn, select } from 'redux-saga/effects';
+import { all, call, take, put, spawn } from 'redux-saga/effects';
 
 import {
   permsRequestRecording,
   permsCheckRecording,
   audioStartRecording,
 } from '../../actions';
-
-import { getPlayerName } from '../../selectors';
-
-import { navigate } from '../../navigation';
 
 import { Storage } from '../../services';
 

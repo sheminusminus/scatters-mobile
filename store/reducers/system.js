@@ -9,7 +9,6 @@ const systemState = {
 };
 
 const system = (state = systemState, action = {}) => {
-  console.log(action.payload, action.type);
   // noinspection JSUnresolvedVariable
   switch (action.type) {
     case permsRequestRecording.SUCCESS:

@@ -23,9 +23,9 @@ import { GamePhase } from '../../constants';
 import { navigate, navigateBack } from '../../navigation';
 
 import {
-  getPlayerName,
-  getRoundAnswers,
-  getRoomsRoom,
+  getUsername,
+  getAnswers,
+  getActiveRoom,
 } from '../../selectors';
 
 
@@ -55,8 +55,9 @@ function* navToScores() {
 
 function* doStartGame() {
   try {
-    const room = yield select(getRoomsRoom);
-    socket.emit(events.START_GAME, { room });
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.START_GAME, { room, username });
   } catch (error) {
     yield put(startGame.failure(error));
   }
@@ -64,8 +65,9 @@ function* doStartGame() {
 
 function* doRollDice() {
   try {
-    const room = yield select(getRoomsRoom);
-    socket.emit(events.ROLL_DICE, { room });
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.ROLL_DICE, { room, username });
   } catch (error) {
     yield put(rollDice.failure(error));
   }
@@ -73,8 +75,9 @@ function* doRollDice() {
 
 function* doResetDiceRoll() {
   try {
-    const room = yield select(getRoomsRoom);
-    socket.emit(events.RESET_DICE_ROLL, { room });
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.RESET_DICE_ROLL, { room, username });
   } catch (error) {
     yield put(resetDiceRoll.failure(error));
   }
@@ -82,8 +85,9 @@ function* doResetDiceRoll() {
 
 function* doStartRound() {
   try {
-    const room = yield select(getRoomsRoom);
-    socket.emit(events.START_ROUND, { room });
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.START_ROUND, { room, username });
   } catch (error) {
     yield put(startRound.failure(error));
   }
@@ -91,9 +95,9 @@ function* doStartRound() {
 
 function* doSendAnswers() {
   try {
-    const room = yield select(getRoomsRoom);
-    const username = yield select(getPlayerName);
-    const answers = yield select(getRoundAnswers);
+    const room = yield select(getActiveRoom);
+    const username = yield select(getUsername);
+    const answers = yield select(getAnswers);
     socket.emit(events.SEND_ANSWERS, { answers, username, room });
   } catch (error) {
     yield put(sendAnswers.failure(error));
@@ -102,8 +106,9 @@ function* doSendAnswers() {
 
 function* doSendTallies(data) {
   try {
-    const room = yield select(getRoomsRoom);
-    socket.emit(events.SEND_TALLIES, { tallies: data, room });
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.SEND_TALLIES, { tallies: data, room, username });
   } catch (error) {
     yield put(sendTallies.failure(error));
   }
@@ -128,8 +133,9 @@ function* doRoundScored() {
 
 function* doNextRound() {
   try {
-    const room = yield select(getRoomsRoom);
-    socket.emit(events.NEXT_ROUND, { room });
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.NEXT_ROUND, { room, username });
   } catch (error) {
     yield put(gotResponses.failure(error));
   }
@@ -145,8 +151,9 @@ function* doNextRoundSuccess() {
 
 function* doGetStatus() {
   try {
-    const room = yield select(getRoomsRoom);
-    socket.emit(events.GET_STATUS, { room });
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.GET_STATUS, { room, username });
   } catch (error) {
     yield put(getStatus.failure(error));
   }
@@ -154,6 +161,14 @@ function* doGetStatus() {
 
 function* doSetGamePhase(payload) {
   try {
+    const room = yield select(getActiveRoom);
+
+    console.log('room match: ', payload.room, room);
+    if (room !== payload.room) {
+      // TODO: fire a status notification here
+      return;
+    }
+
     switch (payload.phase) {
       case GamePhase.NOT_STARTED:
         yield null;
@@ -198,8 +213,9 @@ function* doSetGamePhase(payload) {
 
 function* doSetRound(payload) {
   try {
-    const room = yield select(getRoomsRoom);
-    socket.emit(events.SET_ROUND, { ...payload, room });
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.SET_ROUND, { ...payload, room, username });
   } catch (error) {
     yield put(getStatus.failure(error));
   }

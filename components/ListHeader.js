@@ -16,9 +16,9 @@ const styles = {
   },
 };
 
-const ListHeader = ({ children }) => {
+const ListHeader = ({ children, style = {} }) => {
   return (
-    <Layout style={styles.container}>
+    <Layout style={{ ...styles.container, ...style }}>
       <Text style={styles.text} category="label">
         {children}
       </Text>
