@@ -12,7 +12,6 @@ import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
 
-import { Screen } from './components';
 import { LinkingConfiguration, navigationRef } from './navigation';
 import { Storage } from './services';
 
@@ -44,8 +43,8 @@ const registerForPushNotificationsAsync = async () => {
     }
     const token = await Notifications.getExpoPushTokenAsync();
     console.log(token);
-    await Storage.save('pushToken', token);
-    const createdCategory = await Storage.load('createdRoomInviteCategory');
+    await Storage.save(Storage.kToken, token);
+    const createdCategory = await Storage.load(Storage.kInviteCategory);
     if (!createdCategory) {
       await Notifications.createCategoryAsync('roomInvite', [
         {
@@ -59,7 +58,7 @@ const registerForPushNotificationsAsync = async () => {
           isDestructive: true,
         },
       ]);
-      await Storage.save('createdRoomInviteCategory', 'true');
+      await Storage.save(Storage.kInviteCategory, 'true');
     }
   } else {
     alert('Must use physical device for Push Notifications');

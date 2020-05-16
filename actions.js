@@ -49,6 +49,7 @@ export const gotRooms = makeActions(types.GOT_ROOMS);
 export const joinRoom = makeActions(types.JOIN_ROOM);
 export const nextList = makeActions(types.NEXT_LIST);
 export const nextRound = makeActions(types.NEXT_ROUND);
+export const requestListRooms = makeActions(types.REQUEST_LIST_ROOMS);
 export const requestRoom = makeActions(types.REQUEST_ROOM);
 export const resetDiceRoll = makeActions(types.RESET_DICE_ROLL);
 export const retrieveName = makeActions(types.RETRIEVE_NAME);

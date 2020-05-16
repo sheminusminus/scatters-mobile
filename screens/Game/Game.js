@@ -106,6 +106,7 @@ const GameScreen = (props) => {
         ]}
       >
         <TouchableOpacity
+          disabled={isRolling}
           onPress={() => {
             onRollDice();
             setIsRolling(true);

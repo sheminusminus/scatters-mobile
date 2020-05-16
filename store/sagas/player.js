@@ -6,13 +6,14 @@ import {
   emitName,
   gotRooms,
   joinRoom,
+  requestListRooms,
   requestRoom,
   retrieveName,
 } from '../../actions';
 
 import { RoomVisibility, RoomType } from '../../constants';
 
-import { getUsername } from '../../selectors';
+import { getActiveRoom, getUsername } from '../../selectors';
 
 import { navigate } from '../../navigation';
 
@@ -24,8 +25,8 @@ let events;
 
 function* doEmitName(payload) {
   try {
-    const pushToken = yield call(Storage.load, 'pushToken');
-    yield call(Storage.save, 'username', payload.username);
+    const pushToken = yield call(Storage.load, Storage.kToken);
+    yield call(Storage.save, Storage.kNAME, payload.username);
     socket.emit(events.EMIT_NAME, { ...payload, pushToken });
   } catch (error) {
     yield put(emitName.failure(error));
@@ -43,8 +44,8 @@ function* doGotRooms(data) {
 
 function* doRetrieveName() {
   try {
-    const username = yield call(Storage.load, 'username');
-    const pushToken = yield call(Storage.load, 'pushToken');
+    const username = yield call(Storage.load, Storage.kNAME);
+    const pushToken = yield call(Storage.load, Storage.kToken);
 
     if (username) {
       yield put(retrieveName.success());
@@ -84,6 +85,16 @@ function* doCreateRoom(payload) {
   }
 }
 
+function* doListRooms(payload) {
+  try {
+    const username = yield select(getUsername);
+    const room = yield select(getActiveRoom);
+    socket.emit(events.LIST_ROOMS, { room, username });
+  } catch (error) {
+    yield put(requestListRooms.failure(error));
+  }
+}
+
 /**
  *  Generator function to listen for redux actions
  */
@@ -92,10 +103,11 @@ function* watchPlayerEvents() {
     const { type, payload = {} } = yield take([
       createRoom.TRIGGER,
       emitName.TRIGGER,
-      joinRoom.SUCCESS,
-      retrieveName.TRIGGER,
       gotRooms.TRIGGER,
+      joinRoom.SUCCESS,
+      requestListRooms.TRIGGER,
       requestRoom.TRIGGER,
+      retrieveName.TRIGGER,
     ]);
 
     switch (type) {
@@ -121,6 +133,10 @@ function* watchPlayerEvents() {
 
       case createRoom.TRIGGER:
         yield spawn(doCreateRoom, payload);
+        break;
+
+      case requestListRooms.TRIGGER:
+        yield spawn(doListRooms);
         break;
 
       default:

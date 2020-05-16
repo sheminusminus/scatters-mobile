@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import {
   clearRoom,
   createRoom,
+  emitName,
   gotResponses,
   gotRooms,
   joinRoom,
@@ -25,7 +26,7 @@ import {
   startRound,
   timerFired,
 } from '../actions';
-import { events, socket } from '../services';
+import { events, socket, Storage } from '../services';
 import createRootReducer from './reducers';
 import createRootSagas from './sagas';
 
@@ -50,6 +51,13 @@ export default () => {
   );
 
   sagaMiddleware.run(rootSagas);
+
+  socket.on('reconnect', async () => {
+    const username = await Storage.load(Storage.kNAME);
+    if (username) {
+      store.dispatch(emitName.trigger({ username }));
+    }
+  });
 
   socket.on(events.LIST_ROOMS, (data) => {
     store.dispatch(gotRooms.trigger(data));

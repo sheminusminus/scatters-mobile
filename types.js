@@ -3,6 +3,7 @@ export const GOT_ROOMS = '@player/GOT_ROOMS';
 export const REQUEST_ROOM = '@player/REQUEST_ROOM';
 export const RETRIEVE_NAME = '@player/RETRIEVE_NAME';
 export const CREATE_ROOM = '@player/CREATE_ROOM';
+export const REQUEST_LIST_ROOMS = '@player/REQUEST_LIST_ROOMS';
 
 export const CLEAR_ROOM = '@rooms/CLEAR_ROOM';
 

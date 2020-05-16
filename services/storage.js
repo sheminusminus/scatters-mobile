@@ -6,7 +6,9 @@ const PREFIX = '@Scatters:';
 class Storage {
   static makeKey = (key) => `${PREFIX}${key}`;
 
-  static kNAME = Storage.makeKey('name');
+  static kNAME = Storage.makeKey('username');
+  static kToken = Storage.makeKey('pushToken');
+  static kInviteCategory = Storage.makeKey('createdRoomInviteCategory');
 
   static save = async (k, value) => {
     const key = Storage.makeKey(k);

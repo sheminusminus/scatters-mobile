@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { requestRoom, emitName } from '../../actions';
+import { requestRoom, emitName, requestListRooms } from '../../actions';
 
 import {
   getAllRoomNames,
@@ -22,6 +22,7 @@ const mapState = createStructuredSelector({
 
 const mapDispatch = {
   onRequestRoom: requestRoom.trigger,
+  onRequestListRooms: requestListRooms.trigger,
   onEmitName: emitName.trigger,
 };
 

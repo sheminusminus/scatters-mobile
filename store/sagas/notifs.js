@@ -33,7 +33,7 @@ function* doSendPushNotif(payload) {
 
   try {
     const username = yield select(getUsername);
-    const pushToken = yield call(Storage.load, 'pushToken');
+    const pushToken = yield call(Storage.load, Storage.kToken);
 
     if (pushToken) {
       socket.emit(events.SEND_PUSH, {

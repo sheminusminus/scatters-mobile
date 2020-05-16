@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 
 import { ListHeader, RoomsMenu } from '../../components';
@@ -26,6 +27,7 @@ const RoomsScreen = (props) => {
     allRooms,
     joinedRooms,
     onRequestRoom,
+    onRequestListRooms,
     navigation,
   } = props;
 
@@ -59,6 +61,10 @@ const RoomsScreen = (props) => {
       onRequestRoom(selected);
     }
   };
+
+  useFocusEffect(React.useCallback(() => {
+    onRequestListRooms();
+  }, [onRequestListRooms]));
 
   return (
     <Layout style={styles.container}>
@@ -133,6 +139,7 @@ RoomsScreen.navigationOptions = {
 
 RoomsScreen.propTypes = {
   onRequestRoom: PropTypes.func.isRequired,
+  onRequestListRooms: PropTypes.func.isRequired,
   allRooms: PropTypes.array,
   joinedRooms: PropTypes.array,
   username: PropTypes.string,
