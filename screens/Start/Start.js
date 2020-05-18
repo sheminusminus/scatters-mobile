@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, IndexPath, Layout, Select, SelectItem, Text } from '@ui-kitten/components';
+import { useFocusEffect, StackActions } from '@react-navigation/native';
 
 import { PopBack } from '../../components';
+import { GamePhase } from '../../constants';
+
+import { WaitingScreen } from './components';
 
 import styles from './styles';
 
@@ -12,13 +16,14 @@ import styles from './styles';
 const StartScreen = (props) => {
   const {
     currentList,
+    navigation,
     onClearRoom,
     onGetStatus,
     onSetRound,
     onStartGame,
+    phase,
     players,
     room,
-    allState,
   } = props;
 
   React.useEffect(() => {
@@ -38,6 +43,10 @@ const StartScreen = (props) => {
   const listItems = [];
   for (let i = 0; i < 18; i += 1) {
     listItems.push(i);
+  }
+
+  if (phase === GamePhase.WAIT_FOR_OTHERS) {
+    return <WaitingScreen />;
   }
 
   return (
@@ -104,6 +113,7 @@ StartScreen.propTypes = {
   onGetStatus: PropTypes.func.isRequired,
   onSetRound: PropTypes.func.isRequired,
   onStartGame: PropTypes.func.isRequired,
+  phase: PropTypes.string,
   players: PropTypes.array,
 };
 

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Layout, Text } from '@ui-kitten/components';
 
+import { PopBack } from '../../../../components';
+
 import styles from './styles';
 
 const WaitingScreen = () => {
@@ -9,6 +11,7 @@ const WaitingScreen = () => {
       <Text category="label" style={styles.message}>
         Waiting for others to catch up 🙃
       </Text>
+      <PopBack />
     </Layout>
   );
 };

@@ -8,9 +8,9 @@ import {
 
 import {
   getActivePlayerUsername,
+  getPlayerIsActive,
   getRoll,
   getTimeLeft,
-  getPlayerIsActive,
 } from '../../selectors';
 
 import screen from './Game';

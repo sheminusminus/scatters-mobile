@@ -52,6 +52,7 @@ const game = (state = gameState, action = {}) => {
         ...state,
         activePlayer: action.payload.activePlayer,
         currentList: action.payload.currentList,
+        phase: action.payload.phase,
         players: action.payload.players,
         room: action.payload.room,
       };
@@ -140,6 +141,7 @@ const game = (state = gameState, action = {}) => {
       return {
         ...state,
         activePlayer: action.payload.activePlayer,
+        phase: action.payload.phase,
         players: action.payload.players,
         roll: action.payload.roll,
       };

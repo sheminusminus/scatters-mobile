@@ -9,10 +9,10 @@ import {
 } from '../../actions';
 
 import {
-  getCurrentList,
-  getPlayers,
   getActiveRoom,
-  getAllState,
+  getCurrentList,
+  getGamePhase,
+  getPlayers,
 } from '../../selectors';
 
 import screen from './Start';
@@ -20,9 +20,9 @@ import screen from './Start';
 
 const mapState = createStructuredSelector({
   currentList: getCurrentList,
+  phase: getGamePhase,
   players: getPlayers,
   room: getActiveRoom,
-  allState: getAllState,
 });
 
 const mapDispatch = {

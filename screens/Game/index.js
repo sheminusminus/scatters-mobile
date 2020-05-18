@@ -1,1 +1,1 @@
-export { default } from './GameStack';
+export { default } from './GameContainer';

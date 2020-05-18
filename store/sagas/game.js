@@ -34,7 +34,6 @@ let events;
 
 
 function* navToGame() {
-  // navigate('Game');
   yield call(navigate, 'Game');
   yield null;
 }
@@ -50,6 +49,11 @@ function* navToResponses() {
 
 function* navToScores() {
   yield call(navigate, 'Scores');
+  yield null;
+}
+
+function* navToWaiting() {
+  yield call(navigate, 'Start');
   yield null;
 }
 
@@ -184,6 +188,10 @@ function* doSetGamePhase(payload) {
           put(roundHideList.trigger(false))
         ].filter(Boolean));
         yield spawn(navToList);
+        break;
+
+      case GamePhase.WAIT_FOR_OTHERS:
+        yield spawn(navToWaiting);
         break;
 
       case GamePhase.VOTE:
