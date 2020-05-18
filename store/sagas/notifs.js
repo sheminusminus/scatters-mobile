@@ -2,10 +2,12 @@ import { eventChannel } from 'redux-saga';
 import { all, call, take, put, select, spawn, takeEvery } from 'redux-saga/effects';
 import { Notifications } from 'expo';
 import Constants from 'expo-constants';
+import { Alert } from 'react-native';
 
 import {
   sendPushNotif,
   requestRoom,
+  showAlertMessage,
 } from '../../actions';
 
 import {
@@ -29,8 +31,6 @@ export const notificationsChannel = () => {
 };
 
 function* doSendPushNotif(payload) {
-  console.log(payload);
-
   try {
     const username = yield select(getUsername);
     const pushToken = yield call(Storage.load, Storage.kToken);
@@ -66,6 +66,15 @@ function* handlePushNotifSuccess(payload) {
   }
 }
 
+function* doShowAlertMessage(payload) {
+  try {
+    const { message, title } = payload;
+    yield call(Alert.alert, title, message);
+  } catch (err) {
+    yield put(showAlertMessage.failure(err));
+  }
+}
+
 /**
  *  Generator function to listen for redux actions
  */
@@ -73,6 +82,7 @@ function* watchNotifsEvents() {
   while (true) {
     const { type, payload = {} } = yield take([
       sendPushNotif.TRIGGER,
+      showAlertMessage.TRIGGER,
     ]);
 
     switch (type) {
@@ -82,6 +92,10 @@ function* watchNotifsEvents() {
 
       case sendPushNotif.SUCCESS:
         yield spawn(handlePushNotifSuccess, payload);
+        break;
+
+      case showAlertMessage.TRIGGER:
+        yield spawn(doShowAlertMessage, payload);
         break;
 
       default:

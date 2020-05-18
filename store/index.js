@@ -22,6 +22,7 @@ import {
   setGamePhase,
   setPlayers,
   setRound,
+  showAlertMessage,
   startGame,
   startRound,
   timerFired,
@@ -108,6 +109,7 @@ export default () => {
   });
 
   socket.on(events.GAME_STATUS, (data) => {
+    console.log(events.GAME_STATUS, data.phase);
     store.dispatch(setGamePhase.trigger(data));
     store.dispatch(setGamePhase.success(data));
   });
@@ -145,12 +147,11 @@ export default () => {
   });
 
   socket.on(events.ROOM_CREATED_ERROR, (data) => {
-    console.log(events.ROOM_CREATED_ERROR, data);
     store.dispatch(createRoom.failure(data));
+    store.dispatch(showAlertMessage.trigger(data));
   });
 
   socket.on(events.ROOM_CREATED, (data) => {
-    console.log(events.ROOM_CREATED, data);
     store.dispatch(createRoom.success(data));
   });
 

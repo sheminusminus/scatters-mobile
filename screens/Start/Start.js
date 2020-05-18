@@ -21,7 +21,6 @@ const StartScreen = (props) => {
     allState,
   } = props;
 
-  console.log(allState);
   React.useEffect(() => {
     onGetStatus();
   }, [onGetStatus]);

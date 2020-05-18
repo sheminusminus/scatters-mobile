@@ -35,7 +35,6 @@ function* doEmitName(payload) {
 
 function* doGotRooms(data) {
   try {
-    console.log('navigate to rooms');
     yield call(navigate, 'Rooms');
   } catch (error) {
     yield put(gotRooms.failure(error));

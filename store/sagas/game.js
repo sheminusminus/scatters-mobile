@@ -163,7 +163,6 @@ function* doSetGamePhase(payload) {
   try {
     const room = yield select(getActiveRoom);
 
-    console.log('room match: ', payload.room, room);
     if (room !== payload.room) {
       // TODO: fire a status notification here
       return;

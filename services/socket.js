@@ -7,7 +7,8 @@ import io from 'socket.io-client';
 // const socket = io.connect('https://whimsical-cubic-hare.glitch.me/scatters');
 // const socket = io.connect('https://shore-oval-mongoose.glitch.me/scatters');
 // const socket = io.connect('https://bumpy-helpful-cheese.glitch.me/scatters');
-const socket = io.connect('https://scatters.lol/scatters');
+// const socket = io.connect('https://scatters.lol/scatters');
+const socket = io.connect('https://dev.scatters.lol/scatters');
 
 export const events = {
   CONNECT: 'connect',

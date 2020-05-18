@@ -88,3 +88,5 @@ export const audioStartRecording = makeActions(types.AUDIO_START_REC);
 export const sendPushNotif = makeActions(types.SEND_PUSH_NOTIF);
 export const acceptRoomInvite = makeActions(types.ACCEPT_ROOM_INVITE);
 export const declineRoomInvite = makeActions(types.DECLINE_ROOM_INVITE);
+
+export const showAlertMessage = makeActions(types.SHOW_ALERT_MESSAGE);

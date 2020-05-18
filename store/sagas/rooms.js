@@ -33,7 +33,6 @@ function* doNavigateToRooms() {
 
 function* doRequestAllUsers() {
   try {
-    console.log(events.PRESENCE_GET_ALL_USERS, 'requesting?');
     const username = yield select(getUsername);
     const room = yield select(getActiveRoom);
     socket.emit(events.PRESENCE_GET_ALL_USERS, { username, room });

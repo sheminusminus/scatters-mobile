@@ -23,8 +23,6 @@ function* doRequestRecordingPerms() {
   try {
     const response = yield call(Permissions.askAsync, Permissions.AUDIO_RECORDING);
 
-    console.log('doRequestRecordingPerms', response.status);
-
     if (response.status === 'granted') {
       yield call(Storage.save, 'audio_recording', 'granted');
       yield put(permsCheckRecording.success({ result: 'granted' }));
@@ -71,7 +69,6 @@ export function* doAudioRecording() {
     recording = new Audio.Recording();
     yield call(recording.prepareToRecordAsync, recordingSettings);
     recording.setOnRecordingStatusUpdate((status) => {
-      console.log(status);
       if (status.isDoneRecording) {
         console.log('done');
       }
