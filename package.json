@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "build:ios": "export $(grep '' .env); expo build:ios --apple-id $APPLE_ID --team-id $TEAM_ID --type archive"
+    "build:ios": "export $(grep '' .env); expo build:ios --apple-id $APPLE_ID --team-id $TEAM_ID --type archive",
+    "build:ios:dev": "export $(grep '' .env); expo build:ios --apple-id $APPLE_ID --team-id $TEAM_ID --type archive --config app.dev.json"
   },
   "jest": {
     "preset": "jest-expo"

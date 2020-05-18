@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "Scatters",
-    "slug": "scatters",
+    "name": "ScattersDev",
+    "slug": "scattersdev",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.14",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "scatters",
+    "scheme": "scattersdev",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -24,8 +24,8 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.emilykolar.Scatters",
-      "buildNumber": "1.0.14"
+      "bundleIdentifier": "com.emilykolar.ScattersDev",
+      "buildNumber": "1"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
