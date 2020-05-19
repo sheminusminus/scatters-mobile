@@ -39,8 +39,13 @@ const ListScreen = (props) => {
         )}
         {!hideList && (
           <Layout style={styles.listItemText}>
-            <Text style={styles.listItemNum} category="label">{index + 1}</Text>
-            <Text style={styles.listItemLabel} category="label">{item.toUpperCase()}</Text>
+            <Text style={[styles.listItemNum, { opacity: focused !== index && answers[index] ? 0.5 : 1 }]} category="label">{index + 1}</Text>
+            <Text
+              style={[styles.listItemLabel, { opacity: focused !== index && answers[index] ? 0.5 : 1 }]}
+              category="label"
+            >
+              {item.toUpperCase()}
+            </Text>
           </Layout>
         )}
       </Layout>
@@ -85,6 +90,7 @@ const ListScreen = (props) => {
         innerRef={(el) => {
           scroller.current = el;
         }}
+        keyExtractor={item => item}
         enableResetScrollToCoords={(focused + 1) >= Math.floor(items.length / 2)}
         contentContainerStyle={{ paddingTop: 80, paddingBottom: 24 }}
         data={items}
