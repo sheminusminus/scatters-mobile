@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import { sizes } from '../../constants';
+import { sizes, globalStyles } from '../../constants';
 
 
 const { height, width } = Dimensions.get('window');
@@ -9,11 +9,14 @@ const diceSize = 80;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    height,
+    // flex: 1,
+    // justifyContent: 'flex-start',
+    height: height,
     width,
-    backgroundColor: 'pink',
+  },
+  avoidingContainer: {
+    height: height - 72,
+    marginTop: 72,
   },
   headerContainer: {
     flex: 1,
@@ -21,26 +24,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width,
-    height: 100,
-    maxHeight: 100,
-    paddingTop: 60,
+    height: 72,
+    maxHeight: 72,
+    paddingTop: 32,
     paddingLeft: sizes.spacing.SM,
     paddingRight: sizes.spacing.SM,
   },
   listContainer: {
     position: 'absolute',
-    top: 100,
+    top: 72,
     width,
-    height: height - 100,
+    height: globalStyles.height - 72,
     flex: 1,
+    // paddingBottom: sizes.spacing.L,
   },
   list: {
     width,
-    height: height - 100,
-    paddingBottom: sizes.spacing.XL * 2,
+    height: height - 72,
     paddingTop: sizes.spacing.SM,
   },
   listInner: {
+
   },
   listItem: {
     paddingLeft: sizes.spacing.SM,
@@ -48,8 +52,19 @@ const styles = StyleSheet.create({
     paddingTop: sizes.spacing.XS,
     paddingBottom: sizes.spacing.XS,
   },
+  listItemText: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  listItemNum: {
+    opacity: 0.5,
+  },
+  listItemLabel: {
+    marginLeft: sizes.spacing.XS,
+  },
   listQuestion: {
-    marginBottom: sizes.spacing.XS,
+    marginBottom: sizes.spacing.SM,
   },
   listQuestionRedacted: {
     height: 20,

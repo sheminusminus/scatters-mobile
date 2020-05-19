@@ -1,13 +1,11 @@
 import React from 'react';
-import { Keyboard, Dimensions } from 'react-native';
 import { Layout, List, Text, Input } from '@ui-kitten/components';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { Timer } from '../../components';
 
 import styles from './styles';
 
-
-const { height: h } = Dimensions.get('window');
 
 const ListScreen = (props) => {
   const {
@@ -19,32 +17,19 @@ const ListScreen = (props) => {
     roll,
   } = props;
 
+  const scroller = React.useRef(null);
   const input = React.useRef(null);
-  const [height, setHeight] = React.useState(0);
+  const listRef = React.useRef(null);
   const [focused, setFocused] = React.useState(-1);
 
-  const _keyboardDidShow = (e) => {
-    setHeight(e?.endCoordinates?.height + 24);
-  };
-
-  const _keyboardDidHide = () => {
-    setHeight(0);
-  };
-
-  React.useEffect(() => {
-    Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
-    Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
-
-    return () => {
-      Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
-      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide);
-    };
-  }, []);
-
   const handleNext = () => {
-    if (focused < items.length && input.current) {
+    if (input.current) {
       input.current.focus();
     }
+  };
+
+  const toNode = (node) => {
+    scroller.current.props.scrollToFocusedInput(node)
   };
 
   const renderItem = ({ item, index }) => (
@@ -54,21 +39,28 @@ const ListScreen = (props) => {
           <Layout style={styles.listQuestionRedacted} level="4" />
         )}
         {!hideList && (
-          <Text category="label">
-            {(`${index + 1}) ${item}`).toUpperCase()}
-          </Text>
+          <Layout style={styles.listItemText}>
+            <Text style={styles.listItemNum} category="label">{index + 1}</Text>
+            <Text style={styles.listItemLabel} category="label">{item.toUpperCase()}</Text>
+          </Layout>
         )}
       </Layout>
       <Layout>
         <Input
           returnKeyType="next"
-          ref={focused === (index - 1) ? input : undefined}
+          ref={
+            focused === (index - 1)
+            || (focused === items.length - 1 && index === 0)
+              ? input
+              : undefined}
           disabled={!allowAnswers}
           onChangeText={(val) => {
             onAnswer(val, index);
           }}
           onSubmitEditing={handleNext}
-          onFocus={() => {
+          onFocus={(evt) => {
+            console.log(evt);
+            toNode(evt.target);
             setFocused(index);
           }}
           value={answers[index]}
@@ -78,42 +70,33 @@ const ListScreen = (props) => {
   );
 
   return (
-    <Layout
-      style={[
-        styles.container
-      ]}
-    >
+    <Layout>
       <Layout
-        style={[
-          styles.headerContainer,
-          {
-            zIndex: hideList ? undefined : 1000,
-          },
-        ]}
+        style={[styles.headerContainer, {
+          zIndex: hideList ? undefined : 1000,
+        }]}
       >
         <Text style={styles.roll}>{roll}</Text>
         <Timer />
       </Layout>
 
-      <Layout
-        style={[
-          styles.listContainer,
-          {
-            zIndex: hideList ? undefined : 100,
-          }
-        ]}
+      <KeyboardAwareScrollView
+        keyboardOpeningTime={0}
+        extraHeight={32}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        innerRef={(el) => {
+          scroller.current = el;
+        }}
+        contentContainerStyle={{ paddingTop: 72 }}
       >
-        <Layout style={styles.list}>
-          <List
-            style={[styles.listInner,  {
-              height: h - 100 - height,
-              maxHeight: h - 100 - height,
-            }]}
-            data={items}
-            renderItem={renderItem}
-          />
-        </Layout>
-      </Layout>
+        <List
+          scrollEventThrottle={30}
+          ref={listRef}
+          style={[styles.listInner]}
+          data={items}
+          renderItem={renderItem}
+        />
+      </KeyboardAwareScrollView>
     </Layout>
   );
 };
