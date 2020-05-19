@@ -13,15 +13,22 @@ const BackIcon = (props = {}) => (
   />
 );
 
+// const XIcon = (props = {}) => (
+//   <Icon
+//     {...props}
+//     name="log-out"
+//   />
+// );
+
 const XIcon = (props = {}) => (
   <Icon
     {...props}
-    name="close-circle"
+    name="backspace"
   />
 );
 
-const PopBack = ({ beforeBack, isCancel, style = {} }) => {
-  const navigation = useNavigation();
+const PopBack = ({ beforeBack, isCancel, shouldNavigate = true, style = {} }) => {
+  const navigation = shouldNavigate ? useNavigation() : undefined;
 
   return (
     <Button
@@ -30,9 +37,8 @@ const PopBack = ({ beforeBack, isCancel, style = {} }) => {
       status={isCancel ? Intent.DANGER : Intent.PRIMARY}
       style={{
         position: 'absolute',
-        top: 48,
-        left: isCancel ? undefined : 16,
-        right: isCancel ? 16 : undefined,
+        top: 40,
+        left: 16,
         width: 40,
         height: 40,
         opacity: isCancel ? 0.65 : 1,
@@ -42,7 +48,9 @@ const PopBack = ({ beforeBack, isCancel, style = {} }) => {
         if (beforeBack) {
           beforeBack();
         }
-        navigation.dispatch(popAction);
+        if (shouldNavigate) {
+          navigation.dispatch(popAction);
+        }
       }}
     />
   );

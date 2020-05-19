@@ -4,7 +4,7 @@ import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 
 import { Timer } from '../../components';
 
-import styles, { height } from './styles';
+import styles from './styles';
 
 
 const ListScreen = (props) => {

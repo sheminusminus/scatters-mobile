@@ -1,9 +1,11 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Layout, List, Text } from '@ui-kitten/components';
+import { Layout, List, Text, Button, Modal } from '@ui-kitten/components';
 
 import listItems from '../../lists';
-// import { Record } from '../../components';
+
+import { Chat, PopBack } from '../../components';
+import { Intent } from '../../constants';
 
 import Response from './Response';
 
@@ -12,6 +14,7 @@ import styles from './styles';
 
 class ResponsesScreen extends React.Component {
   state = {
+    showChat: false,
     setIndex: 0,
     showRoundScores: false,
     talliedInSet: 0,
@@ -20,11 +23,6 @@ class ResponsesScreen extends React.Component {
       [player.username]: [],
     }), {}),
   };
-
-  // componentDidMount() {
-  //   const { onRequestRecording } = this.props;
-  //   onRequestRecording();
-  // }
 
   componentDidUpdate(prevProps, prevState) {
     const { players, onSendTallies, roundsScored } = this.props;
@@ -46,6 +44,12 @@ class ResponsesScreen extends React.Component {
       }
     }
   }
+
+  toggleChat = () => {
+    this.setState((state) => ({
+      showChat: !state.showChat,
+    }))
+  };
 
   handleTally = (index, username, vote) => {
     if (this.state.tallies[username][index] !== undefined) {
@@ -71,7 +75,7 @@ class ResponsesScreen extends React.Component {
   };
 
   render() {
-    const { setIndex } = this.state;
+    const { setIndex, showChat } = this.state;
     const {
       canRecord,
       currentList,
@@ -109,7 +113,28 @@ class ResponsesScreen extends React.Component {
           </Layout>
         </Layout>
 
-        {/*<Record canRecord={canRecord} onPress={onRecord} />*/}
+        <Button
+          onPress={this.toggleChat}
+          status={Intent.INFO}
+        >
+          Chat
+        </Button>
+
+        <Modal
+          visible={showChat}
+          onBackdropPress={this.toggleChat}
+          backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        >
+          <>
+            <Chat />
+
+            <PopBack
+              beforeBack={this.toggleChat}
+              isCancel
+              shouldNavigate={false}
+            />
+          </>
+        </Modal>
       </Layout>
     );
   }

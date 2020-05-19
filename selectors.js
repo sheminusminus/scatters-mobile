@@ -10,6 +10,7 @@ const getGameState = state => state.game;
 const getRoomsState = state => state.rooms;
 const getRoundState = state => state.round;
 const getSystemState = state => state.system;
+const getChatsState = state => state.chats;
 
 
 export const getAllState = createSelector(
@@ -192,3 +193,24 @@ export const getOnlinePlayers = createSelector(
   [getRoomsState],
   rooms => rooms.onlinePlayers,
 );
+
+export const getChats = createSelector(
+  [getChatsState],
+  chats => chats.chats,
+);
+
+export const getActiveChat = createSelector(
+  [getChatsState],
+  chats => chats.activeChat,
+);
+
+export const getChatMessages = createSelector(
+  [getChatsState],
+  chats => chats.chatMessages,
+);
+
+export const getMessagesForActiveChat = createSelector(
+  [getActiveChat, getChatMessages],
+  (chat, messages) => messages[chat] || [],
+);
+

@@ -70,7 +70,7 @@ const RoomsScreen = (props) => {
     <Layout style={styles.container}>
       <Layout style={styles.titleContainer}>
         <Text category="label" style={styles.title}>
-          Join a Room
+          JOIN A ROOM
         </Text>
         <Button
           disabled={!selected}
@@ -122,7 +122,8 @@ const RoomsScreen = (props) => {
 
       <View style={styles.actionContainer}>
         <Button
-          accessoryRight={selected ? GoIcon : AddIcon}
+          accessoryLeft={selected ? undefined : AddIcon}
+          accessoryRight={selected ? GoIcon : undefined}
           onPress={handlePress}
         >
           {!!selected && `Join "${selected}"`}

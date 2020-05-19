@@ -50,7 +50,7 @@ const Response = (props) => {
             }}
             status={Intent.DANGER}
           >
-            👎 Nope
+            👎
           </Button>
 
           <Button
@@ -63,7 +63,7 @@ const Response = (props) => {
             }}
             status={Intent.SUCCESS}
           >
-            👍 Yep
+            👍
           </Button>
         </Layout>
       </Layout>

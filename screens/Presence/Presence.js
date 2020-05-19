@@ -25,7 +25,7 @@ const Presence = (props) => {
     <Layout style={styles.container}>
       <Layout style={styles.titleContainer}>
         <Text category="label" style={styles.title}>
-          Scatters with Friends
+          SCATTERS WITH FRIENDS
         </Text>
       </Layout>
       <PlayerList

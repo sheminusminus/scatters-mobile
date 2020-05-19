@@ -50,7 +50,7 @@ const StartScreen = (props) => {
     <Layout style={styles.container}>
       <View style={styles.titleContainer}>
         <Text category="label">
-          {`Room: ${room}`}
+          {`ROOM: ${room.toUpperCase()}`}
         </Text>
       </View>
 

@@ -20,6 +20,7 @@ import {
   sendInviteForRoom,
   sendPushNotif,
   setGamePhase,
+  activateChat,
   setPlayers,
   setRound,
   showAlertMessage,
@@ -53,6 +54,11 @@ export default () => {
 
   sagaMiddleware.run(rootSagas);
 
+  store.subscribe(() => {
+    const state = store.getState();
+    console.log(state.chats);
+  });
+
   socket.on('reconnect', async () => {
     const username = await Storage.load(Storage.kNAME);
     if (username) {
@@ -66,6 +72,7 @@ export default () => {
 
   socket.on(events.JOINED_ROOM, (data) => {
     store.dispatch(joinRoom.success(data));
+    store.dispatch(activateChat.success({ chat: data.room }));
   });
 
   socket.on(events.PLAYERS_UPDATED, (data) => {

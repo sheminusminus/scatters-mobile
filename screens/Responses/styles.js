@@ -1,32 +1,33 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import { sizes } from '../../constants';
+import { sizes, globalStyles } from '../../constants';
 
 
 const { height, width } = Dimensions.get('window');
 
-const diceSize = 80;
-
 const styles = StyleSheet.create({
   container: {
+    ...globalStyles.container,
     flex: 1,
     justifyContent: 'flex-start',
-    height,
-    width,
+    // height,
+    // width,
   },
   questionContainer: {
-    position: 'absolute',
-    width,
-    height: 100,
-    maxHeight: 100,
-    paddingTop: 60,
-    paddingLeft: sizes.spacing.SM,
-    paddingRight: sizes.spacing.SM,
+    ...globalStyles.titleContainer,
+    // position: 'absolute',
+    // width,
+    // height: 100,
+    // maxHeight: 100,
+    // paddingTop: 60,
+    // paddingLeft: sizes.spacing.SM,
+    // paddingRight: sizes.spacing.SM,
   },
   question: {
-    width: '100%',
-    textAlign: 'center',
-    opacity: 0.5,
+    ...globalStyles.title,
+    // width: '100%',
+    // textAlign: 'center',
+    // opacity: 0.5,
   },
   listContainer: {
     position: 'absolute',
@@ -70,11 +71,13 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     // width: width - (sizes.spacing.MED + 200),
-    width: width - ((sizes.spacing.SM * 3) + 200),
+    // width: width - ((sizes.spacing.SM * 2) + 180),
+    width: (width / 2) - 20,
     // maxWidth: width - (sizes.spacing.MED + 200),
-    maxWidth: width - ((sizes.spacing.SM * 3) + 200),
+    // maxWidth: width - ((sizes.spacing.SM * 3) + 200),
+    maxWidth: (width / 2) - 20,
     alignSelf: 'center',
-    paddingRight: sizes.spacing.SM,
+    paddingRight: sizes.spacing.MED,
   },
   name: {
     width: '100%',
@@ -92,12 +95,12 @@ const styles = StyleSheet.create({
     paddingLeft: sizes.spacing.SM,
   },
   actionLeft: {
-    width: 100,
+    width: 80,
     marginRight: sizes.spacing.SM,
     alignSelf: 'center',
   },
   actionRight: {
-    width: 100,
+    width: 80,
     alignSelf: 'center',
   },
   actionSelected: {
@@ -106,5 +109,4 @@ const styles = StyleSheet.create({
 });
 
 
-export { diceSize };
 export default styles;

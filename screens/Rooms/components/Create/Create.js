@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Keyboard, View } from 'react-native';
 import { Button, CheckBox, Input, Layout, Text } from '@ui-kitten/components';
+import { useFocusEffect, StackActions } from '@react-navigation/native';
 
 import { PopBack, KeyboardDismissingView } from '../../../../components';
 import { Intent } from '../../../../constants';
@@ -9,20 +10,19 @@ import { Intent } from '../../../../constants';
 import makeStyles from './styles';
 
 
+const pop = StackActions.pop(1);
+
 const styles = makeStyles();
 
 const CreateScreen = (props) => {
-  const {
-    navigation,
-    onDone,
-  } = props;
+  const { navigation, onDone } = props;
 
   const [input, setInput] = React.useState(null);
   const [isRealtime, setIsRealtime] = React.useState(true);
   const [isPrivate, setIsPrivate] = React.useState(false);
 
   return (
-    <KeyboardDismissingView>
+    <KeyboardDismissingView style={styles.container}>
       <Layout style={styles.titleContainer}>
         <Text category="label" style={styles.title}>SHINY NEW ROOM</Text>
       </Layout>
@@ -45,32 +45,33 @@ const CreateScreen = (props) => {
           status={Intent.INFO}
           style={styles.checkbox}
         >
-          Only for realtime games
+          Realtime
         </CheckBox>
         <CheckBox
           checked={isPrivate}
           onChange={(value) => setIsPrivate(value)}
           status={Intent.INFO}
+          style={styles.checkboxUnder}
         >
-          Only people I invite can join
+          Invite-only
         </CheckBox>
       </View>
 
       <View style={styles.footerContainer}>
+        {/*<Button*/}
+        {/*  appearance="outline"*/}
+        {/*  style={styles.footerButtonLeft}*/}
+        {/*  size='small'*/}
+        {/*  status={Intent.DANGER}*/}
+        {/*  onPress={() => {*/}
+        {/*    Keyboard.dismiss();*/}
+        {/*    navigation.navigate('Rooms');*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  NVM*/}
+        {/*</Button>*/}
         <Button
-          appearance="outline"
-          style={styles.footerButtonLeft}
-          size='small'
-          status={Intent.DANGER}
-          onPress={() => {
-            Keyboard.dismiss();
-            navigation.navigate('Rooms');
-          }}
-        >
-          NVM
-        </Button>
-        <Button
-          appearance="outline"
+          // appearance="outline"
           style={styles.footerButton}
           size='small'
           onPress={() => {
@@ -80,15 +81,18 @@ const CreateScreen = (props) => {
               isRealtime,
               isPrivate,
             };
-            onDone(payload);
+            navigation.dispatch(pop);
+            setTimeout(() => {
+              onDone(payload);
+            }, 600);
           }}
-          status={Intent.SUCCESS}
+          status={Intent.PRIMARY}
         >
-          DONE
+          LOOKS GOOD
         </Button>
       </View>
 
-      <PopBack isCancel style={{ top: 60 }} />
+      <PopBack isCancel style={{ top: 40 }} />
     </KeyboardDismissingView>
   );
 };

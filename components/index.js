@@ -1,3 +1,4 @@
+export { default as Chat } from './Chat';
 export { default as Dice } from './Dice';
 export { default as KeyboardDismissingView } from './KeyboardDismissingView';
 export { default as ListHeader } from './ListHeader';

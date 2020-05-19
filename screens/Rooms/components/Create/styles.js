@@ -1,17 +1,19 @@
 import { StyleSheet } from 'react-native';
 
-import { sizes } from '../../../../constants';
+import { sizes, globalStyles } from '../../../../constants';
 import { getDimensions } from '../../../../utils';
 
 
-const { height, width } = getDimensions();
+const { width } = getDimensions();
 
-// const realEstate = ((width - (sizes.spacing.MED * 2)) - sizes.spacing.MED) * 0.5;
 const realEstate = '40%';
 
 const footerButton = {
-  width: realEstate,
-  minWidth: realEstate,
+  // width: realEstate,te
+  //   // minWidth: realEsta,
+  width: width - (sizes.spacing.MED * 2),
+  maxWidth: width - (sizes.spacing.MED * 2),
+  height: 42,
 };
 
 const styles = () => {
@@ -23,25 +25,15 @@ const styles = () => {
       minHeight: 50,
     },
     container: {
-      paddingBottom: sizes.spacing.XL * 2,
-      paddingTop: sizes.spacing.L * 2,
-      minHeight: height,
-      width,
+      ...globalStyles.container,
     },
     titleContainer: {
+      ...globalStyles.titleContainer,
       flex: 1,
       justifyContent: 'center',
-      height: sizes.spacing.XL,
-      maxHeight: sizes.spacing.XL,
-      maxWidth: width,
-      marginBottom: sizes.spacing.SM,
-      paddingHorizontal: sizes.spacing.MED,
     },
     title: {
-      width,
-      textAlign: 'center',
-      alignSelf: 'center',
-      opacity: 0.5,
+      ...globalStyles.title,
     },
     plusButton: {
       position: 'absolute',
@@ -62,12 +54,16 @@ const styles = () => {
       paddingHorizontal: sizes.spacing.L,
     },
     checkboxContainer: {
-      marginTop: sizes.spacing.L,
-      marginBottom: sizes.spacing.XL,
+      marginTop: sizes.spacing.MED,
+      marginBottom: sizes.spacing.XL + sizes.spacing.MED,
       paddingHorizontal: sizes.spacing.L,
     },
     checkbox: {
       marginBottom: sizes.spacing.MED,
+      marginLeft: sizes.spacing.XS,
+    },
+    checkboxUnder: {
+      marginLeft: sizes.spacing.XS,
     },
     actionContainer: {
       marginTop: sizes.spacing.MED,
