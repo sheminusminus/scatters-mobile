@@ -1,10 +1,10 @@
 import React from 'react';
-import { Layout, List, Text, Input } from '@ui-kitten/components';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { Layout, Text, Input } from '@ui-kitten/components';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 
 import { Timer } from '../../components';
 
-import styles from './styles';
+import styles, { height } from './styles';
 
 
 const ListScreen = (props) => {
@@ -19,7 +19,6 @@ const ListScreen = (props) => {
 
   const scroller = React.useRef(null);
   const input = React.useRef(null);
-  const listRef = React.useRef(null);
   const [focused, setFocused] = React.useState(-1);
 
   const handleNext = () => {
@@ -80,23 +79,17 @@ const ListScreen = (props) => {
         <Timer />
       </Layout>
 
-      <KeyboardAwareScrollView
+      <KeyboardAwareFlatList
         keyboardOpeningTime={0}
         extraHeight={32}
-        resetScrollToCoords={{ x: 0, y: 0 }}
         innerRef={(el) => {
           scroller.current = el;
         }}
-        contentContainerStyle={{ paddingTop: 72 }}
-      >
-        <List
-          scrollEventThrottle={30}
-          ref={listRef}
-          style={[styles.listInner]}
-          data={items}
-          renderItem={renderItem}
-        />
-      </KeyboardAwareScrollView>
+        enableResetScrollToCoords={(focused + 1) >= Math.floor(items.length / 2)}
+        contentContainerStyle={{ paddingTop: 80, paddingBottom: 24 }}
+        data={items}
+        renderItem={renderItem}
+      />
     </Layout>
   );
 };

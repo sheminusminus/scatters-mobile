@@ -5,12 +5,8 @@ import { sizes, globalStyles } from '../../constants';
 
 const { height, width } = Dimensions.get('window');
 
-const diceSize = 80;
-
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: 'flex-start',
     height: height,
     width,
   },
@@ -88,6 +84,5 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export { diceSize };
+export { height };
 export default styles;
