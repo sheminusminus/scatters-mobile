@@ -75,6 +75,14 @@ const GameScreen = (props) => {
 
   return (
     <Layout style={styles.container}>
+      <Animated.View style={[styles.messageContainer, { opacity: fade }]}>
+        {!diceVal && !isRolling && (
+          <Text category="label" style={styles.message}>
+            {`🎲  ${playerIsActive ? 'Your' : `${activePlayerName}'s`} turn to roll  🎲`}
+          </Text>
+        )}
+      </Animated.View>
+
       <Round
         diceVal={diceVal}
         onNextRound={() => {
@@ -124,7 +132,7 @@ const GameScreen = (props) => {
               isDisabled={Boolean(diceVal)}
               onValue={(val) => {
                 setDiceVal(val);
-                handleTranslate(0, 40, 100, 0);
+                handleTranslate(8, 24, 100, 0);
               }}
               ref={diceRef}
               roll={roll}
@@ -136,19 +144,9 @@ const GameScreen = (props) => {
         </TouchableOpacity>
       </Animated.View>
 
-      <Animated.View style={[styles.messageContainer, { opacity: fade }]}>
-        <Layout>
-          {!diceVal && !isRolling && (
-            <Text category="s1" style={styles.message}>
-              {`${playerIsActive ? 'Your' : `${activePlayerName}'s`} turn to roll 🙃`}
-            </Text>
-          )}
-
-          {!isRolling && !diceVal && (
-            <PopBack style={{ top: -48 }} />
-          )}
-        </Layout>
-      </Animated.View>
+      {!isRolling && !diceVal && (
+        <PopBack style={{ position: 'absolute', top: 40 }} />
+      )}
     </Layout>
   );
 };

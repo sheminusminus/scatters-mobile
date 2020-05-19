@@ -1,32 +1,24 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { sizes } from '../../constants';
+import { globalStyles } from '../../constants';
 
-
-const { height, width } = Dimensions.get('window');
 
 const diceSize = 80;
 
 const styles = StyleSheet.create({
   messageContainer: {
-    maxHeight: 100,
-    width,
-    top: 100,
-    position: 'absolute',
-    zIndex: 1900,
+    ...globalStyles.titleContainer,
   },
   message: {
+    ...globalStyles.title,
     width: '100%',
     textAlign: 'center',
   },
   container: {
+    ...globalStyles.container,
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'relative',
-    height,
-    maxHeight: height,
-    width,
   },
   diceContainer: {
     position: 'absolute',

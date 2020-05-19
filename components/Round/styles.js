@@ -1,36 +1,32 @@
 import { StyleSheet } from 'react-native';
 
-import { sizes } from '../../constants';
+import { sizes, globalStyles } from '../../constants';
 
 
 const styles = StyleSheet.create({
-  timerContainer: {
-    width: '50%',
-    marginTop: 60,
-    height: 40,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingRight: sizes.spacing.MED,
-  },
   container: {
-    width: '100%',
-    height: 100,
-    maxHeight: 100,
+    width: globalStyles.width,
+    height: globalStyles.height,
+    maxHeight: globalStyles.height,
     flex: 1,
-    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   buttonsContainer: {
-    width: '50%',
+    width: globalStyles.width,
+    paddingLeft: sizes.spacing.L,
+    paddingRight: sizes.spacing.L,
     marginTop: 60,
     height: 40,
+    maxHeight: 40,
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingRight: sizes.spacing.MED,
+  },
+  button: {
+    width: (globalStyles.width - sizes.spacing.MED - (sizes.spacing.L * 2)) / 2,
   },
   startButton: {
-    marginRight: sizes.spacing.SM,
+    marginBottom: sizes.spacing.L,
+    marginRight: sizes.spacing.MED,
   },
 });
 

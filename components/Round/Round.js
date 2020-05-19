@@ -83,16 +83,16 @@ const RoundScreen = (props) => {
 
   return (
     <Layout style={styles.container}>
-      <Layout style={styles.buttonsContainer}>
-        {!playerIsActive && !allowAnswers && (
-          <Text category="s1">
-            {`${activePlayerName} can start!`}
-          </Text>
-        )}
+      {!playerIsActive && !allowAnswers && (
+        <Text category="label">
+          {`${activePlayerName} can start!`}
+        </Text>
+      )}
 
+      <Layout style={styles.buttonsContainer}>
         {!disableStartButton && playerIsActive && (
           <Button
-            style={styles.startButton}
+            style={[styles.button, styles.startButton]}
             disabled={disableStartButton}
             onPress={handleStartRound}
           >
@@ -102,6 +102,7 @@ const RoundScreen = (props) => {
 
         {!disableStartButton && playerIsActive && (
           <Button
+            style={styles.button}
             disabled={disableStartButton}
             onPress={onReRoll}
           >
