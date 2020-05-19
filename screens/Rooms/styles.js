@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { sizes } from '../../constants';
+import { sizes, globalStyles } from '../../constants';
 import { getDimensions } from '../../utils';
 
 
-const styles = () => {
-  const { height, width } = getDimensions();
+const getStyles = () => {
+  const { width } = getDimensions();
 
   return StyleSheet.create({
     list: {
@@ -15,24 +15,14 @@ const styles = () => {
       minHeight: 50,
     },
     container: {
-      paddingBottom: sizes.spacing.XL * 2,
-      paddingTop: sizes.spacing.L * 2,
-      minHeight: height,
-      width,
+      ...globalStyles.container,
     },
     titleContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      height: sizes.spacing.XL,
-      maxHeight: sizes.spacing.XL,
-      maxWidth: width,
-      marginBottom: sizes.spacing.SM,
+      ...globalStyles.titleContainer,
     },
     title: {
-      width: '100%',
-      textAlign: 'center',
-      alignSelf: 'center',
-      opacity: 0.5,
+      ...globalStyles.title,
+      paddingTop: sizes.spacing.XS,
     },
     plusButton: {
       position: 'absolute',
@@ -73,4 +63,4 @@ const styles = () => {
 };
 
 
-export default styles;
+export default getStyles;

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Button, IndexPath, Layout, Select, SelectItem, Text } from '@ui-kitten/components';
-import { useFocusEffect, StackActions } from '@react-navigation/native';
 
 import { PopBack } from '../../components';
 import { GamePhase } from '../../constants';
@@ -16,7 +14,6 @@ import styles from './styles';
 const StartScreen = (props) => {
   const {
     currentList,
-    navigation,
     onClearRoom,
     onGetStatus,
     onSetRound,
@@ -51,48 +48,46 @@ const StartScreen = (props) => {
 
   return (
     <Layout style={styles.container}>
-      <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.titleContainer}>
-          <Text category="h5">
-            {`Room: ${room}`}
-          </Text>
-        </View>
+      <View style={styles.titleContainer}>
+        <Text category="label">
+          {`Room: ${room}`}
+        </Text>
+      </View>
 
-        <View style={styles.listContainer}>
-          {players.map((player) => (
-            <Text
-              category="s1"
-              key={player.username}
-              style={styles.listItem}
-            >
-              {player.username.toUpperCase()}
-            </Text>
-          ))}
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <View style={styles.selectContainer}>
-            <Select
-              selectedIndex={new IndexPath(currentList)}
-              onSelect={(index) => {
-                handleSetRound(index.row);
-              }}
-              value={`Start with list ${currentList + 1}`}
-            >
-              {listItems.map((item, idx) => (
-                <SelectItem key={`list-${idx}`} title={`List ${idx + 1}`} />
-              ))}
-            </Select>
-          </View>
-
-          <Button
-            disabled={!players.length}
-            onPress={() => handleStart()}
+      <View style={styles.listContainer}>
+        {players.map((player) => (
+          <Text
+            category="label"
+            key={player.username}
+            style={styles.listItem}
           >
-            Everyone's here, let's start!
-          </Button>
+            {player.username.toUpperCase()}
+          </Text>
+        ))}
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <View style={styles.selectContainer}>
+          <Select
+            selectedIndex={new IndexPath(currentList)}
+            onSelect={(index) => {
+              handleSetRound(index.row);
+            }}
+            value={`Start with list ${currentList + 1}`}
+          >
+            {listItems.map((item, idx) => (
+              <SelectItem key={`list-${idx}`} title={`List ${idx + 1}`} />
+            ))}
+          </Select>
         </View>
-      </ScrollView>
+
+        <Button
+          disabled={!players.length}
+          onPress={() => handleStart()}
+        >
+          Everyone's here, let's start!
+        </Button>
+      </View>
 
       <PopBack
         beforeBack={() => {

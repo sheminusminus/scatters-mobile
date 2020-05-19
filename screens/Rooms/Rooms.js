@@ -69,7 +69,7 @@ const RoomsScreen = (props) => {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.titleContainer}>
-        <Text category="h5" style={styles.title}>
+        <Text category="label" style={styles.title}>
           Join a Room
         </Text>
         <Button

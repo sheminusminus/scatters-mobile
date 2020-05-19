@@ -35,17 +35,15 @@ function* doSendPushNotif(payload) {
     const username = yield select(getUsername);
     const pushToken = yield call(Storage.load, Storage.kToken);
 
-    if (pushToken) {
-      socket.emit(events.SEND_PUSH, {
-        action: 'roomInvite',
-        pushToken,
-        room: payload.room,
-        to: payload.to,
-        username,
-        id: Constants.manifest.id,
-        incrementBadge: 1,
-      });
-    }
+    socket.emit(events.SEND_PUSH, {
+      action: 'roomInvite',
+      pushToken,
+      room: payload.room,
+      to: payload.to,
+      username,
+      id: Constants.manifest.id,
+      incrementBadge: 1,
+    });
   } catch (error) {
     yield put(sendPushNotif.failure(error));
   }
