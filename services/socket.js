@@ -10,7 +10,15 @@ import io from 'socket.io-client';
 // const socket = io.connect('https://scatters.lol/scatters');
 const socket = io.connect('https://dev.scatters.lol/scatters');
 
+export const chatEvents = {
+  CHAT_MESSAGE: '@chat/CHAT_MESSAGE',
+  MESSAGE_SENT: '@chat/MESSAGE_SENT',
+  MESSAGES_REQUESTED: '@chat/MESSAGES_REQUESTED',
+  SEND_MESSAGE: '@chat/SEND_MESSAGE',
+};
+
 export const events = {
+  CHAT_MESSAGE_SENT: 'chat-message-sent',
   CONNECT: 'connect',
   CONNECT_ERROR: 'connect_error',
   CREATE_ROOM: 'create-room',
@@ -20,6 +28,7 @@ export const events = {
   EXIT_ROOM: 'exit-room',
   GAME_STARTED: 'game-started',
   GAME_STATUS: 'game-status',
+  GET_CHAT_MESSAGES: 'get-chat-messages',
   GET_STATUS: 'get-status',
   GOT_RESPONSES: 'got-responses',
   JOINED_ROOM: 'joined-room',
@@ -38,6 +47,7 @@ export const events = {
   ROUND_SET: 'round-set',
   ROUND_STARTED: 'round-started',
   SEND_ANSWERS: 'send-answers',
+  SEND_CHAT_MESSAGE: 'send-chat-message',
   SEND_TALLIES: 'send-tallies',
   SET_ROUND: 'set-round',
   START_GAME: 'start-game',

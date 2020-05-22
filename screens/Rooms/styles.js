@@ -24,6 +24,13 @@ const getStyles = () => {
       ...globalStyles.title,
       paddingTop: sizes.spacing.XS,
     },
+    chatButton: {
+      position: 'absolute',
+      top: 0,
+      left: sizes.spacing.MED,
+      maxHeight: sizes.spacing.XL,
+      maxWidth: sizes.spacing.XL,
+    },
     plusButton: {
       position: 'absolute',
       top: 0,

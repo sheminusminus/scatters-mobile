@@ -50,7 +50,10 @@ export const ACCEPT_ROOM_INVITE = '@notifs/ACCEPT_ROOM_INVITE';
 export const DECLINE_ROOM_INVITE = '@notifs/DECLINE_ROOM_INVITE';
 
 export const SHOW_ALERT_MESSAGE = '@notifs/showAlertMessage';
+export const SET_PUSH_TOKEN = '@notifs/SET_PUSH_TOKEN';
 
 export const ACTIVATE_CHAT = '@chat/ACTIVATE_CHAT';
 export const SEND_CHAT_MESSAGE = '@chat/SEND_CHAT_MESSAGE';
 export const CHAT_MESSAGE_RECEIVED = '@chat/CHAT_MESSAGE_RECEIVED';
+export const GET_CHAT_MESSAGES = '@chat/GET_CHAT_MESSAGES';
+export const CLEAR_CHAT = '@chat/CLEAR_CHAT';

@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import {
+  chatMessageReceived,
   clearRoom,
   createRoom,
   emitName,
@@ -28,7 +29,7 @@ import {
   startRound,
   timerFired,
 } from '../actions';
-import { events, socket, Storage } from '../services';
+import { chatEvents, events, socket, Storage } from '../services';
 import createRootReducer from './reducers';
 import createRootSagas from './sagas';
 
@@ -38,7 +39,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = createRootReducer();
 
 export default () => {
-  const rootSagas = createRootSagas(socket, events);
+  const rootSagas = createRootSagas(socket, events, chatEvents);
 
   const sagaMiddleware = createSagaMiddleware();
 
@@ -53,11 +54,6 @@ export default () => {
   );
 
   sagaMiddleware.run(rootSagas);
-
-  store.subscribe(() => {
-    const state = store.getState();
-    console.log(state.chats);
-  });
 
   socket.on('reconnect', async () => {
     const username = await Storage.load(Storage.kNAME);
@@ -160,6 +156,11 @@ export default () => {
 
   socket.on(events.ROOM_CREATED, (data) => {
     store.dispatch(createRoom.success(data));
+  });
+
+  socket.on(chatEvents.CHAT_MESSAGE, (data) => {
+    console.log(chatEvents.CHAT_MESSAGE, data);
+    store.dispatch(chatMessageReceived.success(data));
   });
 
   return { store, socket };

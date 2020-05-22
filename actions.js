@@ -2,6 +2,7 @@ import * as types from './types';
 
 export const makeActions = (ACTION) => {
   const TRIGGER = `${ACTION}_TRIGGER`;
+  const REQUEST = `${ACTION}_REQUEST`;
   const SUCCESS = `${ACTION}_SUCCESS`;
   const FAILURE = `${ACTION}_FAILURE`;
   const FULFILL = `${ACTION}_FULFILL`;
@@ -9,11 +10,17 @@ export const makeActions = (ACTION) => {
 
   return {
     TRIGGER,
+    REQUEST,
     SUCCESS,
     FAILURE,
     RESET,
     trigger: (payload, meta = undefined) => ({
       type: TRIGGER,
+      payload,
+      meta,
+    }),
+    request: (payload, meta = undefined) => ({
+      type: REQUEST,
       payload,
       meta,
     }),
@@ -88,9 +95,12 @@ export const audioStartRecording = makeActions(types.AUDIO_START_REC);
 export const sendPushNotif = makeActions(types.SEND_PUSH_NOTIF);
 export const acceptRoomInvite = makeActions(types.ACCEPT_ROOM_INVITE);
 export const declineRoomInvite = makeActions(types.DECLINE_ROOM_INVITE);
+export const setPushToken = makeActions(types.SET_PUSH_TOKEN);
 
 export const showAlertMessage = makeActions(types.SHOW_ALERT_MESSAGE);
 
 export const activateChat = makeActions(types.ACTIVATE_CHAT);
 export const sendChatMessage = makeActions(types.SEND_CHAT_MESSAGE);
 export const chatMessageReceived = makeActions(types.CHAT_MESSAGE_RECEIVED);
+export const getChatMessages = makeActions(types.GET_CHAT_MESSAGES);
+export const clearChat = makeActions(types.CLEAR_CHAT);

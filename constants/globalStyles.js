@@ -14,6 +14,7 @@ export const container = {
   paddingBottom: spacing.XL * 2,
   paddingTop: isX ? spacing.L * 2 : spacing.XL,
   minHeight: height,
+  height,
   width,
 };
 
@@ -33,4 +34,6 @@ export const title = {
   opacity: 0.7,
 };
 
-export { height, width, isX };
+const adjustedHeight = isX ? height - 88 : height;
+
+export { adjustedHeight as height, width, isX };

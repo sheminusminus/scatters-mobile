@@ -9,6 +9,7 @@ import {
   requestListRooms,
   requestRoom,
   retrieveName,
+  setPushToken,
 } from '../../actions';
 
 import { RoomVisibility, RoomType } from '../../constants';
@@ -27,7 +28,12 @@ function* doEmitName(payload) {
   try {
     const pushToken = yield call(Storage.load, Storage.kToken);
     yield call(Storage.save, Storage.kNAME, payload.username);
-    socket.emit(events.EMIT_NAME, { ...payload, pushToken });
+
+    socket.emit(events.EMIT_NAME, { ...payload });
+
+    if (pushToken) {
+      yield put(setPushToken.trigger());
+    }
   } catch (error) {
     yield put(emitName.failure(error));
   }

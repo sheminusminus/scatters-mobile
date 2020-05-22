@@ -14,6 +14,10 @@ const PlusIcon = (props = {}) => (
   <Icon {...props} name="person-add" />
 );
 
+const MessageIcon = (props = {}) => (
+    <Icon {...props} name="message-square" />
+);
+
 const AddIcon = (props = {}) => (
   <Icon {...props} name="plus" />
 );
@@ -72,6 +76,16 @@ const RoomsScreen = (props) => {
         <Text category="label" style={styles.title}>
           JOIN A ROOM
         </Text>
+        {/*<Button*/}
+        {/*    disabled={!selected}*/}
+        {/*    onPress={() => {*/}
+        {/*      navigation.navigate('ChatClient', { room: selected });*/}
+        {/*    }}*/}
+        {/*    appearance="ghost"*/}
+        {/*    accessoryLeft={MessageIcon}*/}
+        {/*    style={styles.chatButton}*/}
+        {/*    status={Intent.SUCCESS}*/}
+        {/*/>*/}
         <Button
           disabled={!selected}
           onPress={() => {

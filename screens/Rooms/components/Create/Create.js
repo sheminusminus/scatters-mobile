@@ -38,24 +38,26 @@ const CreateScreen = (props) => {
         />
       </View>
 
-      <View style={styles.checkboxContainer}>
-        <CheckBox
-          checked={isRealtime}
-          onChange={(value) => setIsRealtime(value)}
-          status={Intent.INFO}
-          style={styles.checkbox}
-        >
-          Realtime
-        </CheckBox>
-        <CheckBox
-          checked={isPrivate}
-          onChange={(value) => setIsPrivate(value)}
-          status={Intent.INFO}
-          style={styles.checkboxUnder}
-        >
-          Invite-only
-        </CheckBox>
-      </View>
+      {/*<View style={styles.checkboxContainer}>*/}
+      {/*  <CheckBox*/}
+      {/*    disabled*/}
+      {/*    checked={isRealtime}*/}
+      {/*    onChange={(value) => setIsRealtime(value)}*/}
+      {/*    status={Intent.INFO}*/}
+      {/*    style={styles.checkbox}*/}
+      {/*  >*/}
+      {/*    Realtime*/}
+      {/*  </CheckBox>*/}
+      {/*  <CheckBox*/}
+      {/*    disabled*/}
+      {/*    checked={isPrivate}*/}
+      {/*    onChange={(value) => setIsPrivate(value)}*/}
+      {/*    status={Intent.INFO}*/}
+      {/*    style={styles.checkboxUnder}*/}
+      {/*  >*/}
+      {/*    Invite-only*/}
+      {/*  </CheckBox>*/}
+      {/*</View>*/}
 
       <View style={styles.footerContainer}>
         {/*<Button*/}
@@ -71,7 +73,7 @@ const CreateScreen = (props) => {
         {/*  NVM*/}
         {/*</Button>*/}
         <Button
-          // appearance="outline"
+          disabled={!input}
           style={styles.footerButton}
           size='small'
           onPress={() => {

@@ -2,6 +2,8 @@ import {
   activateChat,
   chatMessageReceived,
   sendChatMessage,
+  getChatMessages,
+  clearChat,
 } from '../../actions';
 
 
@@ -19,25 +21,53 @@ const chats = (state = chatState, action = {}) => {
         activeChat: action.payload.chat,
       };
 
+    case sendChatMessage.REQUEST:
     case chatMessageReceived.SUCCESS:
       return {
         ...state,
-        chats: Array.from(new Set([...state.chats, action.payload.chat])),
+        chats: Array.from(new Set([...state.chats, action.payload.room])),
         chatMessages: {
           ...state.chatMessages,
-          [action.payload.chat]: [...(state.chatMessages[action.payload.chat] || []), action.payload.message],
+          [action.payload.room]: [
+            ...(state.chatMessages[action.payload.room] || []),
+            {
+              username: action.payload.username,
+              text: action.payload.text,
+            },
+          ],
         },
       };
 
-    case sendChatMessage.TRIGGER:
+    case clearChat.TRIGGER:
       return {
         ...state,
-        chats: Array.from(new Set([...state.chats, action.payload.chat])),
-        chatMessages: {
-          ...state.chatMessages,
-          [action.payload.chat]: [...(state.chatMessages[action.payload.chat] || []), action.payload.message],
-        },
+        chatMessages: Object.keys(state.chatMessages).reduce((obj, key) => ({
+          ...obj,
+          [key]: [],
+        }), {}),
       };
+    // case sendChatMessage.TRIGGER:
+    //   return {
+    //     ...state,
+    //     chats: Array.from(new Set([...state.chats, action.payload.room])),
+    //     chatMessages: {
+    //       ...state.chatMessages,
+    //       [action.payload.room]: [
+    //         ...(state.chatMessages[action.payload.room] || []),
+    //
+    //       ],
+    //     },
+    //   };
+
+    // case getChatMessages.SUCCESS:
+    //   return {
+    //     ...state,
+    //     chatMessages: {
+    //       ...state.chatMessages,
+    //       chats: Array.from(new Set([...state.chats, action.payload.chat])),
+    //       [action.payload.chat]: [...(state.chatMessages[action.payload.chat] || []), action.payload.message],
+    //     },
+    //   };
 
     default:
       return state;

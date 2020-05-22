@@ -8,6 +8,7 @@ import {
   sendPushNotif,
   requestRoom,
   showAlertMessage,
+  setPushToken,
 } from '../../actions';
 
 import {
@@ -73,6 +74,16 @@ function* doShowAlertMessage(payload) {
   }
 }
 
+function* doSetPushToken() {
+  try {
+    const username = yield select(getUsername);
+    const pushToken = yield call(Storage.load, Storage.kToken);
+    socket.emit(events.SET_PUSH_TOKEN, { username, pushToken });
+  } catch (err) {
+    yield put(showAlertMessage.failure(err));
+  }
+}
+
 /**
  *  Generator function to listen for redux actions
  */
@@ -81,6 +92,8 @@ function* watchNotifsEvents() {
     const { type, payload = {} } = yield take([
       sendPushNotif.TRIGGER,
       showAlertMessage.TRIGGER,
+      setPushToken.TRIGGER,
+      sendPushNotif.SUCCESS,
     ]);
 
     switch (type) {
@@ -94,6 +107,10 @@ function* watchNotifsEvents() {
 
       case showAlertMessage.TRIGGER:
         yield spawn(doShowAlertMessage, payload);
+        break;
+
+      case setPushToken.TRIGGER:
+        yield spawn(doSetPushToken);
         break;
 
       default:

@@ -8,6 +8,9 @@ const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     ...globalStyles.container,
+    paddingBottom: globalStyles.isX ? globalStyles.container.paddingBottom : 0,
+    height: globalStyles.height,
+    minHeight: globalStyles.height,
     flex: 1,
     justifyContent: 'flex-start',
     // height,
@@ -39,11 +42,11 @@ const styles = StyleSheet.create({
   list: {
     width,
     height: height - 100,
-    paddingBottom: sizes.spacing.XL * 2,
+    // paddingBottom: sizes.spacing.XL * 2,
     paddingTop: sizes.spacing.SM,
   },
   listInner: {
-    height: height - 100,
+    // height: height - 100,
   },
   responseContainer: {
     flex: 1,

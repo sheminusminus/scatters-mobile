@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.emilykolar.ScattersDev",
-      "buildNumber": "2"
+      "buildNumber": "4"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

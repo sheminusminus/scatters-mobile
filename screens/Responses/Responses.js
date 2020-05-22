@@ -24,6 +24,11 @@ class ResponsesScreen extends React.Component {
     }), {}),
   };
 
+  componentWillUnmount() {
+    const { onClearChat } = this.props;
+    onClearChat();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { players, onSendTallies, roundsScored } = this.props;
     const { roundsScored: prevRoundsScored } = prevProps;
@@ -77,10 +82,8 @@ class ResponsesScreen extends React.Component {
   render() {
     const { setIndex, showChat } = this.state;
     const {
-      canRecord,
       currentList,
       responses,
-      onRecord,
     } = this.props;
 
     const items = listItems.slice(currentList * 12, (currentList + 1) * 12);
@@ -100,6 +103,7 @@ class ResponsesScreen extends React.Component {
             {items[setIndex].toUpperCase()}
           </Text>
         </Layout>
+
         <Layout style={styles.listContainer}>
           <Layout style={styles.list}>
             {responses.length > 0 && (
@@ -113,28 +117,15 @@ class ResponsesScreen extends React.Component {
           </Layout>
         </Layout>
 
-        <Button
-          onPress={this.toggleChat}
-          status={Intent.INFO}
-        >
-          Chat
-        </Button>
+        {/*<Button*/}
+        {/*  className={styles.showChatButton}*/}
+        {/*  onPress={this.toggleChat}*/}
+        {/*  status={Intent.INFO}*/}
+        {/*>*/}
+        {/*  Chat*/}
+        {/*</Button>*/}
 
-        <Modal
-          visible={showChat}
-          onBackdropPress={this.toggleChat}
-          backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
-        >
-          <>
-            <Chat />
-
-            <PopBack
-              beforeBack={this.toggleChat}
-              isCancel
-              shouldNavigate={false}
-            />
-          </>
-        </Modal>
+        <Chat />
       </Layout>
     );
   }
@@ -146,6 +137,7 @@ ResponsesScreen.navigationOptions = {
 
 ResponsesScreen.propTypes = {
   canRecord: PropTypes.bool,
+  onClearChat: PropTypes.func.isRequired,
   onRecord: PropTypes.func.isRequired,
   onRequestRecording: PropTypes.func.isRequired,
   onSendTallies: PropTypes.func.isRequired,

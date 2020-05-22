@@ -51,7 +51,7 @@ const styles = () => {
       marginTop: sizes.spacing.XL,
       marginBottom: sizes.spacing.SM,
       marginHorizontal: 0,
-      paddingHorizontal: sizes.spacing.L,
+      paddingHorizontal: sizes.spacing.MED,
     },
     checkboxContainer: {
       marginTop: sizes.spacing.MED,
